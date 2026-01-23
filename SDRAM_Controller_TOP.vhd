@@ -8,9 +8,15 @@ use	ieee.std_logic_unsigned.all;
 entity SDRAM_Controller_TOP is
 	generic
 	(
+	
+		-- 32-bit controller interface
+		
 		DATA_WIDTH				: natural := 10;
+		ADDR_WIDTH				:	natural	:= 10;
+		
+		-- SDRAM Interface
 		SDRAM_ADDR_WIDTH	:	natural := 10;
-		SDRAM_BANK_WIDTH	:	natural := 10;
+		SDRAM_BANK_WIDTH	:	natural := 10
 	);
 
 
