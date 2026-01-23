@@ -1,3 +1,5 @@
+-- Library Clause(s)
+-- Use Clause(s) 
 library ieee;
 use	ieee.std_logic_1164.all;
 use	ieee.numeric_std.all;
@@ -14,21 +16,54 @@ entity SDRAM_Controller_TOP is
 
 	port
 	(
+		-- I/O for Interfacing with Controller:
 		-- Input ports
-		<name>	: in  <type>;
-		<name>	: in  <type> := <default_value>;
+		-- reset
+		reset : in std_logic := '0';
 
-		-- Inout ports
-		<name>	: inout <type>;
+		-- clock
+		clk : in std_logic;
+
+		-- address bus
+		addr : in unsigned(ADDR_WIDTH-1 downto 0);
+
+		-- input data bus
+		data : in std_logic_vector(DATA_WIDTH-1 downto 0);
+
+		-- When the write enable signal is asserted, a write operation will be performed.
+		we : in std_logic;
+
+		-- When the request signal is asserted, an operation will be performed.
+		req : in std_logic;
 
 		-- Output ports
-		<name>	: out <type>;
-		<name>	: out <type> := <default_value>
+    -- The acknowledge signal is asserted by the SDRAM controller when
+    -- a request has been accepted.
+    ack : out std_logic;
+
+    -- The valid signal is asserted when there is a valid word on the output
+    -- data bus.
+    valid : out std_logic;
+
+    -- output data bus
+    q : out std_logic_vector(DATA_WIDTH-1 downto 0);
+		
+		-- I/O for interfacing with SDRAM-Chip
+
+		--Inout ports
+    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0);
+		-- Output ports
+		sdram_a     : out unsigned(SDRAM_ADDR_WIDTH-1 downto 0);
+    sdram_ba    : out unsigned(SDRAM_BANK_WIDTH-1 downto 0);
+    sdram_cke   : out std_logic;
+    sdram_cs_n  : out std_logic;
+    sdram_ras_n : out std_logic;
+    sdram_cas_n : out std_logic;
+    sdram_we_n  : out std_logic;
+    sdram_dqml  : out std_logic;
+    sdram_dqmh  : out std_logic
 	);
 end SDRAM_Controller_TOP;
-
--- Library Clause(s) (optional)
--- Use Clause(s) (optional)
 
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 
