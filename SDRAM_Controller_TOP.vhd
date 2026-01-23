@@ -6,9 +6,9 @@ use	ieee.std_logic_unsigned.all;
 entity SDRAM_Controller_TOP is
 	generic
 	(
-		<name>	: <type>  :=	<default_value>;
-		...
-		<name>	: <type>  :=	<default_value>
+		DATA_WIDTH				: natural := 10;
+		SDRAM_ADDR_WIDTH	:	natural := 10;
+		SDRAM_BANK_WIDTH	:	natural := 10;
 	);
 
 
