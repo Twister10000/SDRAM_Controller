@@ -47,6 +47,7 @@
 !**/class.ptf
 !*.tbd
 !*.sof
+!*.sdc
 ## tbd
 
 !*.tcl
