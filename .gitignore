@@ -34,6 +34,7 @@
 # software binary files
 
 /*
+!Source/
 !/*.gitignore
 ##
 !*.qpf
