@@ -17,7 +17,7 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition"
 
--- DATE "01/23/2026 09:38:52"
+-- DATE "01/23/2026 09:48:20"
 
 -- 
 -- Device: Altera 10M50DAF484C7G Package FBGA484
@@ -84,30 +84,29 @@ END structure;
 LIBRARY FIFTYFIVENM;
 LIBRARY IEEE;
 USE FIFTYFIVENM.FIFTYFIVENM_COMPONENTS.ALL;
-USE IEEE.NUMERIC_STD.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY 	SDRAM_Controller_TOP IS
     PORT (
 	reset : IN std_logic;
 	clk : IN std_logic;
-	addr : IN IEEE.NUMERIC_STD.unsigned(9 DOWNTO 0);
+	addr : IN std_logic_vector(9 DOWNTO 0);
 	data : IN std_logic_vector(9 DOWNTO 0);
 	we : IN std_logic;
 	req : IN std_logic;
-	ack : OUT std_logic;
-	valid : OUT std_logic;
-	q : OUT std_logic_vector(9 DOWNTO 0);
-	sdram_dq : INOUT std_logic_vector(9 DOWNTO 0);
-	sdram_a : OUT IEEE.NUMERIC_STD.unsigned(9 DOWNTO 0);
-	sdram_ba : OUT IEEE.NUMERIC_STD.unsigned(9 DOWNTO 0);
-	sdram_cke : OUT std_logic;
-	sdram_cs_n : OUT std_logic;
-	sdram_ras_n : OUT std_logic;
-	sdram_cas_n : OUT std_logic;
-	sdram_we_n : OUT std_logic;
-	sdram_dqml : OUT std_logic;
-	sdram_dqmh : OUT std_logic
+	ack : BUFFER std_logic;
+	valid : BUFFER std_logic;
+	q : BUFFER std_logic_vector(9 DOWNTO 0);
+	sdram_dq : BUFFER std_logic_vector(9 DOWNTO 0);
+	sdram_a : BUFFER std_logic_vector(9 DOWNTO 0);
+	sdram_ba : BUFFER std_logic_vector(9 DOWNTO 0);
+	sdram_cke : BUFFER std_logic;
+	sdram_cs_n : BUFFER std_logic;
+	sdram_ras_n : BUFFER std_logic;
+	sdram_cas_n : BUFFER std_logic;
+	sdram_we_n : BUFFER std_logic;
+	sdram_dqml : BUFFER std_logic;
+	sdram_dqmh : BUFFER std_logic
 	);
 END SDRAM_Controller_TOP;
 
@@ -206,6 +205,7 @@ SIGNAL ww_req : std_logic;
 SIGNAL ww_ack : std_logic;
 SIGNAL ww_valid : std_logic;
 SIGNAL ww_q : std_logic_vector(9 DOWNTO 0);
+SIGNAL ww_sdram_dq : std_logic_vector(9 DOWNTO 0);
 SIGNAL ww_sdram_a : std_logic_vector(9 DOWNTO 0);
 SIGNAL ww_sdram_ba : std_logic_vector(9 DOWNTO 0);
 SIGNAL ww_sdram_cke : std_logic;
@@ -316,15 +316,16 @@ BEGIN
 
 ww_reset <= reset;
 ww_clk <= clk;
-ww_addr <= IEEE.STD_LOGIC_1164.STD_LOGIC_VECTOR(addr);
+ww_addr <= addr;
 ww_data <= data;
 ww_we <= we;
 ww_req <= req;
 ack <= ww_ack;
 valid <= ww_valid;
 q <= ww_q;
-sdram_a <= IEEE.NUMERIC_STD.UNSIGNED(ww_sdram_a);
-sdram_ba <= IEEE.NUMERIC_STD.UNSIGNED(ww_sdram_ba);
+sdram_dq <= ww_sdram_dq;
+sdram_a <= ww_sdram_a;
+sdram_ba <= ww_sdram_ba;
 sdram_cke <= ww_sdram_cke;
 sdram_cs_n <= ww_sdram_cs_n;
 sdram_ras_n <= ww_sdram_ras_n;
