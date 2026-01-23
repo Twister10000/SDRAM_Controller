@@ -35,20 +35,22 @@
 
 /*
 !Source/
-!/*.gitignore
-##
-!*.qpf
-!*.qsf
-!*.qws
-!*.bdf
-!*.vhd
-!*.v
-!*.ptf
-!*.bsf
+!/.gitignore
+!Source/
+!**/*.qpf
+!**/*.qsf
+!**/*.qws
+!**/*.bdf
+!**/*.vhd
+!**/*.v
+!**/*.ptf
+!**/*.bsf
 !**/class.ptf
-!*.tbd
-!*.sof
-!*.sdc
-## tbd
+!**/*.tbd
+!**/*.sof
+!**/*.sdc
+!**/*.tcl
 
-!*.tcl
+db/
+incremental_db/
+output_files/
