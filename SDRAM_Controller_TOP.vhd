@@ -16,6 +16,7 @@ entity SDRAM_Controller_TOP is
 		
 		-- SDRAM Interface
 		SDRAM_ADDR_WIDTH	:	natural := 10;
+		SDRAM_DATA_WIDTH	:	natural	:= 10;
 		SDRAM_BANK_WIDTH	:	natural := 10
 	);
 
