@@ -17,7 +17,7 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition"
 
--- DATE "01/26/2026 07:58:57"
+-- DATE "01/26/2026 08:43:28"
 
 -- 
 -- Device: Altera 10M50DAF484C7G Package FBGA484
@@ -90,7 +90,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 ENTITY 	SDRAM_Controller_TOP IS
     PORT (
 	reset : IN std_logic;
-	clk : IN std_logic;
+	CLK : IN std_logic;
 	addr : IN IEEE.NUMERIC_STD.unsigned(11 DOWNTO 0);
 	data : IN std_logic_vector(15 DOWNTO 0);
 	we : IN std_logic;
@@ -113,7 +113,7 @@ END SDRAM_Controller_TOP;
 
 -- Design Ports Information
 -- reset	=>  Location: PIN_AA6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- clk	=>  Location: PIN_P11,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- CLK	=>  Location: PIN_P11,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- addr[0]	=>  Location: PIN_H11,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- addr[1]	=>  Location: PIN_W1,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- addr[2]	=>  Location: PIN_H4,	 I/O Standard: 2.5 V,	 Current Strength: Default
@@ -212,7 +212,7 @@ SIGNAL ww_devoe : std_logic;
 SIGNAL ww_devclrn : std_logic;
 SIGNAL ww_devpor : std_logic;
 SIGNAL ww_reset : std_logic;
-SIGNAL ww_clk : std_logic;
+SIGNAL ww_CLK : std_logic;
 SIGNAL ww_addr : std_logic_vector(11 DOWNTO 0);
 SIGNAL ww_data : std_logic_vector(15 DOWNTO 0);
 SIGNAL ww_we : std_logic;
@@ -232,7 +232,7 @@ SIGNAL ww_sdram_dqmh : std_logic;
 SIGNAL \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \~QUARTUS_CREATED_ADC2~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \reset~input_o\ : std_logic;
-SIGNAL \clk~input_o\ : std_logic;
+SIGNAL \CLK~input_o\ : std_logic;
 SIGNAL \addr[0]~input_o\ : std_logic;
 SIGNAL \addr[1]~input_o\ : std_logic;
 SIGNAL \addr[2]~input_o\ : std_logic;
@@ -349,7 +349,7 @@ END COMPONENT;
 BEGIN
 
 ww_reset <= reset;
-ww_clk <= clk;
+ww_CLK <= CLK;
 ww_addr <= IEEE.STD_LOGIC_1164.STD_LOGIC_VECTOR(addr);
 ww_data <= data;
 ww_we <= we;
@@ -1065,7 +1065,7 @@ PORT MAP (
 	o => \reset~input_o\);
 
 -- Location: IOIBUF_X34_Y0_N29
-\clk~input\ : fiftyfivenm_io_ibuf
+\CLK~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1073,8 +1073,8 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => ww_clk,
-	o => \clk~input_o\);
+	i => ww_CLK,
+	o => \CLK~input_o\);
 
 -- Location: IOIBUF_X34_Y39_N15
 \addr[0]~input\ : fiftyfivenm_io_ibuf
