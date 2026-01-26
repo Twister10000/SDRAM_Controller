@@ -59,3 +59,6 @@ output_files/
 *.rpt
 Source/simulation/questa/vsim.wlf
 Source/simulation/questa/msim_transcript
+Source/simulation/questa/SDRAM_Controller.vho
+*.qws
+Source/simulation/questa/SDRAM_Controller.vho
