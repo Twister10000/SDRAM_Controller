@@ -98,7 +98,7 @@ begin
 		/**************************************************************
 		/ Normal PLL Generation	for Final Version delete PLL!!!																									
 		/**************************************************************/
-	  PLL: if USE_PLL = true generate -- wird bei der Quartus Compilation ausgefÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼hrt
+	  PLL: if USE_PLL = true generate -- wird bei der Quartus Compilation benutzt
 			PLL1	:	entity work.SDRAM_PLL
         
         port map(
@@ -121,6 +121,8 @@ begin
 			begin
 			
 				if rising_edge(SDRAM_CLK) then
+					
+					valid	<=	not valid;
 					
 					case fsm_SDRAM is
 						
