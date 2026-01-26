@@ -17,7 +17,7 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition"
 
--- DATE "01/26/2026 08:53:14"
+-- DATE "01/26/2026 09:39:29"
 
 -- 
 -- Device: Altera 10M50DAF484C7G Package FBGA484
@@ -27,62 +27,10 @@
 -- This VHDL file should be used for Questa Altera FPGA (VHDL) only
 -- 
 
+LIBRARY ALTERA;
 LIBRARY FIFTYFIVENM;
 LIBRARY IEEE;
-USE FIFTYFIVENM.FIFTYFIVENM_COMPONENTS.ALL;
-USE IEEE.STD_LOGIC_1164.ALL;
-
-ENTITY 	hard_block IS
-    PORT (
-	devoe : IN std_logic;
-	devclrn : IN std_logic;
-	devpor : IN std_logic
-	);
-END hard_block;
-
--- Design Ports Information
--- ~ALTERA_TMS~	=>  Location: PIN_H2,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
--- ~ALTERA_TCK~	=>  Location: PIN_G2,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
--- ~ALTERA_TDI~	=>  Location: PIN_L4,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
--- ~ALTERA_TDO~	=>  Location: PIN_M5,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- ~ALTERA_CONFIG_SEL~	=>  Location: PIN_H10,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- ~ALTERA_nCONFIG~	=>  Location: PIN_H9,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
--- ~ALTERA_nSTATUS~	=>  Location: PIN_G9,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
--- ~ALTERA_CONF_DONE~	=>  Location: PIN_F8,	 I/O Standard: 2.5 V Schmitt Trigger,	 Current Strength: Default
-
-
-ARCHITECTURE structure OF hard_block IS
-SIGNAL gnd : std_logic := '0';
-SIGNAL vcc : std_logic := '1';
-SIGNAL unknown : std_logic := 'X';
-SIGNAL ww_devoe : std_logic;
-SIGNAL ww_devclrn : std_logic;
-SIGNAL ww_devpor : std_logic;
-SIGNAL \~ALTERA_TMS~~padout\ : std_logic;
-SIGNAL \~ALTERA_TCK~~padout\ : std_logic;
-SIGNAL \~ALTERA_TDI~~padout\ : std_logic;
-SIGNAL \~ALTERA_CONFIG_SEL~~padout\ : std_logic;
-SIGNAL \~ALTERA_nCONFIG~~padout\ : std_logic;
-SIGNAL \~ALTERA_nSTATUS~~padout\ : std_logic;
-SIGNAL \~ALTERA_CONF_DONE~~padout\ : std_logic;
-SIGNAL \~ALTERA_TMS~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_TCK~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_TDI~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_CONFIG_SEL~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_nCONFIG~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_nSTATUS~~ibuf_o\ : std_logic;
-SIGNAL \~ALTERA_CONF_DONE~~ibuf_o\ : std_logic;
-
-BEGIN
-
-ww_devoe <= devoe;
-ww_devclrn <= devclrn;
-ww_devpor <= devpor;
-END structure;
-
-
-LIBRARY FIFTYFIVENM;
-LIBRARY IEEE;
+USE ALTERA.ALTERA_PRIMITIVES_COMPONENTS.ALL;
 USE FIFTYFIVENM.FIFTYFIVENM_COMPONENTS.ALL;
 USE IEEE.NUMERIC_STD.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
@@ -112,56 +60,55 @@ ENTITY 	SDRAM_Controller_TOP IS
 END SDRAM_Controller_TOP;
 
 -- Design Ports Information
--- reset	=>  Location: PIN_AA6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- CLK	=>  Location: PIN_P11,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[0]	=>  Location: PIN_H11,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[1]	=>  Location: PIN_W1,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[2]	=>  Location: PIN_H4,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[3]	=>  Location: PIN_R14,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[4]	=>  Location: PIN_D15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[5]	=>  Location: PIN_AB5,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[6]	=>  Location: PIN_L20,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[7]	=>  Location: PIN_A6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[8]	=>  Location: PIN_C18,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[9]	=>  Location: PIN_AB10,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[10]	=>  Location: PIN_Y14,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- addr[11]	=>  Location: PIN_A5,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[0]	=>  Location: PIN_C19,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[1]	=>  Location: PIN_J10,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[2]	=>  Location: PIN_B14,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[3]	=>  Location: PIN_AB6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[4]	=>  Location: PIN_N4,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[5]	=>  Location: PIN_B19,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[6]	=>  Location: PIN_E9,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[7]	=>  Location: PIN_K2,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[8]	=>  Location: PIN_B17,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[9]	=>  Location: PIN_P3,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[10]	=>  Location: PIN_AA2,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[11]	=>  Location: PIN_N15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[12]	=>  Location: PIN_V15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[13]	=>  Location: PIN_E19,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[14]	=>  Location: PIN_D22,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- data[15]	=>  Location: PIN_U4,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- we	=>  Location: PIN_K1,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- req	=>  Location: PIN_W3,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- ack	=>  Location: PIN_E6,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- valid	=>  Location: PIN_A11,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[0]	=>  Location: PIN_AB15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[1]	=>  Location: PIN_AB8,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[2]	=>  Location: PIN_L15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[3]	=>  Location: PIN_V10,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[4]	=>  Location: PIN_F18,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[5]	=>  Location: PIN_L19,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[6]	=>  Location: PIN_Y16,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[7]	=>  Location: PIN_B16,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[8]	=>  Location: PIN_R5,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[9]	=>  Location: PIN_M15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[10]	=>  Location: PIN_D14,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[11]	=>  Location: PIN_AA15,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[12]	=>  Location: PIN_E11,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[13]	=>  Location: PIN_U7,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[14]	=>  Location: PIN_AB16,	 I/O Standard: 2.5 V,	 Current Strength: Default
--- q[15]	=>  Location: PIN_D2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- reset	=>  Location: PIN_D3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[0]	=>  Location: PIN_W5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[1]	=>  Location: PIN_V12,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[2]	=>  Location: PIN_W4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[3]	=>  Location: PIN_C9,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[4]	=>  Location: PIN_D14,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[5]	=>  Location: PIN_U7,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[6]	=>  Location: PIN_J15,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[7]	=>  Location: PIN_H14,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[8]	=>  Location: PIN_D17,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[9]	=>  Location: PIN_Y2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[10]	=>  Location: PIN_E12,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- addr[11]	=>  Location: PIN_M22,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[0]	=>  Location: PIN_A18,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[1]	=>  Location: PIN_F17,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[2]	=>  Location: PIN_H1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[3]	=>  Location: PIN_K15,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[4]	=>  Location: PIN_AA9,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[5]	=>  Location: PIN_C14,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[6]	=>  Location: PIN_N18,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[7]	=>  Location: PIN_K22,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[8]	=>  Location: PIN_J3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[9]	=>  Location: PIN_L2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[10]	=>  Location: PIN_AB20,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[11]	=>  Location: PIN_G3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[12]	=>  Location: PIN_U5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[13]	=>  Location: PIN_N8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[14]	=>  Location: PIN_R12,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- data[15]	=>  Location: PIN_A15,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- we	=>  Location: PIN_M21,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- req	=>  Location: PIN_AA3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- ack	=>  Location: PIN_D8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- valid	=>  Location: PIN_C2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[0]	=>  Location: PIN_B22,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[1]	=>  Location: PIN_N4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[2]	=>  Location: PIN_K2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[3]	=>  Location: PIN_AA5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[4]	=>  Location: PIN_C10,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[5]	=>  Location: PIN_L20,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[6]	=>  Location: PIN_F16,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[7]	=>  Location: PIN_D5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[8]	=>  Location: PIN_D22,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[9]	=>  Location: PIN_B19,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[10]	=>  Location: PIN_D10,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[11]	=>  Location: PIN_B8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[12]	=>  Location: PIN_D9,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[13]	=>  Location: PIN_W18,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[14]	=>  Location: PIN_AB7,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- q[15]	=>  Location: PIN_E17,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- sdram_a[0]	=>  Location: PIN_U17,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- sdram_a[1]	=>  Location: PIN_W19,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- sdram_a[2]	=>  Location: PIN_V18,	 I/O Standard: 2.5 V,	 Current Strength: Default
@@ -199,6 +146,7 @@ END SDRAM_Controller_TOP;
 -- sdram_dq[13]	=>  Location: PIN_G20,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- sdram_dq[14]	=>  Location: PIN_G19,	 I/O Standard: 2.5 V,	 Current Strength: Default
 -- sdram_dq[15]	=>  Location: PIN_F22,	 I/O Standard: 2.5 V,	 Current Strength: Default
+-- CLK	=>  Location: PIN_P11,	 I/O Standard: 2.5 V,	 Current Strength: Default
 
 
 ARCHITECTURE structure OF SDRAM_Controller_TOP IS
@@ -229,10 +177,12 @@ SIGNAL ww_sdram_cas_n : std_logic;
 SIGNAL ww_sdram_we_n : std_logic;
 SIGNAL ww_sdram_dqml : std_logic;
 SIGNAL ww_sdram_dqmh : std_logic;
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|pll1_INCLK_bus\ : std_logic_vector(1 DOWNTO 0);
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
 SIGNAL \~QUARTUS_CREATED_ADC2~_CHSEL_bus\ : std_logic_vector(4 DOWNTO 0);
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_INCLK_bus\ : std_logic_vector(3 DOWNTO 0);
 SIGNAL \reset~input_o\ : std_logic;
-SIGNAL \CLK~input_o\ : std_logic;
 SIGNAL \addr[0]~input_o\ : std_logic;
 SIGNAL \addr[1]~input_o\ : std_logic;
 SIGNAL \addr[2]~input_o\ : std_logic;
@@ -281,70 +231,32 @@ SIGNAL \sdram_dq[14]~input_o\ : std_logic;
 SIGNAL \sdram_dq[15]~input_o\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_GND~I_combout\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_UNVM~~busy\ : std_logic;
+SIGNAL \~ALTERA_TMS~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_TMS~~padout\ : std_logic;
+SIGNAL \~ALTERA_TCK~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_TCK~~padout\ : std_logic;
+SIGNAL \~ALTERA_TDI~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_TDI~~padout\ : std_logic;
+SIGNAL \~ALTERA_TDO~~padout\ : std_logic;
+SIGNAL \~ALTERA_CONFIG_SEL~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_CONFIG_SEL~~padout\ : std_logic;
+SIGNAL \~ALTERA_nCONFIG~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_nCONFIG~~padout\ : std_logic;
+SIGNAL \~ALTERA_nSTATUS~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_nSTATUS~~padout\ : std_logic;
+SIGNAL \~ALTERA_CONF_DONE~~ibuf_o\ : std_logic;
+SIGNAL \~ALTERA_CONF_DONE~~padout\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_ADC1~~eoc\ : std_logic;
 SIGNAL \~QUARTUS_CREATED_ADC2~~eoc\ : std_logic;
-SIGNAL \sdram_dq[0]~output_o\ : std_logic;
-SIGNAL \sdram_dq[1]~output_o\ : std_logic;
-SIGNAL \sdram_dq[2]~output_o\ : std_logic;
-SIGNAL \sdram_dq[3]~output_o\ : std_logic;
-SIGNAL \sdram_dq[4]~output_o\ : std_logic;
-SIGNAL \sdram_dq[5]~output_o\ : std_logic;
-SIGNAL \sdram_dq[6]~output_o\ : std_logic;
-SIGNAL \sdram_dq[7]~output_o\ : std_logic;
-SIGNAL \sdram_dq[8]~output_o\ : std_logic;
-SIGNAL \sdram_dq[9]~output_o\ : std_logic;
-SIGNAL \sdram_dq[10]~output_o\ : std_logic;
-SIGNAL \sdram_dq[11]~output_o\ : std_logic;
-SIGNAL \sdram_dq[12]~output_o\ : std_logic;
-SIGNAL \sdram_dq[13]~output_o\ : std_logic;
-SIGNAL \sdram_dq[14]~output_o\ : std_logic;
-SIGNAL \sdram_dq[15]~output_o\ : std_logic;
-SIGNAL \ack~output_o\ : std_logic;
-SIGNAL \valid~output_o\ : std_logic;
-SIGNAL \q[0]~output_o\ : std_logic;
-SIGNAL \q[1]~output_o\ : std_logic;
-SIGNAL \q[2]~output_o\ : std_logic;
-SIGNAL \q[3]~output_o\ : std_logic;
-SIGNAL \q[4]~output_o\ : std_logic;
-SIGNAL \q[5]~output_o\ : std_logic;
-SIGNAL \q[6]~output_o\ : std_logic;
-SIGNAL \q[7]~output_o\ : std_logic;
-SIGNAL \q[8]~output_o\ : std_logic;
-SIGNAL \q[9]~output_o\ : std_logic;
-SIGNAL \q[10]~output_o\ : std_logic;
-SIGNAL \q[11]~output_o\ : std_logic;
-SIGNAL \q[12]~output_o\ : std_logic;
-SIGNAL \q[13]~output_o\ : std_logic;
-SIGNAL \q[14]~output_o\ : std_logic;
-SIGNAL \q[15]~output_o\ : std_logic;
-SIGNAL \sdram_a[0]~output_o\ : std_logic;
-SIGNAL \sdram_a[1]~output_o\ : std_logic;
-SIGNAL \sdram_a[2]~output_o\ : std_logic;
-SIGNAL \sdram_a[3]~output_o\ : std_logic;
-SIGNAL \sdram_a[4]~output_o\ : std_logic;
-SIGNAL \sdram_a[5]~output_o\ : std_logic;
-SIGNAL \sdram_a[6]~output_o\ : std_logic;
-SIGNAL \sdram_a[7]~output_o\ : std_logic;
-SIGNAL \sdram_a[8]~output_o\ : std_logic;
-SIGNAL \sdram_a[9]~output_o\ : std_logic;
-SIGNAL \sdram_a[10]~output_o\ : std_logic;
-SIGNAL \sdram_a[11]~output_o\ : std_logic;
-SIGNAL \sdram_ba[0]~output_o\ : std_logic;
-SIGNAL \sdram_ba[1]~output_o\ : std_logic;
-SIGNAL \sdram_cke~output_o\ : std_logic;
-SIGNAL \sdram_cs_n~output_o\ : std_logic;
-SIGNAL \sdram_ras_n~output_o\ : std_logic;
-SIGNAL \sdram_cas_n~output_o\ : std_logic;
-SIGNAL \sdram_we_n~output_o\ : std_logic;
-SIGNAL \sdram_dqml~output_o\ : std_logic;
-SIGNAL \sdram_dqmh~output_o\ : std_logic;
-
-COMPONENT hard_block
-    PORT (
-	devoe : IN std_logic;
-	devclrn : IN std_logic;
-	devpor : IN std_logic);
-END COMPONENT;
+SIGNAL \~ALTERA_TDO~~obuf_o\ : std_logic;
+SIGNAL \CLK~input_o\ : std_logic;
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|wire_pll1_fbout\ : std_logic;
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_outclk\ : std_logic;
+SIGNAL \valid~0_combout\ : std_logic;
+SIGNAL \valid~reg0_Duplicate_1_q\ : std_logic;
+SIGNAL \valid~reg0_q\ : std_logic;
+SIGNAL \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\ : std_logic_vector(4 DOWNTO 0);
+SIGNAL \ALT_INV_valid~reg0_Duplicate_1_q\ : std_logic;
 
 BEGIN
 
@@ -370,16 +282,22 @@ ww_devoe <= devoe;
 ww_devclrn <= devclrn;
 ww_devpor <= devpor;
 
+\PLL:PLL1|altpll_component|auto_generated|pll1_INCLK_bus\ <= (gnd & \CLK~input_o\);
+
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(0) <= \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\(0);
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(1) <= \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\(1);
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(2) <= \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\(2);
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(3) <= \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\(3);
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(4) <= \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\(4);
+
 \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ <= (\~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\);
 
 \~QUARTUS_CREATED_ADC2~_CHSEL_bus\ <= (\~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\ & \~QUARTUS_CREATED_GND~I_combout\);
-auto_generated_inst : hard_block
-PORT MAP (
-	devoe => ww_devoe,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor);
 
--- Location: LCCOMB_X44_Y41_N8
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_INCLK_bus\ <= (vcc & vcc & vcc & \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk\(0));
+\ALT_INV_valid~reg0_Duplicate_1_q\ <= NOT \valid~reg0_Duplicate_1_q\;
+
+-- Location: LCCOMB_X44_Y52_N16
 \~QUARTUS_CREATED_GND~I\ : fiftyfivenm_lcell_comb
 -- Equation(s):
 -- \~QUARTUS_CREATED_GND~I_combout\ = GND
@@ -392,199 +310,7 @@ GENERIC MAP (
 PORT MAP (
 	combout => \~QUARTUS_CREATED_GND~I_combout\);
 
--- Location: IOOBUF_X78_Y16_N2
-\sdram_dq[0]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[0]~output_o\);
-
--- Location: IOOBUF_X78_Y16_N9
-\sdram_dq[1]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[1]~output_o\);
-
--- Location: IOOBUF_X78_Y3_N2
-\sdram_dq[2]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[2]~output_o\);
-
--- Location: IOOBUF_X78_Y3_N9
-\sdram_dq[3]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[3]~output_o\);
-
--- Location: IOOBUF_X78_Y15_N9
-\sdram_dq[4]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[4]~output_o\);
-
--- Location: IOOBUF_X78_Y15_N2
-\sdram_dq[5]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[5]~output_o\);
-
--- Location: IOOBUF_X78_Y16_N16
-\sdram_dq[6]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[6]~output_o\);
-
--- Location: IOOBUF_X78_Y17_N9
-\sdram_dq[7]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[7]~output_o\);
-
--- Location: IOOBUF_X78_Y23_N9
-\sdram_dq[8]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[8]~output_o\);
-
--- Location: IOOBUF_X78_Y30_N9
-\sdram_dq[9]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[9]~output_o\);
-
--- Location: IOOBUF_X78_Y29_N2
-\sdram_dq[10]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[10]~output_o\);
-
--- Location: IOOBUF_X78_Y29_N9
-\sdram_dq[11]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[11]~output_o\);
-
--- Location: IOOBUF_X78_Y31_N9
-\sdram_dq[12]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[12]~output_o\);
-
--- Location: IOOBUF_X78_Y31_N23
-\sdram_dq[13]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[13]~output_o\);
-
--- Location: IOOBUF_X78_Y31_N16
-\sdram_dq[14]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[14]~output_o\);
-
--- Location: IOOBUF_X78_Y31_N2
-\sdram_dq[15]~output\ : fiftyfivenm_io_obuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	open_drain_output => "true")
--- pragma translate_on
-PORT MAP (
-	i => VCC,
-	devoe => ww_devoe,
-	o => \sdram_dq[15]~output_o\);
-
--- Location: IOOBUF_X20_Y39_N2
+-- Location: IOOBUF_X31_Y39_N2
 \ack~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -594,9 +320,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \ack~output_o\);
+	o => ww_ack);
 
--- Location: IOOBUF_X51_Y54_N9
+-- Location: IOOBUF_X20_Y39_N16
 \valid~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -604,11 +330,11 @@ GENERIC MAP (
 	open_drain_output => "false")
 -- pragma translate_on
 PORT MAP (
-	i => GND,
+	i => \valid~reg0_q\,
 	devoe => ww_devoe,
-	o => \valid~output_o\);
+	o => ww_valid);
 
--- Location: IOOBUF_X51_Y0_N16
+-- Location: IOOBUF_X78_Y43_N9
 \q[0]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -618,9 +344,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[0]~output_o\);
+	o => ww_q(0));
 
--- Location: IOOBUF_X31_Y0_N9
+-- Location: IOOBUF_X0_Y23_N16
 \q[1]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -630,9 +356,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[1]~output_o\);
+	o => ww_q(1));
 
--- Location: IOOBUF_X78_Y36_N16
+-- Location: IOOBUF_X0_Y28_N2
 \q[2]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -642,9 +368,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[2]~output_o\);
+	o => ww_q(2));
 
--- Location: IOOBUF_X31_Y0_N23
+-- Location: IOOBUF_X26_Y0_N2
 \q[3]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -654,9 +380,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[3]~output_o\);
+	o => ww_q(3));
 
--- Location: IOOBUF_X78_Y40_N16
+-- Location: IOOBUF_X51_Y54_N30
 \q[4]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -666,9 +392,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[4]~output_o\);
+	o => ww_q(4));
 
--- Location: IOOBUF_X78_Y37_N9
+-- Location: IOOBUF_X78_Y37_N2
 \q[5]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -678,9 +404,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[5]~output_o\);
+	o => ww_q(5));
 
--- Location: IOOBUF_X54_Y0_N23
+-- Location: IOOBUF_X71_Y54_N30
 \q[6]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -690,9 +416,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[6]~output_o\);
+	o => ww_q(6));
 
--- Location: IOOBUF_X60_Y54_N9
+-- Location: IOOBUF_X24_Y39_N30
 \q[7]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -702,9 +428,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[7]~output_o\);
+	o => ww_q(7));
 
--- Location: IOOBUF_X0_Y15_N23
+-- Location: IOOBUF_X78_Y35_N9
 \q[8]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -714,9 +440,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[8]~output_o\);
+	o => ww_q(8));
 
--- Location: IOOBUF_X78_Y33_N23
+-- Location: IOOBUF_X69_Y54_N16
 \q[9]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -726,9 +452,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[9]~output_o\);
+	o => ww_q(9));
 
--- Location: IOOBUF_X56_Y54_N9
+-- Location: IOOBUF_X31_Y39_N30
 \q[10]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -738,9 +464,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[10]~output_o\);
+	o => ww_q(10));
 
--- Location: IOOBUF_X54_Y0_N30
+-- Location: IOOBUF_X46_Y54_N30
 \q[11]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -750,9 +476,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[11]~output_o\);
+	o => ww_q(11));
 
--- Location: IOOBUF_X36_Y39_N16
+-- Location: IOOBUF_X31_Y39_N9
 \q[12]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -762,9 +488,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[12]~output_o\);
+	o => ww_q(12));
 
--- Location: IOOBUF_X16_Y0_N2
+-- Location: IOOBUF_X62_Y0_N9
 \q[13]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -774,9 +500,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[13]~output_o\);
+	o => ww_q(13));
 
--- Location: IOOBUF_X54_Y0_N2
+-- Location: IOOBUF_X29_Y0_N2
 \q[14]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -786,9 +512,9 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[14]~output_o\);
+	o => ww_q(14));
 
--- Location: IOOBUF_X0_Y30_N9
+-- Location: IOOBUF_X78_Y43_N16
 \q[15]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
@@ -798,7 +524,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \q[15]~output_o\);
+	o => ww_q(15));
 
 -- Location: IOOBUF_X78_Y3_N16
 \sdram_a[0]~output\ : fiftyfivenm_io_obuf
@@ -810,7 +536,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[0]~output_o\);
+	o => ww_sdram_a(0));
 
 -- Location: IOOBUF_X78_Y16_N24
 \sdram_a[1]~output\ : fiftyfivenm_io_obuf
@@ -822,7 +548,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[1]~output_o\);
+	o => ww_sdram_a(1));
 
 -- Location: IOOBUF_X78_Y15_N23
 \sdram_a[2]~output\ : fiftyfivenm_io_obuf
@@ -834,7 +560,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[2]~output_o\);
+	o => ww_sdram_a(2));
 
 -- Location: IOOBUF_X78_Y3_N23
 \sdram_a[3]~output\ : fiftyfivenm_io_obuf
@@ -846,7 +572,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[3]~output_o\);
+	o => ww_sdram_a(3));
 
 -- Location: IOOBUF_X78_Y15_N16
 \sdram_a[4]~output\ : fiftyfivenm_io_obuf
@@ -858,7 +584,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[4]~output_o\);
+	o => ww_sdram_a(4));
 
 -- Location: IOOBUF_X78_Y20_N16
 \sdram_a[5]~output\ : fiftyfivenm_io_obuf
@@ -870,7 +596,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[5]~output_o\);
+	o => ww_sdram_a(5));
 
 -- Location: IOOBUF_X78_Y20_N24
 \sdram_a[6]~output\ : fiftyfivenm_io_obuf
@@ -882,7 +608,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[6]~output_o\);
+	o => ww_sdram_a(6));
 
 -- Location: IOOBUF_X78_Y24_N24
 \sdram_a[7]~output\ : fiftyfivenm_io_obuf
@@ -894,7 +620,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[7]~output_o\);
+	o => ww_sdram_a(7));
 
 -- Location: IOOBUF_X78_Y24_N16
 \sdram_a[8]~output\ : fiftyfivenm_io_obuf
@@ -906,7 +632,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[8]~output_o\);
+	o => ww_sdram_a(8));
 
 -- Location: IOOBUF_X78_Y24_N9
 \sdram_a[9]~output\ : fiftyfivenm_io_obuf
@@ -918,7 +644,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[9]~output_o\);
+	o => ww_sdram_a(9));
 
 -- Location: IOOBUF_X78_Y20_N9
 \sdram_a[10]~output\ : fiftyfivenm_io_obuf
@@ -930,7 +656,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[10]~output_o\);
+	o => ww_sdram_a(10));
 
 -- Location: IOOBUF_X78_Y24_N2
 \sdram_a[11]~output\ : fiftyfivenm_io_obuf
@@ -942,7 +668,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_a[11]~output_o\);
+	o => ww_sdram_a(11));
 
 -- Location: IOOBUF_X78_Y18_N9
 \sdram_ba[0]~output\ : fiftyfivenm_io_obuf
@@ -954,7 +680,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_ba[0]~output_o\);
+	o => ww_sdram_ba(0));
 
 -- Location: IOOBUF_X78_Y18_N2
 \sdram_ba[1]~output\ : fiftyfivenm_io_obuf
@@ -966,7 +692,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_ba[1]~output_o\);
+	o => ww_sdram_ba(1));
 
 -- Location: IOOBUF_X78_Y23_N2
 \sdram_cke~output\ : fiftyfivenm_io_obuf
@@ -978,7 +704,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_cke~output_o\);
+	o => ww_sdram_cke);
 
 -- Location: IOOBUF_X78_Y17_N16
 \sdram_cs_n~output\ : fiftyfivenm_io_obuf
@@ -990,7 +716,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_cs_n~output_o\);
+	o => ww_sdram_cs_n);
 
 -- Location: IOOBUF_X78_Y21_N16
 \sdram_ras_n~output\ : fiftyfivenm_io_obuf
@@ -1002,7 +728,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_ras_n~output_o\);
+	o => ww_sdram_ras_n);
 
 -- Location: IOOBUF_X78_Y21_N23
 \sdram_cas_n~output\ : fiftyfivenm_io_obuf
@@ -1014,7 +740,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_cas_n~output_o\);
+	o => ww_sdram_cas_n);
 
 -- Location: IOOBUF_X78_Y17_N23
 \sdram_we_n~output\ : fiftyfivenm_io_obuf
@@ -1026,7 +752,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_we_n~output_o\);
+	o => ww_sdram_we_n);
 
 -- Location: IOOBUF_X78_Y17_N2
 \sdram_dqml~output\ : fiftyfivenm_io_obuf
@@ -1038,7 +764,7 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_dqml~output_o\);
+	o => ww_sdram_dqml);
 
 -- Location: IOOBUF_X78_Y30_N2
 \sdram_dqmh~output\ : fiftyfivenm_io_obuf
@@ -1050,19 +776,199 @@ GENERIC MAP (
 PORT MAP (
 	i => GND,
 	devoe => ww_devoe,
-	o => \sdram_dqmh~output_o\);
+	o => ww_sdram_dqmh);
 
--- Location: IOIBUF_X29_Y0_N22
-\reset~input\ : fiftyfivenm_io_ibuf
+-- Location: IOOBUF_X78_Y16_N2
+\sdram_dq[0]~output\ : fiftyfivenm_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
-	listen_to_nsleep_signal => "false",
-	simulate_z_as => "z")
+	open_drain_output => "true")
 -- pragma translate_on
 PORT MAP (
-	i => ww_reset,
-	o => \reset~input_o\);
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(0));
+
+-- Location: IOOBUF_X78_Y16_N9
+\sdram_dq[1]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(1));
+
+-- Location: IOOBUF_X78_Y3_N2
+\sdram_dq[2]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(2));
+
+-- Location: IOOBUF_X78_Y3_N9
+\sdram_dq[3]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(3));
+
+-- Location: IOOBUF_X78_Y15_N9
+\sdram_dq[4]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(4));
+
+-- Location: IOOBUF_X78_Y15_N2
+\sdram_dq[5]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(5));
+
+-- Location: IOOBUF_X78_Y16_N16
+\sdram_dq[6]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(6));
+
+-- Location: IOOBUF_X78_Y17_N9
+\sdram_dq[7]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(7));
+
+-- Location: IOOBUF_X78_Y23_N9
+\sdram_dq[8]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(8));
+
+-- Location: IOOBUF_X78_Y30_N9
+\sdram_dq[9]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(9));
+
+-- Location: IOOBUF_X78_Y29_N2
+\sdram_dq[10]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(10));
+
+-- Location: IOOBUF_X78_Y29_N9
+\sdram_dq[11]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(11));
+
+-- Location: IOOBUF_X78_Y31_N9
+\sdram_dq[12]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(12));
+
+-- Location: IOOBUF_X78_Y31_N23
+\sdram_dq[13]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(13));
+
+-- Location: IOOBUF_X78_Y31_N16
+\sdram_dq[14]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(14));
+
+-- Location: IOOBUF_X78_Y31_N2
+\sdram_dq[15]~output\ : fiftyfivenm_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "true")
+-- pragma translate_on
+PORT MAP (
+	i => VCC,
+	devoe => ww_devoe,
+	o => sdram_dq(15));
 
 -- Location: IOIBUF_X34_Y0_N29
 \CLK~input\ : fiftyfivenm_io_ibuf
@@ -1076,7 +982,166 @@ PORT MAP (
 	i => ww_CLK,
 	o => \CLK~input_o\);
 
--- Location: IOIBUF_X34_Y39_N15
+-- Location: PLL_1
+\PLL:PLL1|altpll_component|auto_generated|pll1\ : fiftyfivenm_pll
+-- pragma translate_off
+GENERIC MAP (
+	auto_settings => "false",
+	bandwidth_type => "medium",
+	c0_high => 3,
+	c0_initial => 1,
+	c0_low => 3,
+	c0_mode => "even",
+	c0_ph => 0,
+	c1_high => 0,
+	c1_initial => 0,
+	c1_low => 0,
+	c1_mode => "bypass",
+	c1_ph => 0,
+	c1_use_casc_in => "off",
+	c2_high => 0,
+	c2_initial => 0,
+	c2_low => 0,
+	c2_mode => "bypass",
+	c2_ph => 0,
+	c2_use_casc_in => "off",
+	c3_high => 0,
+	c3_initial => 0,
+	c3_low => 0,
+	c3_mode => "bypass",
+	c3_ph => 0,
+	c3_use_casc_in => "off",
+	c4_high => 0,
+	c4_initial => 0,
+	c4_low => 0,
+	c4_mode => "bypass",
+	c4_ph => 0,
+	c4_use_casc_in => "off",
+	charge_pump_current_bits => 1,
+	clk0_counter => "c0",
+	clk0_divide_by => 1,
+	clk0_duty_cycle => 50,
+	clk0_multiply_by => 1,
+	clk0_phase_shift => "0",
+	clk1_counter => "unused",
+	clk1_divide_by => 0,
+	clk1_duty_cycle => 50,
+	clk1_multiply_by => 0,
+	clk1_phase_shift => "0",
+	clk2_counter => "unused",
+	clk2_divide_by => 0,
+	clk2_duty_cycle => 50,
+	clk2_multiply_by => 0,
+	clk2_phase_shift => "0",
+	clk3_counter => "unused",
+	clk3_divide_by => 0,
+	clk3_duty_cycle => 50,
+	clk3_multiply_by => 0,
+	clk3_phase_shift => "0",
+	clk4_counter => "unused",
+	clk4_divide_by => 0,
+	clk4_duty_cycle => 50,
+	clk4_multiply_by => 0,
+	clk4_phase_shift => "0",
+	compensate_clock => "clock0",
+	inclk0_input_frequency => 10000,
+	inclk1_input_frequency => 0,
+	loop_filter_c_bits => 0,
+	loop_filter_r_bits => 27,
+	m => 6,
+	m_initial => 1,
+	m_ph => 0,
+	n => 1,
+	operation_mode => "normal",
+	pfd_max => 200000,
+	pfd_min => 3076,
+	self_reset_on_loss_lock => "off",
+	simulation_type => "functional",
+	switch_over_type => "auto",
+	vco_center => 1538,
+	vco_divide_by => 0,
+	vco_frequency_control => "auto",
+	vco_max => 3333,
+	vco_min => 1538,
+	vco_multiply_by => 0,
+	vco_phase_shift_step => 208,
+	vco_post_scale => 2)
+-- pragma translate_on
+PORT MAP (
+	areset => GND,
+	fbin => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_fbout\,
+	inclk => \PLL:PLL1|altpll_component|auto_generated|pll1_INCLK_bus\,
+	fbout => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_fbout\,
+	clk => \PLL:PLL1|altpll_component|auto_generated|pll1_CLK_bus\);
+
+-- Location: CLKCTRL_G18
+\PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl\ : fiftyfivenm_clkctrl
+-- pragma translate_off
+GENERIC MAP (
+	clock_type => "global clock",
+	ena_register_mode => "none")
+-- pragma translate_on
+PORT MAP (
+	inclk => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_INCLK_bus\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	outclk => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_outclk\);
+
+-- Location: LCCOMB_X21_Y38_N8
+\valid~0\ : fiftyfivenm_lcell_comb
+-- Equation(s):
+-- \valid~0_combout\ = !\valid~reg0_Duplicate_1_q\
+
+-- pragma translate_off
+GENERIC MAP (
+	lut_mask => "0000111100001111",
+	sum_lutc_input => "datac")
+-- pragma translate_on
+PORT MAP (
+	datac => \valid~reg0_Duplicate_1_q\,
+	combout => \valid~0_combout\);
+
+-- Location: FF_X21_Y38_N9
+\valid~reg0_Duplicate_1\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_outclk\,
+	d => \valid~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \valid~reg0_Duplicate_1_q\);
+
+-- Location: DDIOOUTCELL_X20_Y39_N18
+\valid~reg0\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \PLL:PLL1|altpll_component|auto_generated|wire_pll1_clk[0]~clkctrl_outclk\,
+	d => \ALT_INV_valid~reg0_Duplicate_1_q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \valid~reg0_q\);
+
+-- Location: IOIBUF_X0_Y30_N1
+\reset~input\ : fiftyfivenm_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	listen_to_nsleep_signal => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_reset,
+	o => \reset~input_o\);
+
+-- Location: IOIBUF_X14_Y0_N1
 \addr[0]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1088,7 +1153,7 @@ PORT MAP (
 	i => ww_addr(0),
 	o => \addr[0]~input_o\);
 
--- Location: IOIBUF_X0_Y9_N1
+-- Location: IOIBUF_X38_Y0_N22
 \addr[1]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1100,7 +1165,7 @@ PORT MAP (
 	i => ww_addr(1),
 	o => \addr[1]~input_o\);
 
--- Location: IOIBUF_X0_Y35_N1
+-- Location: IOIBUF_X18_Y0_N15
 \addr[2]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1112,7 +1177,7 @@ PORT MAP (
 	i => ww_addr(2),
 	o => \addr[2]~input_o\);
 
--- Location: IOIBUF_X78_Y18_N15
+-- Location: IOIBUF_X46_Y54_N15
 \addr[3]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1124,7 +1189,7 @@ PORT MAP (
 	i => ww_addr(3),
 	o => \addr[3]~input_o\);
 
--- Location: IOIBUF_X66_Y54_N15
+-- Location: IOIBUF_X56_Y54_N8
 \addr[4]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1136,7 +1201,7 @@ PORT MAP (
 	i => ww_addr(4),
 	o => \addr[4]~input_o\);
 
--- Location: IOIBUF_X29_Y0_N29
+-- Location: IOIBUF_X16_Y0_N1
 \addr[5]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1148,7 +1213,7 @@ PORT MAP (
 	i => ww_addr(5),
 	o => \addr[5]~input_o\);
 
--- Location: IOIBUF_X78_Y37_N1
+-- Location: IOIBUF_X78_Y44_N15
 \addr[6]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1160,7 +1225,7 @@ PORT MAP (
 	i => ww_addr(6),
 	o => \addr[6]~input_o\);
 
--- Location: IOIBUF_X34_Y39_N29
+-- Location: IOIBUF_X60_Y54_N22
 \addr[7]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1172,7 +1237,7 @@ PORT MAP (
 	i => ww_addr(7),
 	o => \addr[7]~input_o\);
 
--- Location: IOIBUF_X69_Y54_N22
+-- Location: IOIBUF_X74_Y54_N15
 \addr[8]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1184,7 +1249,7 @@ PORT MAP (
 	i => ww_addr(8),
 	o => \addr[8]~input_o\);
 
--- Location: IOIBUF_X38_Y0_N15
+-- Location: IOIBUF_X16_Y0_N15
 \addr[9]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1196,7 +1261,7 @@ PORT MAP (
 	i => ww_addr(9),
 	o => \addr[9]~input_o\);
 
--- Location: IOIBUF_X51_Y0_N1
+-- Location: IOIBUF_X56_Y54_N22
 \addr[10]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1208,7 +1273,7 @@ PORT MAP (
 	i => ww_addr(10),
 	o => \addr[10]~input_o\);
 
--- Location: IOIBUF_X31_Y39_N15
+-- Location: IOIBUF_X78_Y25_N1
 \addr[11]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1220,7 +1285,7 @@ PORT MAP (
 	i => ww_addr(11),
 	o => \addr[11]~input_o\);
 
--- Location: IOIBUF_X69_Y54_N8
+-- Location: IOIBUF_X66_Y54_N29
 \data[0]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1232,7 +1297,7 @@ PORT MAP (
 	i => ww_data(0),
 	o => \data[0]~input_o\);
 
--- Location: IOIBUF_X34_Y39_N8
+-- Location: IOIBUF_X78_Y43_N22
 \data[1]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1244,7 +1309,7 @@ PORT MAP (
 	i => ww_data(1),
 	o => \data[1]~input_o\);
 
--- Location: IOIBUF_X56_Y54_N1
+-- Location: IOIBUF_X0_Y26_N15
 \data[2]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1256,7 +1321,7 @@ PORT MAP (
 	i => ww_data(2),
 	o => \data[2]~input_o\);
 
--- Location: IOIBUF_X29_Y0_N8
+-- Location: IOIBUF_X78_Y41_N15
 \data[3]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1268,7 +1333,7 @@ PORT MAP (
 	i => ww_data(3),
 	o => \data[3]~input_o\);
 
--- Location: IOIBUF_X0_Y23_N15
+-- Location: IOIBUF_X34_Y0_N22
 \data[4]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1280,7 +1345,7 @@ PORT MAP (
 	i => ww_data(4),
 	o => \data[4]~input_o\);
 
--- Location: IOIBUF_X69_Y54_N15
+-- Location: IOIBUF_X58_Y54_N15
 \data[5]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1292,7 +1357,7 @@ PORT MAP (
 	i => ww_data(5),
 	o => \data[5]~input_o\);
 
--- Location: IOIBUF_X29_Y39_N1
+-- Location: IOIBUF_X78_Y34_N23
 \data[6]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1304,7 +1369,7 @@ PORT MAP (
 	i => ww_data(6),
 	o => \data[6]~input_o\);
 
--- Location: IOIBUF_X0_Y28_N1
+-- Location: IOIBUF_X78_Y30_N22
 \data[7]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1316,7 +1381,7 @@ PORT MAP (
 	i => ww_data(7),
 	o => \data[7]~input_o\);
 
--- Location: IOIBUF_X69_Y54_N29
+-- Location: IOIBUF_X0_Y34_N8
 \data[8]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1328,7 +1393,7 @@ PORT MAP (
 	i => ww_data(8),
 	o => \data[8]~input_o\);
 
--- Location: IOIBUF_X0_Y16_N15
+-- Location: IOIBUF_X0_Y28_N8
 \data[9]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1340,7 +1405,7 @@ PORT MAP (
 	i => ww_data(9),
 	o => \data[9]~input_o\);
 
--- Location: IOIBUF_X18_Y0_N22
+-- Location: IOIBUF_X56_Y0_N1
 \data[10]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1352,7 +1417,7 @@ PORT MAP (
 	i => ww_data(10),
 	o => \data[10]~input_o\);
 
--- Location: IOIBUF_X78_Y29_N15
+-- Location: IOIBUF_X0_Y35_N8
 \data[11]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1364,7 +1429,7 @@ PORT MAP (
 	i => ww_data(11),
 	o => \data[11]~input_o\);
 
--- Location: IOIBUF_X58_Y0_N1
+-- Location: IOIBUF_X0_Y10_N22
 \data[12]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1376,7 +1441,7 @@ PORT MAP (
 	i => ww_data(12),
 	o => \data[12]~input_o\);
 
--- Location: IOIBUF_X78_Y40_N22
+-- Location: IOIBUF_X0_Y13_N15
 \data[13]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1388,7 +1453,7 @@ PORT MAP (
 	i => ww_data(13),
 	o => \data[13]~input_o\);
 
--- Location: IOIBUF_X78_Y35_N8
+-- Location: IOIBUF_X38_Y0_N1
 \data[14]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1400,7 +1465,7 @@ PORT MAP (
 	i => ww_data(14),
 	o => \data[14]~input_o\);
 
--- Location: IOIBUF_X0_Y10_N15
+-- Location: IOIBUF_X58_Y54_N1
 \data[15]~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1412,7 +1477,7 @@ PORT MAP (
 	i => ww_data(15),
 	o => \data[15]~input_o\);
 
--- Location: IOIBUF_X0_Y25_N1
+-- Location: IOIBUF_X78_Y25_N22
 \we~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1424,7 +1489,7 @@ PORT MAP (
 	i => ww_we,
 	o => \we~input_o\);
 
--- Location: IOIBUF_X18_Y0_N8
+-- Location: IOIBUF_X26_Y0_N29
 \req~input\ : fiftyfivenm_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
@@ -1698,116 +1763,6 @@ PORT MAP (
 	tsen => \~QUARTUS_CREATED_GND~I_combout\,
 	chsel => \~QUARTUS_CREATED_ADC2~_CHSEL_bus\,
 	eoc => \~QUARTUS_CREATED_ADC2~~eoc\);
-
-ww_ack <= \ack~output_o\;
-
-ww_valid <= \valid~output_o\;
-
-ww_q(0) <= \q[0]~output_o\;
-
-ww_q(1) <= \q[1]~output_o\;
-
-ww_q(2) <= \q[2]~output_o\;
-
-ww_q(3) <= \q[3]~output_o\;
-
-ww_q(4) <= \q[4]~output_o\;
-
-ww_q(5) <= \q[5]~output_o\;
-
-ww_q(6) <= \q[6]~output_o\;
-
-ww_q(7) <= \q[7]~output_o\;
-
-ww_q(8) <= \q[8]~output_o\;
-
-ww_q(9) <= \q[9]~output_o\;
-
-ww_q(10) <= \q[10]~output_o\;
-
-ww_q(11) <= \q[11]~output_o\;
-
-ww_q(12) <= \q[12]~output_o\;
-
-ww_q(13) <= \q[13]~output_o\;
-
-ww_q(14) <= \q[14]~output_o\;
-
-ww_q(15) <= \q[15]~output_o\;
-
-ww_sdram_a(0) <= \sdram_a[0]~output_o\;
-
-ww_sdram_a(1) <= \sdram_a[1]~output_o\;
-
-ww_sdram_a(2) <= \sdram_a[2]~output_o\;
-
-ww_sdram_a(3) <= \sdram_a[3]~output_o\;
-
-ww_sdram_a(4) <= \sdram_a[4]~output_o\;
-
-ww_sdram_a(5) <= \sdram_a[5]~output_o\;
-
-ww_sdram_a(6) <= \sdram_a[6]~output_o\;
-
-ww_sdram_a(7) <= \sdram_a[7]~output_o\;
-
-ww_sdram_a(8) <= \sdram_a[8]~output_o\;
-
-ww_sdram_a(9) <= \sdram_a[9]~output_o\;
-
-ww_sdram_a(10) <= \sdram_a[10]~output_o\;
-
-ww_sdram_a(11) <= \sdram_a[11]~output_o\;
-
-ww_sdram_ba(0) <= \sdram_ba[0]~output_o\;
-
-ww_sdram_ba(1) <= \sdram_ba[1]~output_o\;
-
-ww_sdram_cke <= \sdram_cke~output_o\;
-
-ww_sdram_cs_n <= \sdram_cs_n~output_o\;
-
-ww_sdram_ras_n <= \sdram_ras_n~output_o\;
-
-ww_sdram_cas_n <= \sdram_cas_n~output_o\;
-
-ww_sdram_we_n <= \sdram_we_n~output_o\;
-
-ww_sdram_dqml <= \sdram_dqml~output_o\;
-
-ww_sdram_dqmh <= \sdram_dqmh~output_o\;
-
-sdram_dq(0) <= \sdram_dq[0]~output_o\;
-
-sdram_dq(1) <= \sdram_dq[1]~output_o\;
-
-sdram_dq(2) <= \sdram_dq[2]~output_o\;
-
-sdram_dq(3) <= \sdram_dq[3]~output_o\;
-
-sdram_dq(4) <= \sdram_dq[4]~output_o\;
-
-sdram_dq(5) <= \sdram_dq[5]~output_o\;
-
-sdram_dq(6) <= \sdram_dq[6]~output_o\;
-
-sdram_dq(7) <= \sdram_dq[7]~output_o\;
-
-sdram_dq(8) <= \sdram_dq[8]~output_o\;
-
-sdram_dq(9) <= \sdram_dq[9]~output_o\;
-
-sdram_dq(10) <= \sdram_dq[10]~output_o\;
-
-sdram_dq(11) <= \sdram_dq[11]~output_o\;
-
-sdram_dq(12) <= \sdram_dq[12]~output_o\;
-
-sdram_dq(13) <= \sdram_dq[13]~output_o\;
-
-sdram_dq(14) <= \sdram_dq[14]~output_o\;
-
-sdram_dq(15) <= \sdram_dq[15]~output_o\;
 END structure;
 
 
