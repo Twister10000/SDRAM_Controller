@@ -82,8 +82,16 @@ entity SDRAM_Controller_TOP is
 end SDRAM_Controller_TOP;
 
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
-
-	-- Declarations (optional)
+	
+	-- FSM Declarations
+	type sdram_fsm_type is (reading, writing, idle, refresh);
+	
+	signal FSM_SDRAM				: sdram_fsm_type	:= idle;
+	attribute	syn_encoding	: string;
+	
+	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
+	
+	-- signal declarations 
 	signal 	SDRAM_CLK	: std_logic := '0';
 
 begin
@@ -113,6 +121,23 @@ begin
 			begin
 			
 				if rising_edge(SDRAM_CLK) then
+					
+					case fsm_SDRAM is
+						
+						when idle 		=>
+							-- ToDo Idle Beh
+						
+						when writing	=>
+							-- ToDo writing Beh
+							
+						when reading	=>
+							-- ToDo reading Beh
+							
+						when refresh	=>
+							-- ToDo refresh Beh
+							
+						when others	=> fsm_SDRAM <= idle;
+					end case;
 					
 				end if;
 		end process main; 
