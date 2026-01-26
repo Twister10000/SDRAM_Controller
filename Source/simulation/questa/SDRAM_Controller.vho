@@ -17,7 +17,7 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition"
 
--- DATE "01/26/2026 09:50:05"
+-- DATE "01/26/2026 10:20:44"
 
 -- 
 -- Device: Altera 10M50DAF484C7G Package FBGA484
@@ -32,30 +32,29 @@ LIBRARY FIFTYFIVENM;
 LIBRARY IEEE;
 USE ALTERA.ALTERA_PRIMITIVES_COMPONENTS.ALL;
 USE FIFTYFIVENM.FIFTYFIVENM_COMPONENTS.ALL;
-USE IEEE.NUMERIC_STD.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY 	SDRAM_Controller_TOP IS
     PORT (
 	reset : IN std_logic;
 	CLK : IN std_logic;
-	addr : IN IEEE.NUMERIC_STD.unsigned(11 DOWNTO 0);
+	addr : IN std_logic_vector(11 DOWNTO 0);
 	data : IN std_logic_vector(15 DOWNTO 0);
 	we : IN std_logic;
 	req : IN std_logic;
-	ack : OUT std_logic;
-	valid : OUT std_logic;
-	q : OUT std_logic_vector(15 DOWNTO 0);
-	sdram_dq : INOUT std_logic_vector(15 DOWNTO 0);
-	sdram_a : OUT IEEE.NUMERIC_STD.unsigned(11 DOWNTO 0);
-	sdram_ba : OUT IEEE.NUMERIC_STD.unsigned(1 DOWNTO 0);
-	sdram_cke : OUT std_logic;
-	sdram_cs_n : OUT std_logic;
-	sdram_ras_n : OUT std_logic;
-	sdram_cas_n : OUT std_logic;
-	sdram_we_n : OUT std_logic;
-	sdram_dqml : OUT std_logic;
-	sdram_dqmh : OUT std_logic
+	ack : BUFFER std_logic;
+	valid : BUFFER std_logic;
+	q : BUFFER std_logic_vector(15 DOWNTO 0);
+	sdram_dq : BUFFER std_logic_vector(15 DOWNTO 0);
+	sdram_a : BUFFER std_logic_vector(11 DOWNTO 0);
+	sdram_ba : BUFFER std_logic_vector(1 DOWNTO 0);
+	sdram_cke : BUFFER std_logic;
+	sdram_cs_n : BUFFER std_logic;
+	sdram_ras_n : BUFFER std_logic;
+	sdram_cas_n : BUFFER std_logic;
+	sdram_we_n : BUFFER std_logic;
+	sdram_dqml : BUFFER std_logic;
+	sdram_dqmh : BUFFER std_logic
 	);
 END SDRAM_Controller_TOP;
 
@@ -168,6 +167,7 @@ SIGNAL ww_req : std_logic;
 SIGNAL ww_ack : std_logic;
 SIGNAL ww_valid : std_logic;
 SIGNAL ww_q : std_logic_vector(15 DOWNTO 0);
+SIGNAL ww_sdram_dq : std_logic_vector(15 DOWNTO 0);
 SIGNAL ww_sdram_a : std_logic_vector(11 DOWNTO 0);
 SIGNAL ww_sdram_ba : std_logic_vector(1 DOWNTO 0);
 SIGNAL ww_sdram_cke : std_logic;
@@ -262,15 +262,16 @@ BEGIN
 
 ww_reset <= reset;
 ww_CLK <= CLK;
-ww_addr <= IEEE.STD_LOGIC_1164.STD_LOGIC_VECTOR(addr);
+ww_addr <= addr;
 ww_data <= data;
 ww_we <= we;
 ww_req <= req;
 ack <= ww_ack;
 valid <= ww_valid;
 q <= ww_q;
-sdram_a <= IEEE.NUMERIC_STD.UNSIGNED(ww_sdram_a);
-sdram_ba <= IEEE.NUMERIC_STD.UNSIGNED(ww_sdram_ba);
+sdram_dq <= ww_sdram_dq;
+sdram_a <= ww_sdram_a;
+sdram_ba <= ww_sdram_ba;
 sdram_cke <= ww_sdram_cke;
 sdram_cs_n <= ww_sdram_cs_n;
 sdram_ras_n <= ww_sdram_ras_n;
@@ -788,7 +789,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(0));
+	o => ww_sdram_dq(0));
 
 -- Location: IOOBUF_X78_Y16_N9
 \sdram_dq[1]~output\ : fiftyfivenm_io_obuf
@@ -800,7 +801,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(1));
+	o => ww_sdram_dq(1));
 
 -- Location: IOOBUF_X78_Y3_N2
 \sdram_dq[2]~output\ : fiftyfivenm_io_obuf
@@ -812,7 +813,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(2));
+	o => ww_sdram_dq(2));
 
 -- Location: IOOBUF_X78_Y3_N9
 \sdram_dq[3]~output\ : fiftyfivenm_io_obuf
@@ -824,7 +825,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(3));
+	o => ww_sdram_dq(3));
 
 -- Location: IOOBUF_X78_Y15_N9
 \sdram_dq[4]~output\ : fiftyfivenm_io_obuf
@@ -836,7 +837,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(4));
+	o => ww_sdram_dq(4));
 
 -- Location: IOOBUF_X78_Y15_N2
 \sdram_dq[5]~output\ : fiftyfivenm_io_obuf
@@ -848,7 +849,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(5));
+	o => ww_sdram_dq(5));
 
 -- Location: IOOBUF_X78_Y16_N16
 \sdram_dq[6]~output\ : fiftyfivenm_io_obuf
@@ -860,7 +861,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(6));
+	o => ww_sdram_dq(6));
 
 -- Location: IOOBUF_X78_Y17_N9
 \sdram_dq[7]~output\ : fiftyfivenm_io_obuf
@@ -872,7 +873,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(7));
+	o => ww_sdram_dq(7));
 
 -- Location: IOOBUF_X78_Y23_N9
 \sdram_dq[8]~output\ : fiftyfivenm_io_obuf
@@ -884,7 +885,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(8));
+	o => ww_sdram_dq(8));
 
 -- Location: IOOBUF_X78_Y30_N9
 \sdram_dq[9]~output\ : fiftyfivenm_io_obuf
@@ -896,7 +897,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(9));
+	o => ww_sdram_dq(9));
 
 -- Location: IOOBUF_X78_Y29_N2
 \sdram_dq[10]~output\ : fiftyfivenm_io_obuf
@@ -908,7 +909,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(10));
+	o => ww_sdram_dq(10));
 
 -- Location: IOOBUF_X78_Y29_N9
 \sdram_dq[11]~output\ : fiftyfivenm_io_obuf
@@ -920,7 +921,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(11));
+	o => ww_sdram_dq(11));
 
 -- Location: IOOBUF_X78_Y31_N9
 \sdram_dq[12]~output\ : fiftyfivenm_io_obuf
@@ -932,7 +933,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(12));
+	o => ww_sdram_dq(12));
 
 -- Location: IOOBUF_X78_Y31_N23
 \sdram_dq[13]~output\ : fiftyfivenm_io_obuf
@@ -944,7 +945,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(13));
+	o => ww_sdram_dq(13));
 
 -- Location: IOOBUF_X78_Y31_N16
 \sdram_dq[14]~output\ : fiftyfivenm_io_obuf
@@ -956,7 +957,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(14));
+	o => ww_sdram_dq(14));
 
 -- Location: IOOBUF_X78_Y31_N2
 \sdram_dq[15]~output\ : fiftyfivenm_io_obuf
@@ -968,7 +969,7 @@ GENERIC MAP (
 PORT MAP (
 	i => VCC,
 	devoe => ww_devoe,
-	o => sdram_dq(15));
+	o => ww_sdram_dq(15));
 
 -- Location: IOIBUF_X34_Y0_N29
 \CLK~input\ : fiftyfivenm_io_ibuf
@@ -1510,7 +1511,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(0),
+	i => ww_sdram_dq(0),
 	o => \sdram_dq[0]~input_o\);
 
 -- Location: IOIBUF_X78_Y16_N8
@@ -1522,7 +1523,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(1),
+	i => ww_sdram_dq(1),
 	o => \sdram_dq[1]~input_o\);
 
 -- Location: IOIBUF_X78_Y3_N1
@@ -1534,7 +1535,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(2),
+	i => ww_sdram_dq(2),
 	o => \sdram_dq[2]~input_o\);
 
 -- Location: IOIBUF_X78_Y3_N8
@@ -1546,7 +1547,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(3),
+	i => ww_sdram_dq(3),
 	o => \sdram_dq[3]~input_o\);
 
 -- Location: IOIBUF_X78_Y15_N8
@@ -1558,7 +1559,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(4),
+	i => ww_sdram_dq(4),
 	o => \sdram_dq[4]~input_o\);
 
 -- Location: IOIBUF_X78_Y15_N1
@@ -1570,7 +1571,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(5),
+	i => ww_sdram_dq(5),
 	o => \sdram_dq[5]~input_o\);
 
 -- Location: IOIBUF_X78_Y16_N15
@@ -1582,7 +1583,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(6),
+	i => ww_sdram_dq(6),
 	o => \sdram_dq[6]~input_o\);
 
 -- Location: IOIBUF_X78_Y17_N8
@@ -1594,7 +1595,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(7),
+	i => ww_sdram_dq(7),
 	o => \sdram_dq[7]~input_o\);
 
 -- Location: IOIBUF_X78_Y23_N8
@@ -1606,7 +1607,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(8),
+	i => ww_sdram_dq(8),
 	o => \sdram_dq[8]~input_o\);
 
 -- Location: IOIBUF_X78_Y30_N8
@@ -1618,7 +1619,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(9),
+	i => ww_sdram_dq(9),
 	o => \sdram_dq[9]~input_o\);
 
 -- Location: IOIBUF_X78_Y29_N1
@@ -1630,7 +1631,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(10),
+	i => ww_sdram_dq(10),
 	o => \sdram_dq[10]~input_o\);
 
 -- Location: IOIBUF_X78_Y29_N8
@@ -1642,7 +1643,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(11),
+	i => ww_sdram_dq(11),
 	o => \sdram_dq[11]~input_o\);
 
 -- Location: IOIBUF_X78_Y31_N8
@@ -1654,7 +1655,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(12),
+	i => ww_sdram_dq(12),
 	o => \sdram_dq[12]~input_o\);
 
 -- Location: IOIBUF_X78_Y31_N22
@@ -1666,7 +1667,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(13),
+	i => ww_sdram_dq(13),
 	o => \sdram_dq[13]~input_o\);
 
 -- Location: IOIBUF_X78_Y31_N15
@@ -1678,7 +1679,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(14),
+	i => ww_sdram_dq(14),
 	o => \sdram_dq[14]~input_o\);
 
 -- Location: IOIBUF_X78_Y31_N1
@@ -1690,7 +1691,7 @@ GENERIC MAP (
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => sdram_dq(15),
+	i => ww_sdram_dq(15),
 	o => \sdram_dq[15]~input_o\);
 
 -- Location: UNVM_X0_Y40_N40

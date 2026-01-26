@@ -1,0 +1,125 @@
+m255
+K4
+z2
+!s11e vcom 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/simulation/questa
+Esdram_controller_top
+Z1 w1769417376
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z4 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z5 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z6 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 1
+R0
+Z7 8../../SDRAM_Controller_TOP.vhd
+Z8 F../../SDRAM_Controller_TOP.vhd
+l0
+L12 1
+Vnzl3F8jLh3R:]]S08QlaV1
+!s100 ES]beB0R?3ZdJze3JzZ]Z3
+Z9 OL;C;2025.2;82
+33
+Z10 !s110 1769420073
+!i10b 1
+Z11 !s108 1769420073.000000
+Z12 !s90 -reportprogress|300|-work|work|../../SDRAM_Controller_TOP.vhd|
+Z13 !s107 ../../SDRAM_Controller_TOP.vhd|
+!i113 0
+Z14 o-work work
+Z15 tExplicit 1 CvgOpt 0 defaultOptions 1083072464
+Abeh_sdram_controller_top
+Z16 DEx4 work 9 sdram_pll 0 22 bV3=jBfKFi2AROT[G8gnc0
+R2
+R3
+R4
+R5
+R6
+DEx4 work 20 sdram_controller_top 0 22 nzl3F8jLh3R:]]S08QlaV1
+!i122 1
+l96
+L83 76
+VQlfJXkC5RBmU5zokQ6Rg10
+!s100 Q]hkg^UKzbDQPbC_3<7i50
+R9
+33
+R10
+!i10b 1
+R11
+R12
+R13
+!i113 0
+R14
+R15
+Esdram_controller_top_vhd_tst
+w1769420065
+R2
+R3
+R4
+R5
+R6
+!i122 2
+R0
+8TB_SDRAM_Controller_TOP.vht
+FTB_SDRAM_Controller_TOP.vht
+l0
+L33 1
+VH3SVDlH<`BXaoh>2EJNeK0
+!s100 zUIUP0loA3M:7SXHFNP5W2
+R9
+33
+!s110 1769420074
+!i10b 1
+R11
+!s90 -reportprogress|300|-work|work|TB_SDRAM_Controller_TOP.vht|
+!s107 TB_SDRAM_Controller_TOP.vht|
+!i113 0
+R14
+R15
+Esdram_pll
+Z17 w1769412473
+R5
+R6
+!i122 0
+R0
+Z18 8../../SDRAM_PLL.vhd
+Z19 F../../SDRAM_PLL.vhd
+l0
+L43 1
+VbV3=jBfKFi2AROT[G8gnc0
+!s100 iK8>dUE^CQOIO?C>Cgi4d0
+R9
+33
+R10
+!i10b 1
+R11
+Z20 !s90 -reportprogress|300|-work|work|../../SDRAM_PLL.vhd|
+Z21 !s107 ../../SDRAM_PLL.vhd|
+!i113 0
+R14
+R15
+Asyn
+R5
+R6
+R16
+!i122 0
+l132
+L54 155
+VAD;WjK9NL?k2hG_E>0Wo`3
+!s100 8<_<@nPieI@PV_=m<W3:20
+R9
+33
+R10
+!i10b 1
+R11
+R20
+R21
+!i113 0
+R14
+R15

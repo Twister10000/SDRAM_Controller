@@ -26,16 +26,13 @@
 -- 
 
 LIBRARY ieee;                                               
-USE ieee.std_logic_1164.all;
-use	ieee.numeric_std.all;
-use	ieee.std_logic_unsigned.all;                                
+USE ieee.std_logic_1164.all;                                
 
 ENTITY SDRAM_Controller_TOP_vhd_tst IS
 END SDRAM_Controller_TOP_vhd_tst;
 ARCHITECTURE SDRAM_Controller_TOP_arch OF SDRAM_Controller_TOP_vhd_tst IS
 -- constants
-constant	clk_period	:	time :=  10 ns;
-signal		USE_PLL			: boolean := false;                                                
+constant	clk_period	:	time :=  10 ns;                                                
 -- signals                                                   
 SIGNAL ack : STD_LOGIC;
 SIGNAL addr : STD_LOGIC_VECTOR(11 DOWNTO 0);
@@ -81,8 +78,7 @@ COMPONENT SDRAM_Controller_TOP
 	);
 END COMPONENT;
 BEGIN
-	i1 : entity work.SDRAM_Controller_TOP
-	GENERIC MAP (USE_PLL => USE_PLL)
+	i1 : SDRAM_Controller_TOP
 	PORT MAP (
 -- list connections between master ports and signals
 	ack => ack,
@@ -118,7 +114,7 @@ begin
 	wait for 	clk_period/2;
 	clk <=	'1';
 	wait for	clk_period/2;
-end process Clock;                                          
+                                          
 always : PROCESS                                              
 -- optional sensitivity list                                  
 -- (        )                                                 
