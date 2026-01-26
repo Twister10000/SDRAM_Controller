@@ -16,7 +16,6 @@ entity SDRAM_Controller_TOP is
 		-- Simulation Generic
 		
 		USE_PLL			:	boolean := true;
-		Simulation	:	boolean	:= false;
 		
 		-- 32-bit controller interface
 		
@@ -95,10 +94,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal 	SDRAM_CLK	: std_logic := '0';
 
 begin
+		-- Generate Statement
 		/**************************************************************
 		/ Normal PLL Generation	for Final Version delete PLL!!!																									
 		/**************************************************************/
-	  PLL: if USE_PLL = true generate -- wird bei der Quartus Compilation benutzt
+	  PLL			: if USE_PLL = true generate -- wird bei der Quartus Compilation benutzt
 			PLL1	:	entity work.SDRAM_PLL
         
         port map(
@@ -115,7 +115,7 @@ begin
           SDRAM_CLK <= CLK; -- Der Clock input wird direkt mit dem globalen
     end generate Simu_PLL;
 
-	-- Process Statement (optional)
+		-- Process Statement (optional)
 		main : process(all)
 		
 			begin
@@ -154,6 +154,5 @@ begin
 
 	-- Component Instantiation Statement (optional)
 
-	-- Generate Statement (optional)
 
 end BEH_SDRAM_Controller_TOP;
