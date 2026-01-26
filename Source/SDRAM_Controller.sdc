@@ -5,6 +5,8 @@
 #**************************************************************
 # Create Clock
 #**************************************************************
+create_clock -period "50.0 MHz" [get_ports CLK]
+
 
 
 
@@ -18,6 +20,8 @@
 # Create Generated Clock
 #**************************************************************
 
+derive_pll_clocks -create_base_clocks
+set SDRAM_CLK	{SDRAM_PLL|altpll_component|auto_generated|pll1|clk[0]}
 
 #**************************************************************
 # Set Clock Latency
@@ -28,7 +32,7 @@
 #**************************************************************
 # Set Clock Uncertainty
 #**************************************************************
-
+derive_clock_uncertainty
 
 
 
