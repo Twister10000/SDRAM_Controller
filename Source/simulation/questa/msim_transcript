@@ -553,3 +553,287 @@ do rtl_SDRAM_CONTROLLER.do
 # C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
 #     while executing
 # "vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht"
+do rtl_SDRAM_CONTROLLER.do
+# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
+# vmap work rtl_work 
+# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
+# Modifying modelsim.ini
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:45 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_PLL
+# -- Compiling architecture SYN of sdram_pll
+# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:46 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity SDRAM_Controller_TOP
+# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
+# -- Loading entity SDRAM_PLL
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
+# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:46 on Jan 26,2026
+# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
+# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Loading entity SDRAM_Controller_TOP
+# ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
+# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:05:44
+# Errors: 4, Warnings: 1
+# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
+# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
+# Start time: 10:39:46 on Jan 26,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) 'modelsim.ini' is used as the ini file.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.sdram_controller_top_vhd_tst(sdram_controller_top_arch)#1
+# Loading work.sdram_controller_top(beh_sdram_controller_top)#1
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/ack has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/q(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized inout port /sdram_controller_top_vhd_tst/i1/sdram_dq(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_a(11 downto 0) has no driver.
+# This port will contribute value (12'hXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ba(1 downto 0) has no driver.
+# This port will contribute value (2'hX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cke has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cs_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ras_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cas_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_we_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqml has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Error: Cannot open macro file: wave.do
+# Error in macro ./rtl_SDRAM_CONTROLLER.do line 13
+# Cannot open macro file: wave.do
+#     while executing
+# "do wave.do"
+do rtl_SDRAM_CONTROLLER.do
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt".  Locker is mikaj@DESKTOP-5EPU23T.
+# ** Warning: (vlib-34) Library already exists at "rtl_work".
+# Errors: 0, Warnings: 1
+# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
+# vmap work rtl_work 
+# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
+# Modifying modelsim.ini
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:55 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_PLL
+# -- Compiling architecture SYN of sdram_pll
+# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:55 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity SDRAM_Controller_TOP
+# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
+# -- Loading entity SDRAM_PLL
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
+# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:39:55 on Jan 26,2026
+# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
+# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Loading entity SDRAM_Controller_TOP
+# ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
+# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# End time: 10:39:56 on Jan 26,2026, Elapsed time: 0:00:10
+# Errors: 1, Warnings: 13
+# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
+# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
+# Start time: 10:39:56 on Jan 26,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.sdram_controller_top_vhd_tst(sdram_controller_top_arch)#1
+# Loading work.sdram_controller_top(beh_sdram_controller_top)#1
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/ack has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/q(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized inout port /sdram_controller_top_vhd_tst/i1/sdram_dq(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_a(11 downto 0) has no driver.
+# This port will contribute value (12'hXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ba(1 downto 0) has no driver.
+# This port will contribute value (2'hX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cke has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cs_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ras_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cas_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_we_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqml has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Error: Cannot open macro file: wave.do
+# Error in macro ./rtl_SDRAM_CONTROLLER.do line 13
+# Cannot open macro file: wave.do
+#     while executing
+# "do wave.do"
+add wave -position end  sim:/sdram_controller_top_vhd_tst/CLK
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/simulation/questa/wave.do
+do rtl_SDRAM_CONTROLLER.do
+# ** Warning: (vdel-134) Unable to remove locked optimized design "_opt".  Locker is mikaj@DESKTOP-5EPU23T.
+# ** Warning: (vlib-34) Library already exists at "rtl_work".
+# Errors: 0, Warnings: 1
+# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
+# vmap work rtl_work 
+# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
+# Modifying modelsim.ini
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:41:25 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_PLL
+# -- Compiling architecture SYN of sdram_pll
+# End time: 10:41:25 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:41:25 on Jan 26,2026
+# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity SDRAM_Controller_TOP
+# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
+# -- Loading entity SDRAM_PLL
+# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
+# End time: 10:41:25 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:41:25 on Jan 26,2026
+# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
+# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Loading entity SDRAM_Controller_TOP
+# ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
+# End time: 10:41:26 on Jan 26,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 1
+# End time: 10:41:27 on Jan 26,2026, Elapsed time: 0:01:31
+# Errors: 1, Warnings: 12
+# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
+# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
+# Start time: 10:41:27 on Jan 26,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.sdram_controller_top_vhd_tst(sdram_controller_top_arch)#1
+# Loading work.sdram_controller_top(beh_sdram_controller_top)#1
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/ack has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/q(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized inout port /sdram_controller_top_vhd_tst/i1/sdram_dq(15 downto 0) has no driver.
+# This port will contribute value (16'hXXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_a(11 downto 0) has no driver.
+# This port will contribute value (12'hXXX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ba(1 downto 0) has no driver.
+# This port will contribute value (2'hX) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cke has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cs_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_ras_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_cas_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_we_n has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqml has no driver.
+# This port will contribute value (U) to the signal network.
+# ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
+# This port will contribute value (U) to the signal network.
+# End time: 10:42:04 on Jan 26,2026, Elapsed time: 0:00:37
+# Errors: 0, Warnings: 12

@@ -40,7 +40,7 @@ entity SDRAM_Controller_TOP is
 		CLK : in std_logic;
 
 		-- address bus
-		addr : in unsigned(ADDR_WIDTH-1 downto 0);
+		addr : in std_logic_vector(ADDR_WIDTH-1 downto 0);
 
 		-- input data bus
 		data : in std_logic_vector(DATA_WIDTH-1 downto 0);
@@ -68,8 +68,8 @@ entity SDRAM_Controller_TOP is
 		--Inout ports
     sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0);
 		-- Output ports
-		sdram_a     : out unsigned(SDRAM_ADDR_WIDTH-1 downto 0);
-    sdram_ba    : out unsigned(SDRAM_BANK_WIDTH-1 downto 0);
+		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0);
+    sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0);
     sdram_cke   : out std_logic;
     sdram_cs_n  : out std_logic;
     sdram_ras_n : out std_logic;

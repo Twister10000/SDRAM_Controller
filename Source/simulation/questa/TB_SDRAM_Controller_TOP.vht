@@ -27,8 +27,7 @@
 
 LIBRARY ieee;                                               
 USE ieee.std_logic_1164.all;
-use	ieee.numeric_std.all;
-use	ieee.std_logic_unsigned.all;                                
+                             
 
 ENTITY SDRAM_Controller_TOP_vhd_tst IS
 END SDRAM_Controller_TOP_vhd_tst;
