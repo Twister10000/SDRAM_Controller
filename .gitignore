@@ -30,9 +30,7 @@
 
 # hardware binary files
 ### project_name.sof SRAM Object File
-
 # software binary files
-
 /*
 !Source/
 !Documentation/
@@ -55,3 +53,5 @@
 db/
 incremental_db/
 output_files/
+
+/Source/simulation/questa/rtl_work
