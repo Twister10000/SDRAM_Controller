@@ -55,3 +55,7 @@ incremental_db/
 output_files/
 
 /Source/simulation/questa/rtl_work
+*.bak*
+*.rpt
+Source/simulation/questa/vsim.wlf
+Source/simulation/questa/msim_transcript
