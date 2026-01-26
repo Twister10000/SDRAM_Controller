@@ -17,34 +17,41 @@
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all
 # }
-# ** Error (suppressible): (vdel-19) Failed to access library 'rtl_work' at "rtl_work".
-# No such file or directory. (errno = ENOENT)
-# ** Warning: (vdel-57) Library 'rtl_work' is missing or is not a valid QuestaSim library.
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vdel failed.
-# Error in macro ./SDRAM_Controller_run_msim_rtl_vhdl.do line 4
-# C:/altera_lite/25.1std/questa_fse/win64/vdel failed.
-#     while executing
-# "error [FixExecError $msg]"
-#     (procedure "vdel" line 6)
-#     invoked from within
-# "vdel -lib rtl_work -all"
-#     invoked from within
-# "if {[file exists rtl_work]} {
-# 	vdel -lib rtl_work -all
-# }"
-
-
-
-vlib rtl_work
-do rtl_SDRAM_CONTROLLER.do
+# vlib rtl_work
+# vmap work rtl_work
 # Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
 # vmap work rtl_work 
 # ** Note: (vmap-220) 'C:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # Copying C:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
+# 
+# vlog  -work work +incdir+C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/db {C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/db/sdram_pll_altpll.v}
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:51:03 on Jan 26,2026
+# vlog -reportprogress 300 -work work "+incdir+C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/db" C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/db/sdram_pll_altpll.v 
+# ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
+# -- Compiling module SDRAM_PLL_altpll
+# 
+# Top level modules:
+# 	SDRAM_PLL_altpll
+# End time: 10:51:03 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -2008 -work work {C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_PLL.vhd}
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:26:21 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
+# Start time: 10:51:04 on Jan 26,2026
+# vcom -reportprogress 300 -2008 -work work C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_PLL.vhd 
+# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity SDRAM_PLL
+# -- Compiling architecture SYN of sdram_pll
+# End time: 10:51:04 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -2008 -work work {C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_Controller_TOP.vhd}
+# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 10:51:04 on Jan 26,2026
+# vcom -reportprogress 300 -2008 -work work C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_Controller_TOP.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -54,86 +61,19 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity SDRAM_Controller_TOP
 # -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# ** Error: (vcom-11) Could not find work.sdram_pll.
-# ** Error (suppressible): ../../SDRAM_Controller_TOP.vhd(102): (vcom-1195) Cannot find expanded name "work.SDRAM_PLL".
-# ** Error: ../../SDRAM_Controller_TOP.vhd(102): Unknown expanded name.
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# ** Note: ../../SDRAM_Controller_TOP.vhd(158): VHDL Compiler exiting
-# End time: 10:26:21 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 2
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 9
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd"
+# ** Warning: C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
+# -- Loading entity SDRAM_PLL
+# ** Warning: C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
+# End time: 10:51:04 on Jan 26,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# 
 do rtl_SDRAM_CONTROLLER.do
 # Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
 # vmap work rtl_work 
 # ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
 # Modifying modelsim.ini
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:27:21 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# ** Error: (vcom-11) Could not find work.sdram_pll.
-# ** Error (suppressible): ../../SDRAM_Controller_TOP.vhd(102): (vcom-1195) Cannot find expanded name "work.SDRAM_PLL".
-# ** Error: ../../SDRAM_Controller_TOP.vhd(102): Unknown expanded name.
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# ** Note: ../../SDRAM_Controller_TOP.vhd(158): VHDL Compiler exiting
-# End time: 10:27:21 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 2
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 9
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:28:22 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# ** Error: (vcom-11) Could not find work.sdram_pll.
-# ** Error (suppressible): ../../SDRAM_Controller_TOP.vhd(102): (vcom-1195) Cannot find expanded name "work.SDRAM_PLL".
-# ** Error: ../../SDRAM_Controller_TOP.vhd(102): Unknown expanded name.
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# ** Note: ../../SDRAM_Controller_TOP.vhd(158): VHDL Compiler exiting
-# End time: 10:28:22 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 2
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 9
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:29:30 on Jan 26,2026
+# Start time: 10:56:21 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -141,10 +81,10 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package std_logic_1164
 # -- Compiling entity SDRAM_PLL
 # -- Compiling architecture SYN of sdram_pll
-# End time: 10:29:31 on Jan 26,2026, Elapsed time: 0:00:01
+# End time: 10:56:21 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:29:31 on Jan 26,2026
+# Start time: 10:56:21 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -158,436 +98,10 @@ do rtl_SDRAM_CONTROLLER.do
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
 # -- Loading entity SDRAM_PLL
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:29:31 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:21 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 2
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:29:31 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# ** Warning: TB_SDRAM_Controller_TOP.vht(83): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "test".
-# ** Error: TB_SDRAM_Controller_TOP.vht(84): near "PORT": syntax error
-# ** Error: TB_SDRAM_Controller_TOP.vht(124): Illegal sequential statement.
-# ** Error: TB_SDRAM_Controller_TOP.vht(128): near "SDRAM_Controller_TOP": (vcom-1576) expecting PROCESS.
-# End time: 10:29:31 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 1
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 10
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:12 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:30:12 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:12 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:30:12 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:12 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# ** Warning: TB_SDRAM_Controller_TOP.vht(83): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# ** Error: TB_SDRAM_Controller_TOP.vht(124): Illegal sequential statement.
-# ** Error: TB_SDRAM_Controller_TOP.vht(128): near "SDRAM_Controller_TOP": (vcom-1576) expecting PROCESS.
-# End time: 10:30:12 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 2, Warnings: 1
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 10
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:52 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:30:52 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:52 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:30:52 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:30:52 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# ** Warning: TB_SDRAM_Controller_TOP.vht(83): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:30:52 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
-# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:30:54 on Jan 26,2026
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'modelsim.ini' is used as the ini file.
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "addr".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "sdram_a".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "sdram_ba".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=3, Warnings=1.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./rtl_SDRAM_CONTROLLER.do PAUSED at line 12
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:31:37 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:31:37 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:31:37 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:31:37 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:31:37 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# ** Warning: TB_SDRAM_Controller_TOP.vht(83): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:31:37 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-# End time: 10:31:37 on Jan 26,2026, Elapsed time: 0:00:43
-# Errors: 3, Warnings: 1
-# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
-# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:31:37 on Jan 26,2026
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'modelsim.ini' is used as the ini file.
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "addr".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "sdram_a".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(82): (vopt-1133) Type mismatch found on port "sdram_ba".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=3, Warnings=1.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./rtl_SDRAM_CONTROLLER.do PAUSED at line 12
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:33:30 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:33:30 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:33:30 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:33:31 on Jan 26,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:33:31 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Loading entity SDRAM_Controller_TOP
-# ** Warning: TB_SDRAM_Controller_TOP.vht(83): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# ** Error: TB_SDRAM_Controller_TOP.vht(87): Signal "addr" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Error: TB_SDRAM_Controller_TOP.vht(93): Signal "sdram_a" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Error: TB_SDRAM_Controller_TOP.vht(94): Signal "sdram_ba" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Note: TB_SDRAM_Controller_TOP.vht(128): VHDL Compiler exiting
-# End time: 10:33:31 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 1
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 10
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:01 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:34:01 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:01 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:34:01 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:01 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# ** Warning: TB_SDRAM_Controller_TOP.vht(85): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:34:02 on Jan 26,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 1
-# End time: 10:34:02 on Jan 26,2026, Elapsed time: 0:02:25
-# Errors: 4, Warnings: 1
-# ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
-# vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:34:02 on Jan 26,2026
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'modelsim.ini' is used as the ini file.
-# ** Error: TB_SDRAM_Controller_TOP.vht(84): (vopt-1133) Type mismatch found on port "addr".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(84): (vopt-1133) Type mismatch found on port "sdram_a".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# ** Error: TB_SDRAM_Controller_TOP.vht(84): (vopt-1133) Type mismatch found on port "sdram_ba".
-#    In the component "SDRAM_Controller_TOP", the port type is "ieee.std_logic_1164.STD_LOGIC_VECTOR".
-#    In the entity "SDRAM_Controller_TOP", the port type is "ieee.NUMERIC_STD.UNSIGNED"
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=3, Warnings=1.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./rtl_SDRAM_CONTROLLER.do PAUSED at line 12
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:33 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:34:33 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:33 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:34:33 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:34:33 on Jan 26,2026
-# vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP_vhd_tst
-# -- Compiling architecture SDRAM_Controller_TOP_arch of SDRAM_Controller_TOP_vhd_tst
-# -- Loading entity SDRAM_Controller_TOP
-# ** Warning: TB_SDRAM_Controller_TOP.vht(85): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# ** Error: TB_SDRAM_Controller_TOP.vht(89): Signal "addr" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Error: TB_SDRAM_Controller_TOP.vht(95): Signal "sdram_a" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Error: TB_SDRAM_Controller_TOP.vht(96): Signal "sdram_ba" is type ieee.std_logic_1164.STD_LOGIC_VECTOR; expecting type ieee.NUMERIC_STD.UNSIGNED.
-# ** Note: TB_SDRAM_Controller_TOP.vht(130): VHDL Compiler exiting
-# End time: 10:34:34 on Jan 26,2026, Elapsed time: 0:00:01
-# Errors: 3, Warnings: 1
-# ** Error: C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 10
-# C:/altera_lite/25.1std/questa_fse/win64/vcom failed.
-#     while executing
-# "vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht"
-do rtl_SDRAM_CONTROLLER.do
-# Questa Altera Starter FPGA Edition-64 vmap 2025.2 Lib Mapping Utility 2025.05 May 31 2025
-# vmap work rtl_work 
-# ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
-# Modifying modelsim.ini
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:45 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity SDRAM_PLL
-# -- Compiling architecture SYN of sdram_pll
-# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:46 on Jan 26,2026
-# vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
-# ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity SDRAM_Controller_TOP
-# -- Compiling architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
-# -- Loading entity SDRAM_PLL
-# ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
-# Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:46 on Jan 26,2026
+# Start time: 10:56:21 on Jan 26,2026
 # vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -600,13 +114,11 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Loading entity SDRAM_Controller_TOP
 # ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:21 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
-# End time: 10:39:46 on Jan 26,2026, Elapsed time: 0:05:44
-# Errors: 4, Warnings: 1
 # ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
 # vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:39:46 on Jan 26,2026
+# Start time: 10:56:21 on Jan 26,2026
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
 # ** Note: (vopt-220) 'modelsim.ini' is used as the ini file.
@@ -643,11 +155,7 @@ do rtl_SDRAM_CONTROLLER.do
 # This port will contribute value (U) to the signal network.
 # ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
 # This port will contribute value (U) to the signal network.
-# ** Error: Cannot open macro file: wave.do
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 13
-# Cannot open macro file: wave.do
-#     while executing
-# "do wave.do"
+add wave -position end  sim:/sdram_controller_top_vhd_tst/valid
 do rtl_SDRAM_CONTROLLER.do
 # ** Warning: (vdel-134) Unable to remove locked optimized design "_opt".  Locker is mikaj@DESKTOP-5EPU23T.
 # ** Warning: (vlib-34) Library already exists at "rtl_work".
@@ -657,7 +165,7 @@ do rtl_SDRAM_CONTROLLER.do
 # ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
 # Modifying modelsim.ini
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:55 on Jan 26,2026
+# Start time: 10:56:40 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -665,10 +173,10 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package std_logic_1164
 # -- Compiling entity SDRAM_PLL
 # -- Compiling architecture SYN of sdram_pll
-# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:41 on Jan 26,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:55 on Jan 26,2026
+# Start time: 10:56:41 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -682,10 +190,10 @@ do rtl_SDRAM_CONTROLLER.do
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
 # -- Loading entity SDRAM_PLL
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:41 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 2
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:39:55 on Jan 26,2026
+# Start time: 10:56:41 on Jan 26,2026
 # vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -698,13 +206,13 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Loading entity SDRAM_Controller_TOP
 # ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:39:55 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:41 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
-# End time: 10:39:56 on Jan 26,2026, Elapsed time: 0:00:10
-# Errors: 1, Warnings: 13
+# End time: 10:56:42 on Jan 26,2026, Elapsed time: 0:00:21
+# Errors: 0, Warnings: 13
 # ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
 # vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:39:56 on Jan 26,2026
+# Start time: 10:56:42 on Jan 26,2026
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # Loading std.standard
 # Loading std.textio(body)
@@ -738,12 +246,8 @@ do rtl_SDRAM_CONTROLLER.do
 # This port will contribute value (U) to the signal network.
 # ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
 # This port will contribute value (U) to the signal network.
-# ** Error: Cannot open macro file: wave.do
-# Error in macro ./rtl_SDRAM_CONTROLLER.do line 13
-# Cannot open macro file: wave.do
-#     while executing
-# "do wave.do"
-add wave -position end  sim:/sdram_controller_top_vhd_tst/CLK
+add wave -position end  sim:/sdram_controller_top_vhd_tst/valid
+# Causality operation skipped due to absence of debug database file
 write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/mikaj/Documents/GitHub/SDRAM_Controller/Source/simulation/questa/wave.do
 do rtl_SDRAM_CONTROLLER.do
 # ** Warning: (vdel-134) Unable to remove locked optimized design "_opt".  Locker is mikaj@DESKTOP-5EPU23T.
@@ -754,7 +258,7 @@ do rtl_SDRAM_CONTROLLER.do
 # ** Note: (vmap-220) 'modelsim.ini' is used as the ini file.
 # Modifying modelsim.ini
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:41:25 on Jan 26,2026
+# Start time: 10:56:55 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_PLL.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -762,10 +266,10 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package std_logic_1164
 # -- Compiling entity SDRAM_PLL
 # -- Compiling architecture SYN of sdram_pll
-# End time: 10:41:25 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:55 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:41:25 on Jan 26,2026
+# Start time: 10:56:55 on Jan 26,2026
 # vcom -reportprogress 300 -work work ../../SDRAM_Controller_TOP.vhd 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -779,10 +283,10 @@ do rtl_SDRAM_CONTROLLER.do
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(100): /* found in delimited comment. Nested comments not supported.
 # -- Loading entity SDRAM_PLL
 # ** Warning: ../../SDRAM_Controller_TOP.vhd(113): /* found in delimited comment. Nested comments not supported.
-# End time: 10:41:25 on Jan 26,2026, Elapsed time: 0:00:00
+# End time: 10:56:55 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 2
 # Questa Altera Starter FPGA Edition-64 vcom 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 10:41:25 on Jan 26,2026
+# Start time: 10:56:55 on Jan 26,2026
 # vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht 
 # ** Note: (vcom-220) 'modelsim.ini' is used as the ini file.
 # -- Loading package STANDARD
@@ -795,13 +299,13 @@ do rtl_SDRAM_CONTROLLER.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Loading entity SDRAM_Controller_TOP
 # ** Warning: TB_SDRAM_Controller_TOP.vht(84): (vcom-1049) Actual for generic "USE_PLL" depends on value of signal "USE_PLL".
-# End time: 10:41:26 on Jan 26,2026, Elapsed time: 0:00:01
+# End time: 10:56:55 on Jan 26,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
-# End time: 10:41:27 on Jan 26,2026, Elapsed time: 0:01:31
-# Errors: 1, Warnings: 12
+# End time: 10:56:56 on Jan 26,2026, Elapsed time: 0:00:14
+# Errors: 0, Warnings: 12
 # ** Note: (vsim-220) 'modelsim.ini' is used as the ini file.
 # vsim -t 1ps -voptargs=""+acc"" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst 
-# Start time: 10:41:27 on Jan 26,2026
+# Start time: 10:56:56 on Jan 26,2026
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # Loading std.standard
 # Loading std.textio(body)
@@ -835,5 +339,5 @@ do rtl_SDRAM_CONTROLLER.do
 # This port will contribute value (U) to the signal network.
 # ** Warning: (vsim-8683) Uninitialized out port /sdram_controller_top_vhd_tst/i1/sdram_dqmh has no driver.
 # This port will contribute value (U) to the signal network.
-# End time: 10:42:04 on Jan 26,2026, Elapsed time: 0:00:37
+# End time: 10:57:09 on Jan 26,2026, Elapsed time: 0:00:13
 # Errors: 0, Warnings: 12
