@@ -83,9 +83,9 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (reading, writing, idle, refresh);
+	type sdram_fsm_type is (init, reading, writing, active, idle, refresh);
 	
-	signal FSM_SDRAM				: sdram_fsm_type	:= idle;
+	signal FSM_SDRAM				: sdram_fsm_type	:= init;
 	attribute	syn_encoding	: string;
 	
 	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
