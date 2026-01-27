@@ -151,7 +151,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 		std_logic_vector(to_unsigned(natural(ceil(log2(real(BURST_LENGTH)))), 3)));
 		
 	-- CLK_PERIOD in [ns]
-	constant	CLK_PERIOD				:	real		:=	1.0/CLK_FREQ*1000.0;
+	constant	CLK_PERIOD				:	real		:=	1.0/CLK_FREQ*1000.0; 
 	-- number of clock cycles to wait before init
 	constant	INIT_WAIT					:	natural	:=	natural(ceil(T_DESL / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
 	
@@ -181,7 +181,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	
 	-- signal declarations 
-	signal 	SDRAM_CLK	: std_logic := '0';
+	signal 	SDRAM_CLK		: std_logic := '0';
+	
+	signal	wait_cnt		:	integer	range 0 to 50e3	:= 	0;
+	signal	refresh_cnt	:	integer	range 0 to 50e3	:=	0;
 
 begin
 		-- Generate Statement
