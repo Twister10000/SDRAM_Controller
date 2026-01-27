@@ -204,8 +204,8 @@ begin
 		/**************************************************************
 		/ Simulation PLL Generation																										
 		/**************************************************************/		
-		Simu_PLL: if USE_PLL = false generate -- wird bei der Modelsim Simulation ausgefÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼hrt
-          sdram_clk <= clk; -- Der Clock input wird direkt mit dem globalen
+		Simu_PLL: if USE_PLL = false generate -- wird bei der Modelsim Simulation ausgefuehrt
+          sdram_clk <= clk; -- Der Clock input wird direkt mit der globalen clk verbunden
     end generate Simu_PLL;
 
 		-- Process Statement (optional)
