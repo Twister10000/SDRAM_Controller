@@ -8,6 +8,7 @@ library ieee;
 use	ieee.std_logic_1164.all;
 use	ieee.numeric_std.all;
 use	ieee.std_logic_unsigned.all;
+use ieee.math_real.all;
 
 entity SDRAM_Controller_TOP is
 	generic
@@ -123,6 +124,27 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	CMD_LOAD_MODE			:	std_logic_vector(3	downto	0)	:=	"0000";
 	constant	CMD_AUTO_REFRESH	:	std_logic_vector(3	downto	0)	:=	"0001";
 	constant	CMD_PRECAHRGE			:	std_logic_vector(3	downto	0)	:=	"0010";
+	
+	-- MODE Register
+	
+	-- the ordering of the accesses within a burst
+	constant	BURST_MODE				:	std_logic	:=	'0'; -- 0=sequential, 1=interleaved
+	
+	-- the write burst type enables bursting for write operations
+	constant	BURST_TYPE				:	std_logic	:=	'0'; -- 0=burst, 1=single
+	
+	-- the value written to the mode register to configure the memory. Adjust the values to fit your SDRAM-CHIP
+	constant MODE_REGISTER			:	std_logic_vector((SDRAM_ADDR_WIDTH+SDRAM_BANK_WIDTH-1)	downto	0) := (
+	
+		"0000" & 
+		BURST_MODE & 
+		"00" &	
+		std_logic_vector(to_unsigned(CAS_LATENCY, 3)) & 
+		BURST_TYPE & 
+		std_logic_vector(to_unsigned(natural(ceil(log2(real(BURST_LENGTH)))), 3)));
+		
+	
+	
 	
 	-- signal declarations 
 	signal 	SDRAM_CLK	: std_logic := '0';
