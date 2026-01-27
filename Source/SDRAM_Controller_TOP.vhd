@@ -15,7 +15,7 @@ entity SDRAM_Controller_TOP is
 	
 		-- Simulation Generic
 		
-		USE_PLL			:	boolean := true;
+		USE_PLL						:	boolean := true;
 		
 		-- 32-bit controller interface
 		
@@ -25,7 +25,29 @@ entity SDRAM_Controller_TOP is
 		-- SDRAM Interface
 		SDRAM_ADDR_WIDTH	:	natural := 12;
 		SDRAM_DATA_WIDTH	:	natural	:= 16;
-		SDRAM_BANK_WIDTH	:	natural := 2
+		SDRAM_BANK_WIDTH	:	natural := 2;
+		
+		
+    -- The delay in clock cycles, between the start of a read command and the
+    -- availability of the output data.
+    CAS_LATENCY 			: natural := 2; -- 2=below 133MHz, 3=above 133MHz
+		
+		-- The number of 16-bit words to be bursted during a read/write.
+    BURST_LENGTH 			: natural := 2;
+		
+		
+    -- timing values (in nanoseconds)
+    --
+    -- These values can be adjusted to match the exact timing of your SDRAM
+    -- chip (refer to the datasheet).
+    T_DESL 						: natural := 200000; 	-- startup delay
+    T_MRD  						: natural := 12; 			-- mode register cycle time
+    T_RC   						: natural := 60; 			-- row cycle time
+    T_RCD  						: natural := 18; 			-- RAS to CAS delay
+    T_RP   						: natural := 18; 			-- precharge to activate delay
+    T_WR   						: natural := 12; 			-- write recovery time
+    T_REFI 						: real 		:= 7812.5  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
+		
 	);
 
 
