@@ -1,5 +1,7 @@
 /**************************************************************
  Author: Twister10000 (Mika)
+ 
+ Ensure that all constants and generics are adjusted for the SDRAM chip!
 **************************************************************/
 
 -- Library Clause(s)
@@ -18,9 +20,9 @@ entity SDRAM_Controller_TOP is
 		
 		USE_PLL						:	boolean := true;
 		
-		-- these value is needed to calculate time periods [Hz]
+		-- these value is needed to calculate time periods [MHz]
 		
-		CLK_FREQ					:	natural	:=	100e6;
+		CLK_FREQ					:	real 		:= 100.0;
 		
 		
 		-- 32-bit controller interface
@@ -46,13 +48,13 @@ entity SDRAM_Controller_TOP is
     --
     -- These values can be adjusted to match the exact timing of your SDRAM
     -- chip (refer to the datasheet).
-    T_DESL 						: natural := 200000; 	-- startup delay
-    T_MRD  						: natural := 12; 			-- mode register cycle time
-    T_RC   						: natural := 60; 			-- row cycle time
-    T_RCD  						: natural := 18; 			-- RAS to CAS delay
-    T_RP   						: natural := 18; 			-- precharge to activate delay
-    T_WR   						: natural := 12; 			-- write recovery time
-    T_REFI 						: real 		:= 7812.5  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
+    T_DESL 						: real		 	:= 200000.0; 	-- startup delay
+    T_MRD  						: real		 	:= 12.0; 			-- mode register cycle time
+    T_RC   						: real		 	:= 60.0; 			-- row cycle time
+    T_RCD  						: real		 	:= 18.0; 			-- RAS to CAS delay
+    T_RP   						: real		 	:= 18.0; 			-- precharge to activate delay
+    T_WR   						: real		 	:= 12.0; 			-- write recovery time
+    T_REFI 						: real			:= 7812.5  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
 		
 	);
 
