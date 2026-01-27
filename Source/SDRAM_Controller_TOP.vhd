@@ -112,6 +112,18 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
 	
+	-- constant declarations
+	-- CMD from COMMAND TRUTH Table
+	constant	CMD_DESELECT			:	std_logic_vector(3	downto	0)	:=	"1000";
+	constant	CMD_NOP						:	std_logic_vector(3	downto	0)	:=	"0111";
+	constant	CMD_BRST_STOP			:	std_logic_vector(3	downto	0)	:=	"0110";
+	constant	CMD_READ					:	std_logic_vector(3	downto	0)	:=	"0101";
+	constant	CMD_WRITE					:	std_logic_vector(3	downto	0)	:=	"0100";
+	constant	CMD_BANK_ACTIVATE	:	std_logic_vector(3	downto	0)	:=	"0011";
+	constant	CMD_LOAD_MODE			:	std_logic_vector(3	downto	0)	:=	"0000";
+	constant	CMD_AUTO_REFRESH	:	std_logic_vector(3	downto	0)	:=	"0001";
+	constant	CMD_PRECAHRGE			:	std_logic_vector(3	downto	0)	:=	"0010";
+	
 	-- signal declarations 
 	signal 	SDRAM_CLK	: std_logic := '0';
 
