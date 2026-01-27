@@ -18,6 +18,11 @@ entity SDRAM_Controller_TOP is
 		
 		USE_PLL						:	boolean := true;
 		
+		-- these value is needed to calculate time periods [Hz]
+		
+		CLK_FREQ					:	natural	:=	100e6;
+		
+		
 		-- 32-bit controller interface
 		
 		DATA_WIDTH				: natural := 16;
@@ -127,13 +132,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- MODE Register
 	
-	-- the ordering of the accesses within a burst
+	-- the ordering of the burst
 	constant	BURST_MODE				:	std_logic	:=	'0'; -- 0=sequential, 1=interleaved
 	
-	-- the write burst type enables bursting for write operations
+	-- the write burst type for write operations
 	constant	BURST_TYPE				:	std_logic	:=	'0'; -- 0=burst, 1=single
 	
-	-- the value written to the mode register to configure the memory. Adjust the values to fit your SDRAM-CHIP
+	-- the mode register value to configure the memory. Adjust the values to fit your SDRAM-CHIP
 	constant MODE_REGISTER			:	std_logic_vector((SDRAM_ADDR_WIDTH+SDRAM_BANK_WIDTH-1)	downto	0) := (
 	
 		"0000" & 
