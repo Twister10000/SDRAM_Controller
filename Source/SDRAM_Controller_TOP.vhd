@@ -177,11 +177,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD));
 	
 	
-	
-	
-	
 	-- signal declarations 
 	signal 	SDRAM_CLK		: std_logic := '0';
+	
+	
 	
 	signal	wait_cnt		:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt	:	integer	range 0 to 50e3	:=	0;
@@ -237,6 +236,20 @@ begin
 				end if;
 		end process main; 
 
+		update_wait_cnt	:	process(all)
+			begin
+				
+				if rising_edge(SDRAM_CLK)	then
+					-- TO DO Logic for CNT Update
+					if reset	= '1' then
+						wait_cnt	<= 0;
+						/*elsif zustand nicht gleich neuer Zustand => wait_cnt <= 0*/
+					else
+						wait_cnt	<= wait_cnt	+	1;
+					end if;
+				end if;
+		
+		end process update_wait_cnt;
 	-- Concurrent Procedure Call (optional)
 
 	-- Concurrent Signal Assignment (optional)
