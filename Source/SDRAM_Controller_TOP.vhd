@@ -216,7 +216,10 @@ begin
 			
 				if rising_edge(sdram_clk) then
 					
-					valid	<=	not valid;
+					valid							<=	not valid;
+					next_sdram_state	<=	current_sdram_state;
+					next_cmd					<=	CMD_NOP; -- default CMD ist NOP
+					
 					
 					case current_sdram_state is
 						
