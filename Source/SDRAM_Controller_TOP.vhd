@@ -148,6 +148,33 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 		BURST_TYPE & 
 		std_logic_vector(to_unsigned(natural(ceil(log2(real(BURST_LENGTH)))), 3)));
 		
+	-- CLK_PERIOD in [ns]
+	constant	CLK_PERIOD				:	real		:=	1.0/CLK_FREQ*1000.0;
+	-- number of clock cycles to wait before init
+	constant	INIT_WAIT					:	natural	:=	natural(ceil(T_DESL / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
+	
+	-- the number of clock cycles to wait for LOAD_MODE CMD is executed
+	constant	LOAD_MODE_WAIT		:	natural	:=	natural(ceil(T_MRD/CLK_PERIOD));
+	
+	-- the number of clock cycles to wait for REFRESH CMD is executed
+	constant	REFRESH_WAIT			:	natural	:=	natural(ceil(T_RC/CLK_PERIOD));
+	
+	-- the number of clock cycles to wait for ACTIVE CMD is executed
+	constant	ACTIVE_WAIT				:	natural	:=	natural(ceil(T_RCD/CLK_PERIOD));
+	
+	-- the number of clock cycles to wait for PRECHARGE CMD is executed
+	constant	PRECHARGE_WAIT		:	natural	:=	natural(ceil(T_RP/CLK_PERIOD));
+	
+	-- the number of clock cycles to wait for READ CMD is executed
+	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH;
+	
+	-- the number of clock cycles to wait for WRITE CMD is executed
+	constant	WRITE_WAIT				:	natural	:=	CAS_LATENCY+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
+	
+	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
+	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD));
+	
+	
 	
 	
 	
