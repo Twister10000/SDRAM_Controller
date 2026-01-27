@@ -115,7 +115,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- FSM Declarations
 	type sdram_fsm_type is (init, reading, writing, active, idle, refresh);
 	
-	signal FSM_SDRAM				: sdram_fsm_type	:= init;
+	signal current_sdram_state				: sdram_fsm_type	:= 	init;
+	signal next_sdram_state						:	sdram_fsm_type	:=	init;
 	attribute	syn_encoding	: string;
 	
 	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
@@ -216,7 +217,10 @@ begin
 					
 					valid	<=	not valid;
 					
-					case fsm_SDRAM is
+					case current_sdram_state is
+						
+						when init			=>
+							-- ToDo init Beh
 						
 						when idle 		=>
 							-- ToDo Idle Beh
@@ -229,13 +233,21 @@ begin
 							
 						when refresh	=>
 							-- ToDo refresh Beh
+						
+						when active		=>
+							-- ToDo active Beh
 							
-						when others	=> fsm_SDRAM <= idle;
+						when others	=> current_sdram_state <= idle;
 					end case;
 					
 				end if;
 		end process main; 
 
+		/**
+		* To-Do Proccess für Zustand übergabe
+		*/
+		
+		
 		update_wait_cnt	:	process(all)
 			begin
 				
