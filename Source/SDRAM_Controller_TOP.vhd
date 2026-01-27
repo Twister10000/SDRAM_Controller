@@ -184,8 +184,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP;
 	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP;
 	
-	signal	wait_cnt		:	integer	range 0 to 50e3	:= 	0;
-	signal	refresh_cnt	:	integer	range 0 to 50e3	:=	0;
+	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
+	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
+	signal	init_refresh_cnt	:	integer	range	0	to	8		:=	0;
 
 begin
 		-- Generate Statement
@@ -226,6 +227,11 @@ begin
 						when init			=>
 							-- ToDo init Beh
 						
+							if	wait_cnt	= INIT_WAIT-1	then
+								next_cmd					<=	CMD_AUTO_REFRESH;
+								next_sdram_state	<=	refresh;
+							end if;
+							
 						when idle 		=>
 							-- ToDo Idle Beh
 						
@@ -237,6 +243,7 @@ begin
 							
 						when refresh	=>
 							-- ToDo refresh Beh
+							
 						
 						when active		=>
 							-- ToDo active Beh
