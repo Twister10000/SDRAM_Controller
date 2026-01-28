@@ -52,9 +52,9 @@ set_output_delay -min -clock $SDRAM_CLK -0.8 [get_ports sdram_dq*]
 set_output_delay -max -clock $SDRAM_CLK 1.5 [get_ports sdram_dq*]
 
 # Address Hold Time & Command Hold Time (CS, RAS, CAS, WE, DQM) 0.8ns !negative because hold Time
-set_output_delay -min -clock $SDRAM_CLK -0.8 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
+set_output_delay -min -clock $SDRAM_CLK -0.8 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
 # Address Setup Time(2) 1.5ns & Command Setup Time (CS, RAS, CAS, WE, DQM) 1.5ns
-set_output_delay -max -clock $SDRAM_CLK 1.5 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
+set_output_delay -max -clock $SDRAM_CLK 1.5 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
 
 #Controller Interface no timing requirments
 set_output_delay -min -clock $SDRAM_CLK 0 [get_ports {ack valid q*}]
