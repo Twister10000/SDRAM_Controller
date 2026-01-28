@@ -2,6 +2,7 @@
  Author: Twister10000 (Mika)
  
  Ensure that all constants and generics are adjusted for the SDRAM chip!
+ PLS CHECK also the sdram_cmd_pkg for adjustments
 **************************************************************/
 
 -- Library Clause(s)

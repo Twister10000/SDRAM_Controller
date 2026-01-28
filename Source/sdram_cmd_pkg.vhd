@@ -1,4 +1,9 @@
+/**************************************************************
+ Author: Twister10000 (Mika)
+ 
+ Ensure that all constants and values are adjusted for the SDRAM chip!
 
+**************************************************************/
 -- Library Clause(s) (optional)
 -- Use Clause(s) (optional)
 library ieee;
