@@ -189,7 +189,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
-	signal	init_refresh_cnt	:	integer	range	0	to	8		:=	0;
 
 begin
 		-- Generate Statement
@@ -236,10 +235,14 @@ begin
 							
 								next_sdram_state	<= mode;
 								
-							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1	then
+							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= mode	then
 							
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-															
+							
+							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state = mode	then
+								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								sdram_a		<= 	MODE_REGISTER_ADRESS;
+								sdram_ba	<=	MODE_REGISTER_BANK;		
 							end if;
 						
 						when mode			=>
@@ -248,7 +251,7 @@ begin
 							sdram_a		<= 	MODE_REGISTER_ADRESS;
 							sdram_ba	<=	MODE_REGISTER_BANK;
 							
-							if wait_cnt	= LOAD_MODE_WAIT-1	then
+							if wait_cnt	>= LOAD_MODE_WAIT	then
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	idle;
 							end if;
