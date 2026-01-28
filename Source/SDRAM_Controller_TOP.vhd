@@ -31,7 +31,7 @@ entity SDRAM_Controller_TOP is
 		ADDR_WIDTH				:	natural	:= 12;
 		
 		-- SDRAM Interface
-		SDRAM_ADDR_WIDTH	:	natural := 12;
+		SDRAM_ADDR_WIDTH	:	natural := 13;
 		SDRAM_DATA_WIDTH	:	natural	:= 16;
 		SDRAM_BANK_WIDTH	:	natural := 2;
 		
@@ -113,7 +113,7 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (init, reading, writing, active, idle, refresh);
+	type sdram_fsm_type is (init, mode, reading, writing, active, idle, refresh);
 	
 	signal current_sdram_state				: sdram_fsm_type	:= 	init;
 	signal next_sdram_state						:	sdram_fsm_type	:=	init;
@@ -123,28 +123,30 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- constant declarations
 	-- CMD from COMMAND TRUTH Table
-	constant	CMD_DESELECT			:	std_logic_vector(3	downto	0)	:=	"1000";
-	constant	CMD_NOP						:	std_logic_vector(3	downto	0)	:=	"0111";
-	constant	CMD_BRST_STOP			:	std_logic_vector(3	downto	0)	:=	"0110";
-	constant	CMD_READ					:	std_logic_vector(3	downto	0)	:=	"0101";
-	constant	CMD_WRITE					:	std_logic_vector(3	downto	0)	:=	"0100";
-	constant	CMD_BANK_ACTIVATE	:	std_logic_vector(3	downto	0)	:=	"0011";
-	constant	CMD_LOAD_MODE			:	std_logic_vector(3	downto	0)	:=	"0000";
-	constant	CMD_AUTO_REFRESH	:	std_logic_vector(3	downto	0)	:=	"0001";
-	constant	CMD_PRECAHRGE			:	std_logic_vector(3	downto	0)	:=	"0010";
-	
-	-- MODE Register
-	
-	-- the ordering of the burst
-	constant	BURST_MODE				:	std_logic	:=	'0'; -- 0=sequential, 1=interleaved
-	
-	-- the write burst type for write operations
-	constant	BURST_TYPE				:	std_logic	:=	'0'; -- 0=burst, 1=single
+	constant	CMD_DESELECT							:	std_logic_vector(3	downto	0)	:=	"1000";
+	constant	CMD_NOP										:	std_logic_vector(3	downto	0)	:=	"0111";
+	constant	CMD_BRST_STOP							:	std_logic_vector(3	downto	0)	:=	"0110";
+	constant	CMD_READ									:	std_logic_vector(3	downto	0)	:=	"0101";
+	constant	CMD_WRITE									:	std_logic_vector(3	downto	0)	:=	"0100";
+	constant	CMD_BANK_ACTIVATE					:	std_logic_vector(3	downto	0)	:=	"0011";
+	constant	CMD_LOAD_MODE							:	std_logic_vector(3	downto	0)	:=	"0000";
+	constant	CMD_AUTO_REFRESH					:	std_logic_vector(3	downto	0)	:=	"0001";
+	constant	CMD_PRECAHRGE							:	std_logic_vector(3	downto	0)	:=	"0010";
+					
+	-- MODE Register				
+					
+	-- the ordering of the burst				
+	constant	BURST_MODE								:	std_logic	:=	'0'; -- 0=sequential, 1=interleaved
+					
+	-- the write burst type for 				write operations
+	constant	BURST_TYPE								:	std_logic	:=	'0'; -- 0=burst, 1=single
 	
 	-- the mode register value to configure the memory. Adjust the values to fit your SDRAM-CHIP
-	constant MODE_REGISTER			:	std_logic_vector((SDRAM_ADDR_WIDTH+SDRAM_BANK_WIDTH-1)	downto	0) := (
+	constant	MODE_REGISTER_BANK				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	:=	"00";
 	
-		"0000" & 
+	constant 	MODE_REGISTER_ADRESS			:	std_logic_vector((SDRAM_ADDR_WIDTH-1)	downto	0) := (
+	
+		"000" & 
 		BURST_MODE & 
 		"00" &	
 		std_logic_vector(to_unsigned(CAS_LATENCY, 3)) & 
