@@ -149,7 +149,7 @@ package body sdram_cmd_pkg  is
 		signal sdram_we_n   : out std_logic
 	)is
 	begin
-		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_AUTO_REFRESH_CONST;
 	end procedure	cmd_auto_refresh;
 	
 	procedure cmd_load_mode_reg (
