@@ -27,7 +27,7 @@
 
 LIBRARY ieee;                                               
 USE ieee.std_logic_1164.all;
-                             
+use work.sdram_cmd_pkg.all;                             
 
 ENTITY SDRAM_Controller_TOP_vhd_tst IS
 END SDRAM_Controller_TOP_vhd_tst;
@@ -43,7 +43,7 @@ SIGNAL data : STD_LOGIC_VECTOR(15 DOWNTO 0);
 SIGNAL q : STD_LOGIC_VECTOR(15 DOWNTO 0);
 SIGNAL req : STD_LOGIC;
 SIGNAL reset : STD_LOGIC;
-SIGNAL sdram_a : STD_LOGIC_VECTOR(11 DOWNTO 0);
+SIGNAL sdram_a : STD_LOGIC_VECTOR(12 DOWNTO 0);
 SIGNAL sdram_ba : STD_LOGIC_VECTOR(1 DOWNTO 0);
 SIGNAL sdram_cas_n : STD_LOGIC;
 SIGNAL sdram_cke : STD_LOGIC;
