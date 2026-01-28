@@ -55,7 +55,7 @@ entity SDRAM_Controller_TOP is
     T_RCD  						: real		 	:= 18.0; 			-- RAS to CAS delay
     T_RP   						: real		 	:= 18.0; 			-- precharge to activate delay
     T_WR   						: real		 	:= 12.0; 			-- write recovery time
-    T_REFI 						: real			:= 7812.5  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
+    T_REFI 						: real			:= 7812.5  		-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
 		
 	);
 
@@ -220,8 +220,7 @@ begin
 			
 				if rising_edge(sdram_clk) then
 					
-					valid							<=	not valid;
-					next_sdram_state	<=	current_sdram_state;
+					--next_sdram_state	<=	current_sdram_state;
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
 					
@@ -233,20 +232,20 @@ begin
 							if	wait_cnt	= INIT_WAIT-1	then
 								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
 								
-							elsif	wait_cnt	= (INIT_WAIT+PRECHARGE_WAIT)-1	then
-							
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								
 							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
 							
 								next_sdram_state	<= mode;
 								
+							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1	then
+							
+								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+															
 							end if;
 						
 						when mode			=>
 							
-							cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-							sdram_a		<= MODE_REGISTER_ADRESS;
+							cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+							sdram_a		<= 	MODE_REGISTER_ADRESS;
 							sdram_ba	<=	MODE_REGISTER_BANK;
 							
 							if wait_cnt	= LOAD_MODE_WAIT-1	then
@@ -270,9 +269,9 @@ begin
 						when active		=>
 							-- ToDo active Beh
 							
-						when others	=> current_sdram_state <= idle;
+						when others	=> next_sdram_state <= idle;
 					end case;
-					
+
 				end if;
 		end process main; 
 
