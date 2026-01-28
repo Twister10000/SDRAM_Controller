@@ -11,6 +11,7 @@ use	ieee.std_logic_1164.all;
 use	ieee.numeric_std.all;
 use	ieee.std_logic_unsigned.all;
 use ieee.math_real.all;
+use work.sdram_cmd_pkg.all;
 
 entity SDRAM_Controller_TOP is
 	generic
@@ -123,15 +124,15 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- constant declarations
 	-- CMD from COMMAND TRUTH Table
-	constant	CMD_DESELECT							:	std_logic_vector(3	downto	0)	:=	"1000";
-	constant	CMD_NOP										:	std_logic_vector(3	downto	0)	:=	"0111";
-	constant	CMD_BRST_STOP							:	std_logic_vector(3	downto	0)	:=	"0110";
-	constant	CMD_READ									:	std_logic_vector(3	downto	0)	:=	"0101";
-	constant	CMD_WRITE									:	std_logic_vector(3	downto	0)	:=	"0100";
-	constant	CMD_BANK_ACTIVATE					:	std_logic_vector(3	downto	0)	:=	"0011";
-	constant	CMD_LOAD_MODE							:	std_logic_vector(3	downto	0)	:=	"0000";
-	constant	CMD_AUTO_REFRESH					:	std_logic_vector(3	downto	0)	:=	"0001";
-	constant	CMD_PRECAHRGE							:	std_logic_vector(3	downto	0)	:=	"0010";
+--	constant	CMD_DESELECT							:	std_logic_vector(3	downto	0)	:=	"1000";
+--	constant	CMD_NOP										:	std_logic_vector(3	downto	0)	:=	"0111";
+--	constant	CMD_BRST_STOP							:	std_logic_vector(3	downto	0)	:=	"0110";
+--	constant	CMD_READ									:	std_logic_vector(3	downto	0)	:=	"0101";
+--	constant	CMD_WRITE									:	std_logic_vector(3	downto	0)	:=	"0100";
+--	constant	CMD_BANK_ACTIVATE					:	std_logic_vector(3	downto	0)	:=	"0011";
+--	constant	CMD_LOAD_MODE							:	std_logic_vector(3	downto	0)	:=	"0000";
+--	constant	CMD_AUTO_REFRESH					:	std_logic_vector(3	downto	0)	:=	"0001";
+--	constant	CMD_PRECAHRGE							:	std_logic_vector(3	downto	0)	:=	"0010";
 					
 	-- MODE Register				
 					
@@ -183,8 +184,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- signal declarations 
 	signal 	sdram_clk		: std_logic := '0';
 	
-	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP;
-	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP;
+	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
+	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
 	
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
@@ -221,7 +222,7 @@ begin
 					
 					valid							<=	not valid;
 					next_sdram_state	<=	current_sdram_state;
-					next_cmd					<=	CMD_NOP; -- default CMD ist NOP
+					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
 					
 					case current_sdram_state is
@@ -230,7 +231,7 @@ begin
 							-- ToDo init Beh
 						
 							if	wait_cnt	= INIT_WAIT-1	then
-								next_cmd					<=	CMD_AUTO_REFRESH;
+								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	refresh;
 							end if;
 							
