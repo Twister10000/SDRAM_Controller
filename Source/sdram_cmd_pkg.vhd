@@ -109,10 +109,9 @@ package body sdram_cmd_pkg  is
 		signal sdram_we_n   : out std_logic
 	) is
 	begin
-		sdram_cs_n					<=	CMD_NOP_CONST(3);
-		sdram_ras_n					<=	CMD_NOP_CONST(2);
-		sdram_cas_n					<=	CMD_NOP_CONST(1);
-		sdram_we_n					<=	CMD_NOP_CONST(0);
+	
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_NOP_CONST;
+
 	end procedure	cmd_nop;
 	
 	procedure cmd_precharge_all (
@@ -123,10 +122,8 @@ package body sdram_cmd_pkg  is
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
 	) is
 	begin
-		sdram_cs_n					<=	CMD_PRECHARGE_CONST(3);
-		sdram_ras_n					<=	CMD_PRECHARGE_CONST(2);
-		sdram_cas_n					<=	CMD_PRECHARGE_CONST(1);
-		sdram_we_n					<=	CMD_PRECHARGE_CONST(0);
+
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
 		sdram_a(10)						<=	'1';
 	end procedure	cmd_precharge_all;
 		
@@ -140,10 +137,7 @@ package body sdram_cmd_pkg  is
 	
 	)is
 	begin
-		sdram_cs_n					<=	CMD_PRECHARGE_CONST(3);
-		sdram_ras_n					<=	CMD_PRECHARGE_CONST(2);
-		sdram_cas_n					<=	CMD_PRECHARGE_CONST(1);
-		sdram_we_n					<=	CMD_PRECHARGE_CONST(0);
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
 		sdram_a(10)					<=	'0';
 	end procedure	cmd_precharge_single;
 		
@@ -155,10 +149,7 @@ package body sdram_cmd_pkg  is
 		signal sdram_we_n   : out std_logic
 	)is
 	begin
-		sdram_cs_n					<=	CMD_AUTO_REFRESH_CONST(3);
-		sdram_ras_n					<=	CMD_AUTO_REFRESH_CONST(2);
-		sdram_cas_n					<=	CMD_AUTO_REFRESH_CONST(1);
-		sdram_we_n					<=	CMD_AUTO_REFRESH_CONST(0);
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
 	end procedure	cmd_auto_refresh;
 	
 	procedure cmd_load_mode_reg (
@@ -169,10 +160,9 @@ package body sdram_cmd_pkg  is
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
 	)is
 	begin
-		sdram_cs_n					<=	CMD_LOAD_MODE_CONST(3);
-		sdram_ras_n					<=	CMD_LOAD_MODE_CONST(2);
-		sdram_cas_n					<=	CMD_LOAD_MODE_CONST(1);
-		sdram_we_n					<=	CMD_LOAD_MODE_CONST(0);
+	
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_LOAD_MODE_CONST;
+	
 	end procedure	cmd_load_mode_reg;
 		
 	procedure cmd_read (
@@ -183,10 +173,7 @@ package body sdram_cmd_pkg  is
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
 	)is
 	begin
-		sdram_cs_n					<=	CMD_READ_CONST(3);
-		sdram_ras_n					<=	CMD_READ_CONST(2);
-		sdram_cas_n					<=	CMD_READ_CONST(1);
-		sdram_we_n					<=	CMD_READ_CONST(0);
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_READ_CONST;
 	end procedure	cmd_read;
 		
 	procedure cmd_write (
@@ -197,10 +184,7 @@ package body sdram_cmd_pkg  is
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
 	)is
 	begin
-		sdram_cs_n					<=	CMD_WRITE_CONST(3);
-		sdram_ras_n					<=	CMD_WRITE_CONST(2);
-		sdram_cas_n					<=	CMD_WRITE_CONST(1);
-		sdram_we_n					<=	CMD_WRITE_CONST(0);
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_WRITE_CONST;
 	end procedure	cmd_write;
 		
 	procedure cmd_active (
@@ -211,10 +195,7 @@ package body sdram_cmd_pkg  is
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
 	)is
 	begin
-		sdram_cs_n					<=	CMD_BANK_ACTIVATE_CONST(3);
-		sdram_ras_n					<=	CMD_BANK_ACTIVATE_CONST(2);
-		sdram_cas_n					<=	CMD_BANK_ACTIVATE_CONST(1);
-		sdram_we_n					<=	CMD_BANK_ACTIVATE_CONST(0);
+		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_BANK_ACTIVATE_CONST;
 	end procedure	cmd_active;
 	
 	-- Component Declaration (optional)	
