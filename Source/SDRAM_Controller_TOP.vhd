@@ -296,6 +296,23 @@ begin
 				end if;
 		
 		end process update_wait_cnt;
+		
+		update_fsm_state	:	process(all)
+			begin
+				
+				if rising_edge(sdram_clk)	then
+					
+					if reset = '1'	then
+						--next_sdram_state 		<=	init;
+						--current_sdram_state	<=	init;
+					else
+						current_sdram_state	<=	next_sdram_state;
+					end if;
+						
+					
+				end if;
+				
+			end process update_fsm_state;
 	-- Concurrent Procedure Call (optional)
 
 	-- Concurrent Signal Assignment (optional)
