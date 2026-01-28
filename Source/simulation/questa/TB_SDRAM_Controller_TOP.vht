@@ -36,47 +36,47 @@ ARCHITECTURE SDRAM_Controller_TOP_arch OF SDRAM_Controller_TOP_vhd_tst IS
 constant	clk_period	:	time :=  10 ns;
 signal		USE_PLL			: boolean := false;                                                
 -- signals                                                   
-SIGNAL ack : STD_LOGIC;
-SIGNAL addr : STD_LOGIC_VECTOR(11 DOWNTO 0);
-SIGNAL CLK : STD_LOGIC;
-SIGNAL data : STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL q : STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL req : STD_LOGIC;
-SIGNAL reset : STD_LOGIC;
-SIGNAL sdram_a : STD_LOGIC_VECTOR(12 DOWNTO 0);
-SIGNAL sdram_ba : STD_LOGIC_VECTOR(1 DOWNTO 0);
-SIGNAL sdram_cas_n : STD_LOGIC;
-SIGNAL sdram_cke : STD_LOGIC;
-SIGNAL sdram_cs_n : STD_LOGIC;
-SIGNAL sdram_dq : STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL sdram_dqmh : STD_LOGIC;
-SIGNAL sdram_dqml : STD_LOGIC;
-SIGNAL sdram_ras_n : STD_LOGIC;
-SIGNAL sdram_we_n : STD_LOGIC;
-SIGNAL valid : STD_LOGIC;
-SIGNAL we : STD_LOGIC;
+SIGNAL ack 						: STD_LOGIC;
+SIGNAL addr 					: STD_LOGIC_VECTOR(11 DOWNTO 0);
+SIGNAL CLK 						: STD_LOGIC;
+SIGNAL data 					: STD_LOGIC_VECTOR(15 DOWNTO 0);
+SIGNAL q 							: STD_LOGIC_VECTOR(15 DOWNTO 0);
+SIGNAL req 						: STD_LOGIC;
+SIGNAL reset 					: STD_LOGIC;
+SIGNAL sdram_a 				: STD_LOGIC_VECTOR(12 DOWNTO 0);
+SIGNAL sdram_ba 			: STD_LOGIC_VECTOR(1 DOWNTO 0);
+SIGNAL sdram_cas_n 		: STD_LOGIC;
+SIGNAL sdram_cke 			: STD_LOGIC;
+SIGNAL sdram_cs_n 		: STD_LOGIC;
+SIGNAL sdram_dq 			: STD_LOGIC_VECTOR(15 DOWNTO 0);
+SIGNAL sdram_dqmh 		: STD_LOGIC;
+SIGNAL sdram_dqml 		: STD_LOGIC;
+SIGNAL sdram_ras_n 		: STD_LOGIC;
+SIGNAL sdram_we_n 		: STD_LOGIC;
+SIGNAL valid 					: STD_LOGIC;
+SIGNAL we 						: STD_LOGIC;
 COMPONENT SDRAM_Controller_TOP
 	generic	(USE_PLL : boolean := false);
 	PORT (
-	ack : OUT STD_LOGIC;
-	addr : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-	CLK : IN STD_LOGIC;
-	data : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-	q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-	req : IN STD_LOGIC;
-	reset : IN STD_LOGIC;
-	sdram_a : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-	sdram_ba : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-	sdram_cas_n : OUT STD_LOGIC;
-	sdram_cke : OUT STD_LOGIC;
-	sdram_cs_n : OUT STD_LOGIC;
-	sdram_dq : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-	sdram_dqmh : OUT STD_LOGIC;
-	sdram_dqml : OUT STD_LOGIC;
-	sdram_ras_n : OUT STD_LOGIC;
-	sdram_we_n : OUT STD_LOGIC;
-	valid : OUT STD_LOGIC;
-	we : IN STD_LOGIC
+	ack 								: OUT STD_LOGIC;
+	addr 								: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+	CLK 								: IN STD_LOGIC;
+	data 								: IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+	q 									: OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+	req 								: IN STD_LOGIC;
+	reset 							: IN STD_LOGIC;
+	sdram_a 						: OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+	sdram_ba 						: OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+	sdram_cas_n 				: OUT STD_LOGIC;
+	sdram_cke 					: OUT STD_LOGIC;
+	sdram_cs_n 					: OUT STD_LOGIC;
+	sdram_dq 						: INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+	sdram_dqmh 					: OUT STD_LOGIC;
+	sdram_dqml 					: OUT STD_LOGIC;
+	sdram_ras_n 				: OUT STD_LOGIC;
+	sdram_we_n 					: OUT STD_LOGIC;
+	valid 							: OUT STD_LOGIC;
+	we 									: IN STD_LOGIC
 	);
 END COMPONENT;
 BEGIN
@@ -84,30 +84,41 @@ BEGIN
 	GENERIC MAP (USE_PLL => USE_PLL)
 	PORT MAP (
 -- list connections between master ports and signals
-	ack => ack,
-	addr => addr,
-	CLK => CLK,
-	data => data,
-	q => q,
-	req => req,
-	reset => reset,
-	sdram_a => sdram_a,
-	sdram_ba => sdram_ba,
-	sdram_cas_n => sdram_cas_n,
-	sdram_cke => sdram_cke,
-	sdram_cs_n => sdram_cs_n,
-	sdram_dq => sdram_dq,
-	sdram_dqmh => sdram_dqmh,
-	sdram_dqml => sdram_dqml,
-	sdram_ras_n => sdram_ras_n,
-	sdram_we_n => sdram_we_n,
-	valid => valid,
-	we => we
+	ack 					=> ack,
+	addr 					=> addr,
+	CLK 					=> CLK,
+	data 					=> data,
+	q 						=> q,
+	req 					=> req,
+	reset 				=> reset,
+	sdram_a 			=> sdram_a,
+	sdram_ba 			=> sdram_ba,
+	sdram_cas_n 	=> sdram_cas_n,
+	sdram_cke 		=> sdram_cke,
+	sdram_cs_n 		=> sdram_cs_n,
+	sdram_dq 			=> sdram_dq,
+	sdram_dqmh 		=> sdram_dqmh,
+	sdram_dqml 		=> sdram_dqml,
+	sdram_ras_n 	=> sdram_ras_n,
+	sdram_we_n 		=> sdram_we_n,
+	valid 				=> valid,
+	we 						=> we
 	);
 init : PROCESS                                               
 -- variable declarations                                     
 BEGIN                                                        
-        -- code that executes only once                      
+        -- code that executes only once
+	assert (false)	report "Start" severity note;			
+	wait for 200.005 us;
+	assert (false)	report "Precharge" severity note;
+	wait for 18 ns;
+	assert (false)	report "Refresh" severity note;
+	wait for 480 ns;
+	assert (false)	report "Load  Mode" severity note;
+	wait for 12 ns;
+	assert (false)	report "INIT DONE- READY for DATA" severity note;
+	
+	
 WAIT;                                                       
 END PROCESS init; 
 
