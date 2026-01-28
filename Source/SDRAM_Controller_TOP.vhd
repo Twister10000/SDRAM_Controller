@@ -231,8 +231,17 @@ begin
 							-- ToDo init Beh
 						
 							if	wait_cnt	= INIT_WAIT-1	then
+								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								
+							elsif	wait_cnt	= (INIT_WAIT+PRECHARGE_WAIT)-1	then
+							
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<=	refresh;
+								
+							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
+							
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								next_sdram_state	<= idle;
+								
 							end if;
 							
 						when idle 		=>
