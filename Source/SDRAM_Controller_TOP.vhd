@@ -231,7 +231,7 @@ begin
 							-- ToDo init Beh
 						
 							if	wait_cnt	= INIT_WAIT-1	then
-								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
 								
 							elsif	wait_cnt	= (INIT_WAIT+PRECHARGE_WAIT)-1	then
 							
@@ -239,11 +239,21 @@ begin
 								
 							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
 							
-								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<= idle;
+								next_sdram_state	<= mode;
 								
 							end if;
+						
+						when mode			=>
 							
+							cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+							sdram_a		<= MODE_REGISTER_ADRESS;
+							sdram_ba	<=	MODE_REGISTER_BANK;
+							
+							if wait_cnt	= LOAD_MODE_WAIT-1	then
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								next_sdram_state	<=	idle;
+							end if;
+						
 						when idle 		=>
 							-- ToDo Idle Beh
 						
@@ -277,8 +287,9 @@ begin
 				if rising_edge(sdram_clk)	then
 					-- TO DO Logic for CNT Update
 					if reset	= '1' then
-						wait_cnt	<= 0;
-						/*elsif zustand nicht gleich neuer Zustand => wait_cnt <= 0*/
+						wait_cnt	<= 	0;
+					elsif	next_sdram_state	/= current_sdram_state	then
+						wait_cnt	<=	0;
 					else
 						wait_cnt	<= wait_cnt	+	1;
 					end if;
