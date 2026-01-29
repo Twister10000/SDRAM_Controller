@@ -221,7 +221,7 @@ begin
 			
 				if rising_edge(sdram_clk) then
 					
-					
+					current_sdram_state	<=	next_sdram_state;
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
 					case current_sdram_state is
@@ -241,9 +241,10 @@ begin
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							
 							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state = mode	then
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
-								sdram_a		<= 	MODE_REGISTER_ADRESS;
-								sdram_ba	<=	MODE_REGISTER_BANK;		
+								/*NEEDED????*/
+--								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+--								sdram_a		<= 	MODE_REGISTER_ADRESS;
+--								sdram_ba	<=	MODE_REGISTER_BANK;		
 							end if;
 						
 						when mode			=>
@@ -320,7 +321,7 @@ begin
 						refresh_cnt				<=	0;
 						refresh_needed		<=	'0';
 						
-					elsif	refresh_cnt	>= REFRESH_CYCLE-1 then
+					elsif	refresh_cnt	>= REFRESH_CYCLE - 4 then
 					
 						refresh_needed		<=	'1';
 						
@@ -333,19 +334,4 @@ begin
 				end if;
 		end process	update_refresh_cnt;
 		
-		-- process for updating sdram_fsm
-		update_fsm_state		:	process(all)
-			begin
-				
-				if rising_edge(sdram_clk)	then
-					
-					if reset = '1'	then
-						
-						current_sdram_state	<=	init;
-					else
-						current_sdram_state	<=	next_sdram_state;
-					end if;
-				end if;		
-		end process update_fsm_state;
-
 end BEH_SDRAM_Controller_TOP;
