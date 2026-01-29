@@ -11,8 +11,10 @@ add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sd
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_we_n
+add wave -noupdate /sdram_controller_top_vhd_tst/sdram_a
+add wave -noupdate /sdram_controller_top_vhd_tst/sdram_ba
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {0 ps} 0} {{Cursor 2} {200005000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200025000 ps} 0} {{Cursor 2} {200515000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -28,4 +30,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {199386591 ps} {201548041 ps}
+WaveRestoreZoom {200925087 ps} {201003943 ps}
