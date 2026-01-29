@@ -183,7 +183,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	
 	-- signal declarations 
-	signal 	sdram_clk		: std_logic := '0';
+	signal 	sdram_clk				: std_logic := 	'0';
+	signal	refresh_needed	:	std_logic	:=	'0';
+	signal	refresh_done		:	std_logic	:=	'0';
 	
 	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
 	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
