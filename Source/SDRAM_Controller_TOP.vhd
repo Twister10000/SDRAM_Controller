@@ -185,7 +185,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- signal declarations 
 	signal 	sdram_clk				: std_logic := 	'0';
 	signal	refresh_needed	:	std_logic	:=	'0';
-	signal	refresh_done		:	std_logic	:=	'0';
 	
 	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
 	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
@@ -224,7 +223,6 @@ begin
 					
 					
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-					refresh_done	<=	'0';
 					
 					case current_sdram_state is
 						
@@ -276,7 +274,6 @@ begin
 							-- ToDo refresh Beh
 							if wait_cnt	>= REFRESH_WAIT-1 then
 								
-								refresh_done			<=	'1';
 								next_sdram_state	<=	idle;
 								
 							end if;
@@ -318,7 +315,7 @@ begin
 						refresh_cnt				<=	0;
 						refresh_needed		<=	'0';
 						
-					elsif	refresh_done	=	'1'	then
+					elsif	current_sdram_state	= refresh and wait_cnt	=	0	then
 					
 						refresh_cnt				<=	0;
 						refresh_needed		<=	'0';
