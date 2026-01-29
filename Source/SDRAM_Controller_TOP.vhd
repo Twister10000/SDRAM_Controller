@@ -295,6 +295,18 @@ begin
 				end if;			
 	
 		end process update_wait_cnt;
+
+		-- process for refresh_cnt
+		update_refresh_cnt	:	process(all)
+			begin
+				if rising_edge(sdram_clk)	then
+					
+					if reset	=	'1'	then
+						refresh_cnt	<=	0;
+					end if;
+					
+				end if;
+		end process	update_refresh_cnt;
 		
 		-- process for updating sdram_fsm
 		update_fsm_state		:	process(all)
