@@ -179,7 +179,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	WRITE_WAIT				:	natural	:=	CAS_LATENCY+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
 	
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
-	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresch CMD
+	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
 	
 	
 	-- signal declarations 
@@ -222,9 +222,9 @@ begin
 			
 				if rising_edge(sdram_clk) then
 					
-					--next_sdram_state	<=	current_sdram_state;
-					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
+					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+					refresh_done	<=	'0';
 					
 					case current_sdram_state is
 						
@@ -261,6 +261,10 @@ begin
 						
 						when idle 		=>
 							-- ToDo Idle Beh
+							if refresh_needed	=	'1'	then
+								next_sdram_state	<=	refresh;
+								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+							end if;
 						
 						when writing	=>
 							-- ToDo writing Beh
@@ -270,6 +274,12 @@ begin
 							
 						when refresh	=>
 							-- ToDo refresh Beh
+							if wait_cnt	>= REFRESH_WAIT-1 then
+								
+								refresh_done			<=	'1';
+								next_sdram_state	<=	idle;
+								
+							end if;
 							
 						
 						when active		=>
@@ -304,7 +314,23 @@ begin
 				if rising_edge(sdram_clk)	then
 					
 					if reset	=	'1'	then
-						refresh_cnt	<=	0;
+					
+						refresh_cnt				<=	0;
+						refresh_needed		<=	'0';
+						
+					elsif	refresh_done	=	'1'	then
+					
+						refresh_cnt				<=	0;
+						refresh_needed		<=	'0';
+						
+					elsif	refresh_cnt	>= REFRESH_CYCLE-1 then
+					
+						refresh_needed		<=	'1';
+						
+					else
+					
+						refresh_cnt				<=	refresh_cnt	+	1;
+						
 					end if;
 					
 				end if;
