@@ -179,7 +179,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	WRITE_WAIT				:	natural	:=	CAS_LATENCY+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
 	
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
-	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD));
+	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresch CMD
 	
 	
 	-- signal declarations 
@@ -278,13 +278,9 @@ begin
 
 				end if;
 		end process main; 
-
-		/**
-		* To-Do Proccess für Zustand übergabe
-		*/
 		
-		
-		update_wait_cnt	:	process(all)
+		-- process for wait_cnt
+		update_wait_cnt			:	process(all)
 			begin
 				
 				if rising_edge(sdram_clk)	then
@@ -296,35 +292,23 @@ begin
 					else
 						wait_cnt	<= wait_cnt	+	1;
 					end if;
-				end if;
-		
+				end if;			
+	
 		end process update_wait_cnt;
 		
-		update_fsm_state	:	process(all)
+		-- process for updating sdram_fsm
+		update_fsm_state		:	process(all)
 			begin
 				
 				if rising_edge(sdram_clk)	then
 					
 					if reset = '1'	then
-						--next_sdram_state 		<=	init;
-						--current_sdram_state	<=	init;
+						
+						current_sdram_state	<=	init;
 					else
 						current_sdram_state	<=	next_sdram_state;
 					end if;
-						
-					
-				end if;
-				
-			end process update_fsm_state;
-	-- Concurrent Procedure Call (optional)
-
-	-- Concurrent Signal Assignment (optional)
-
-	-- Conditional Signal Assignment (optional)
-
-	-- Selected Signal Assignment (optional)
-
-	-- Component Instantiation Statement (optional)
-
+				end if;		
+		end process update_fsm_state;
 
 end BEH_SDRAM_Controller_TOP;
