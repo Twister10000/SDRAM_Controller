@@ -14,7 +14,7 @@ add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sd
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
 add wave -noupdate -radix decimal /sdram_controller_top_vhd_tst/i1/REFRESH_CYCLE
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200555000 ps} 1} {{Cursor 2} {200025000 ps} 0} {{Cursor 4} {200505000 ps} 0}
+WaveRestoreCursors {{Cursor 2} {200505000 ps} 1} {{Cursor 4} {200025000 ps} 0} {{Cursor 3} {200545000 ps} 0}
 quietly wave cursor active 3
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -30,4 +30,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200471545 ps} {200597577 ps}
+WaveRestoreZoom {200500639 ps} {200559528 ps}

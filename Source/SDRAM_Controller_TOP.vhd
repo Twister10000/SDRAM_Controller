@@ -230,21 +230,26 @@ begin
 							-- ToDo init Beh
 						
 							if	wait_cnt	= INIT_WAIT-1	then
+							
 								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
 								
 							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
 							
 								next_sdram_state	<= mode;
+								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								sdram_a		<= 	MODE_REGISTER_ADRESS;
+								sdram_ba	<=	MODE_REGISTER_BANK;
 								
 							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= mode	then
 							
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							
-							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state = mode	then
-								/*NEEDED????*/
---								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
---								sdram_a		<= 	MODE_REGISTER_ADRESS;
---								sdram_ba	<=	MODE_REGISTER_BANK;		
+							elsif	wait_cnt	>=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1 and next_sdram_state = mode	then
+								
+								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								sdram_a		<= 	MODE_REGISTER_ADRESS;
+								sdram_ba	<=	MODE_REGISTER_BANK;		
+								
 							end if;
 						
 						when mode			=>
@@ -253,7 +258,7 @@ begin
 							sdram_a		<= 	MODE_REGISTER_ADRESS;
 							sdram_ba	<=	MODE_REGISTER_BANK;
 							
-							if wait_cnt	>= LOAD_MODE_WAIT	then
+							if wait_cnt	>= LOAD_MODE_WAIT-1	then
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	idle;
 							end if;
