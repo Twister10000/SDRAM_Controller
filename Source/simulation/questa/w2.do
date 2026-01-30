@@ -11,6 +11,9 @@ add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sd
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_we_n
+add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} /sdram_controller_top_vhd_tst/sdram_a
+add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_BANK -color Pink /sdram_controller_top_vhd_tst/sdram_ba
+add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_DATA -color Orange /sdram_controller_top_vhd_tst/sdram_dq
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
 add wave -noupdate -radix decimal /sdram_controller_top_vhd_tst/i1/REFRESH_CYCLE
 TreeUpdate [SetDefaultTree]
