@@ -33,9 +33,11 @@ entity SDRAM_Controller_TOP is
 		ADDR_WIDTH				:	natural	:= 	25; -- 25/24 Bank, 23-10 Row Address, 9-0 Column
 		
 		-- SDRAM Interface
-		SDRAM_ADDR_WIDTH	:	natural := 13;
-		SDRAM_DATA_WIDTH	:	natural	:= 16;
-		SDRAM_BANK_WIDTH	:	natural := 2;
+		SDRAM_ADDR_WIDTH	:	natural := 	13;
+		SDRAM_DATA_WIDTH	:	natural	:= 	16;
+		SDRAM_COL_WIDTH		:	natural	:=	10;
+		SDRAM_ROW_WIDTH		:	natural	:=	13;
+		SDRAM_BANK_WIDTH	:	natural := 	2;
 		
 		
     -- The delay in clock cycles, between the start of a read command and the
@@ -191,6 +193,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
+	
+	-- alias declarations
+	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr(24	downto	23);
+	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr(22	downto	10);
+	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr(9	downto	0);
 
 begin
 		-- Generate Statement
