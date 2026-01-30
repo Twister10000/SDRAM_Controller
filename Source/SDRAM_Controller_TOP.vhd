@@ -72,10 +72,10 @@ entity SDRAM_Controller_TOP is
 		clk 	: in std_logic;
 
 		-- address bus
-		addr 	: in std_logic_vector(ADDR_WIDTH-1 downto 0);
+		addr 	: in std_logic_vector(ADDR_WIDTH-1 downto 0)	:=	(others	=>	'0');
 
 		-- input data bus
-		data 	: in std_logic_vector(DATA_WIDTH-1 downto 0);
+		data 	: in std_logic_vector(DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
 
 		-- When the write enable signal is asserted, a write operation will be performed.
 		we 		: in std_logic;
@@ -93,15 +93,15 @@ entity SDRAM_Controller_TOP is
     valid : out std_logic;
 
     -- output data bus
-    q 		: out std_logic_vector(DATA_WIDTH-1 downto 0);
+    q 		: out std_logic_vector(DATA_WIDTH-1 downto 0)								:=	(others	=>	'0');
 		
 		-- I/O for interfacing with SDRAM-Chip
 
 		--Inout ports
-    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0);
+    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
 		-- Output ports
-		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0);
-    sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0);
+		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0)		:=	(others	=>	'0');
+    sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_cke   : out std_logic;
     sdram_cs_n  : out std_logic;
     sdram_ras_n : out std_logic;
