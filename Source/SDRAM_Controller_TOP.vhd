@@ -29,8 +29,8 @@ entity SDRAM_Controller_TOP is
 		
 		-- 32-bit controller interface
 		
-		DATA_WIDTH				: natural := 32;
-		ADDR_WIDTH				:	natural	:= 23;
+		DATA_WIDTH				: natural := 	32;
+		ADDR_WIDTH				:	natural	:= 	25; -- 25/24 Bank, 23-10 Row Address, 9-0 Column
 		
 		-- SDRAM Interface
 		SDRAM_ADDR_WIDTH	:	natural := 13;
