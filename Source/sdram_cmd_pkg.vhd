@@ -46,18 +46,7 @@ package sdram_cmd_pkg is
 		signal sdram_cas_n  : out std_logic;
 		signal sdram_we_n   : out std_logic;
 		signal sdram_a		  : out std_logic_vector(12 downto 0)
-	);
-		
-	procedure	cmd_precharge_single (
-		signal sdram_cs_n   : out std_logic;
-		signal sdram_ras_n  : out std_logic;
-		signal sdram_cas_n  : out std_logic;
-		signal sdram_we_n   : out std_logic;
-		signal sdram_a  		: out std_logic_vector(12 downto 	0);
-		signal sdram_ba			:	out	std_logic_vector(1	downto	0)
-	
-	);
-		
+	);		
 	
 	procedure cmd_auto_refresh (
 		signal sdram_cs_n   : out std_logic;
@@ -127,22 +116,7 @@ package body sdram_cmd_pkg  is
 
 		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
 		sdram_a(10)						<=	'1';
-	end procedure	cmd_precharge_all;
-		
-	procedure	cmd_precharge_single (
-		signal sdram_cs_n   : out std_logic;
-		signal sdram_ras_n  : out std_logic;
-		signal sdram_cas_n  : out std_logic;
-		signal sdram_we_n   : out std_logic;
-		signal sdram_a  		: out std_logic_vector(12 downto 0);
-		signal sdram_ba			:	out	std_logic_vector(1	downto	0)
-	
-	)is
-	begin
-		(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)	<= CMD_PRECHARGE_CONST;
-		sdram_a(10)					<=	'0';
-	end procedure	cmd_precharge_single;
-		
+	end procedure	cmd_precharge_all;		
 	
 	procedure cmd_auto_refresh (
 		signal sdram_cs_n   : out std_logic;
