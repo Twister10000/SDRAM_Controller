@@ -117,7 +117,7 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (init, mode, reading, writing, active, idle, refresh);
+	type sdram_fsm_type is (init, mode, reading, writing, activate, idle, refresh);
 	
 	signal current_sdram_state				: sdram_fsm_type	:= 	init;
 	signal next_sdram_state						:	sdram_fsm_type	:=	init;
@@ -272,6 +272,7 @@ begin
 						when idle 		=>
 							-- ToDo Idle Beh
 							if refresh_needed	=	'1'	then
+							
 								next_sdram_state	<=	refresh;
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							end if;
@@ -291,8 +292,8 @@ begin
 							end if;
 							
 						
-						when active		=>
-							-- ToDo active Beh
+						when activate		=>
+							-- ToDo activate Beh
 							
 						when others	=> next_sdram_state <= idle;
 					end case;
