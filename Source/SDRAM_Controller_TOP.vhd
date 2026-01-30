@@ -275,6 +275,14 @@ begin
 							
 								next_sdram_state	<=	refresh;
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+							
+							elsif	req	=	'1'	then
+							
+								next_sdram_state	<=	activate;
+								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								sdram_ba	<= 	bank;
+								sdram_a		<=	row;
+							
 							end if;
 						
 						when writing	=>
@@ -294,6 +302,19 @@ begin
 						
 						when activate		=>
 							-- ToDo activate Beh
+							
+							if wait_cnt	= ACTIVE_WAIT-1 then
+							
+								if we	=	'1' then
+								
+									next_sdram_state	<= writing;
+									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								
+								else
+									-- Reading_Beh
+								end if;
+							
+							end if;
 							
 						when others	=> next_sdram_state <= idle;
 					end case;
