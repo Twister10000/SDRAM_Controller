@@ -238,12 +238,12 @@ begin
 						
 							if	wait_cnt	= INIT_WAIT-1	then
 							
-								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								
 							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
 							
 								next_sdram_state	<= mode;
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_a		<= 	MODE_REGISTER_ADRESS;
 								sdram_ba	<=	MODE_REGISTER_BANK;
 								
@@ -253,7 +253,7 @@ begin
 							
 							elsif	wait_cnt	>=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1 and next_sdram_state = mode	then
 								
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
+								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_a		<= 	MODE_REGISTER_ADRESS;
 								sdram_ba	<=	MODE_REGISTER_BANK;		
 								
