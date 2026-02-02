@@ -229,6 +229,9 @@ begin
 				if rising_edge(sdram_clk) then
 					
 					current_sdram_state	<=	next_sdram_state;
+					/*Default values for signal*/
+					sdram_dqml					<=	'1';	-- Disables lower input byte buffer
+					sdram_dqmh					<=	'1';	-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');
 					sdram_ba						<=	(others	=>	'0');
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -290,6 +293,7 @@ begin
 						when writing	=>
 							-- ToDo writing Beh
 							
+							
 						when reading	=>
 							-- ToDo reading Beh
 							
@@ -313,6 +317,8 @@ begin
 									next_sdram_state	<=	writing;
 									sdram_ba					<= 	bank;
 									sdram_a						<=	"001" & column; -- Auto-Precharge A10 needs to be HIGH
+									sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+									sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 								
 								else
 									-- Reading_Beh
