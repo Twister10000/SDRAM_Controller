@@ -236,8 +236,8 @@ begin
 					
 					current_sdram_state	<=	next_sdram_state;
 					/*Default values for signal*/
-					sdram_dqml					<=	'1';	-- Disables lower input byte buffer
-					sdram_dqmh					<=	'1';	-- Disables higher input byte buffer
+					sdram_dqml					<=	'1';									-- Disables lower input byte buffer
+					sdram_dqmh					<=	'1';									-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');
 					sdram_ba						<=	(others	=>	'0');
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -298,7 +298,15 @@ begin
 						
 						when writing	=>
 							-- ToDo writing Beh
+							if wait_cnt	= WRITE_WAIT-1	then
 							
+								next_sdram_state <= idle;
+							
+							else
+							
+								
+							
+							end if;
 							
 						when reading	=>
 							-- ToDo reading Beh
@@ -316,7 +324,7 @@ begin
 							-- ToDo activate Beh
 							
 							if wait_cnt	= ACTIVE_WAIT-1 then
-							
+								
 								if we	=	'1' then
 								
 									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
