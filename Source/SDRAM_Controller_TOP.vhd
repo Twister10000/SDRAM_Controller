@@ -229,6 +229,8 @@ begin
 				if rising_edge(sdram_clk) then
 					
 					current_sdram_state	<=	next_sdram_state;
+					sdram_a							<=	(others	=>	'0');
+					sdram_ba						<=	(others	=>	'0');
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
 					case current_sdram_state is
@@ -307,8 +309,10 @@ begin
 							
 								if we	=	'1' then
 								
-									next_sdram_state	<= writing;
 									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+									next_sdram_state	<=	writing;
+									sdram_ba					<= 	bank;
+									sdram_a						<=	row;
 								
 								else
 									-- Reading_Beh
