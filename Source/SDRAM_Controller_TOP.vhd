@@ -178,7 +178,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH;
 	
 	-- the number of clock cycles to wait for WRITE CMD is executed
-	constant	WRITE_WAIT				:	natural	:=	CAS_LATENCY+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
+	constant	WRITE_WAIT				:	natural	:=	BURST_LENGTH+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
 	
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
