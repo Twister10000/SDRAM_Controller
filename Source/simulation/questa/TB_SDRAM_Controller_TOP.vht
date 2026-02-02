@@ -37,10 +37,10 @@ constant	clk_period	:	time :=  10 ns;
 signal		USE_PLL			: boolean := false;                                                
 -- signals                                                   
 SIGNAL ack 						: STD_LOGIC;
-SIGNAL addr 					: STD_LOGIC_VECTOR(11 DOWNTO 0);
+SIGNAL addr 					: STD_LOGIC_VECTOR(24 DOWNTO 0);
 SIGNAL CLK 						: STD_LOGIC;
-SIGNAL data 					: STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL q 							: STD_LOGIC_VECTOR(15 DOWNTO 0);
+SIGNAL data 					: STD_LOGIC_VECTOR(31 DOWNTO 0);
+SIGNAL q 							: STD_LOGIC_VECTOR(31 DOWNTO 0);
 SIGNAL req 						: STD_LOGIC;
 SIGNAL reset 					: STD_LOGIC;
 SIGNAL sdram_a 				: STD_LOGIC_VECTOR(12 DOWNTO 0);
@@ -111,11 +111,11 @@ BEGIN
 	assert (false)	report "Start" severity note;			
 	wait for 200.005 us;
 	assert (false)	report "Precharge" severity note;
-	wait for 18 ns;
+	wait for 20 ns;
 	assert (false)	report "Refresh" severity note;
 	wait for 480 ns;
 	assert (false)	report "Load  Mode" severity note;
-	wait for 12 ns;
+	wait for 20	ns;
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
 	
 	
