@@ -185,27 +185,29 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	
 	-- signal declarations 
-	signal 	sdram_clk				: std_logic := 	'0';
-	signal	refresh_needed	:	std_logic	:=	'0';
+	signal 	sdram_clk					: std_logic := 	'0';
+	signal	refresh_needed		:	std_logic	:=	'0';
 	
-	signal	cmd					:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
-	signal	next_cmd		:	std_logic_vector(3	downto	0)	:=	CMD_NOP_CONST;
+	-- Control signals declarations
 	
+	signal	ready							:	std_logic	:=	'0';
+	
+	-- Counter declarations
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
 	
 	-- Registers declarations
-	signal	addr_reg			:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
-	signal	data_reg			:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
-	signal	q_reg					:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
-	signal	we_reg				:	std_logic	:= '0';
+	signal	addr_reg					:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	data_reg					:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	q_reg							:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	we_reg						:	std_logic	:= '0';
 	
 	-- alias declarations
-	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr_reg(SDRAM_BANK_WIDTH+SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH);
-	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr_reg(SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_COL_WIDTH);
-	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr_reg(SDRAM_COL_WIDTH-1	downto	0);
+	alias		bank							:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr_reg(SDRAM_BANK_WIDTH+SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH);
+	alias		row								:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr_reg(SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_COL_WIDTH);
+	alias		column						:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr_reg(SDRAM_COL_WIDTH-1	downto	0);
 
-begin
+	begin
 		-- Generate Statement
 		/**************************************************************
 		/ Normal PLL Generation	for Final Version delete PLL!!!																									
@@ -236,6 +238,8 @@ begin
 					
 					current_sdram_state	<=	next_sdram_state;
 					/*Default values for signal*/
+					ack									<=	'0';
+					ready								<=	'0';
 					sdram_dqml					<=	'1';									-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';									-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');
@@ -282,6 +286,9 @@ begin
 						
 						when idle 		=>
 							-- ToDo Idle Beh
+							
+							ready	<=	'1';
+							
 							if refresh_needed	=	'1'	then
 							
 								next_sdram_state	<=	refresh;
@@ -338,7 +345,7 @@ begin
 									-- Reading_Beh
 								end if;
 							elsif	wait_cnt	<= ACTIVE_WAIT-1	then
-							
+								
 								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_ba	<= 	bank;
 								sdram_a		<=	row;
@@ -395,5 +402,22 @@ begin
 					
 				end if;
 		end process	update_refresh_cnt;
+		
+		register_input	:	process(all)
+		
+			begin
+			
+				if rising_edge(sdram_clk)	then
+				
+					if ready	=	'1'	then
+						data_reg	<=	data;
+						addr_reg	<=	addr;
+						we_reg		<=	we;
+					end if;
+				
+				end if;
+				
+		
+		end process register_input;
 		
 end BEH_SDRAM_Controller_TOP;
