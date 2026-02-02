@@ -304,6 +304,9 @@ begin
 						
 						when activate		=>
 							-- ToDo activate Beh
+							cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+							sdram_ba	<= 	bank;
+							sdram_a		<=	row;
 							
 							if wait_cnt	= ACTIVE_WAIT-1 then
 							
@@ -312,7 +315,7 @@ begin
 									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									next_sdram_state	<=	writing;
 									sdram_ba					<= 	bank;
-									sdram_a						<=	row;
+									sdram_a						<=	"001" & column; -- Auto-Precharge A10 needs to be HIGH
 								
 								else
 									-- Reading_Beh
