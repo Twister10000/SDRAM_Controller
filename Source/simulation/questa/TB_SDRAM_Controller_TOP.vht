@@ -27,6 +27,7 @@
 
 LIBRARY ieee;                                               
 USE ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 use work.sdram_cmd_pkg.all;                             
 
 ENTITY SDRAM_Controller_TOP_vhd_tst IS
@@ -36,25 +37,25 @@ ARCHITECTURE SDRAM_Controller_TOP_arch OF SDRAM_Controller_TOP_vhd_tst IS
 constant	clk_period	:	time :=  10 ns;
 signal		USE_PLL			: boolean := false;                                                
 -- signals                                                   
-SIGNAL ack 						: STD_LOGIC;
-SIGNAL addr 					: STD_LOGIC_VECTOR(24 DOWNTO 0);
-SIGNAL CLK 						: STD_LOGIC;
-SIGNAL data 					: STD_LOGIC_VECTOR(31 DOWNTO 0);
-SIGNAL q 							: STD_LOGIC_VECTOR(31 DOWNTO 0);
-SIGNAL req 						: STD_LOGIC;
-SIGNAL reset 					: STD_LOGIC;
-SIGNAL sdram_a 				: STD_LOGIC_VECTOR(12 DOWNTO 0);
-SIGNAL sdram_ba 			: STD_LOGIC_VECTOR(1 DOWNTO 0);
-SIGNAL sdram_cas_n 		: STD_LOGIC;
-SIGNAL sdram_cke 			: STD_LOGIC;
-SIGNAL sdram_cs_n 		: STD_LOGIC;
-SIGNAL sdram_dq 			: STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL sdram_dqmh 		: STD_LOGIC;
-SIGNAL sdram_dqml 		: STD_LOGIC;
-SIGNAL sdram_ras_n 		: STD_LOGIC;
-SIGNAL sdram_we_n 		: STD_LOGIC;
-SIGNAL valid 					: STD_LOGIC;
-SIGNAL we 						: STD_LOGIC;
+SIGNAL ack 						: STD_LOGIC	:=	'0';
+SIGNAL addr 					: STD_LOGIC_VECTOR(24 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL CLK 						: STD_LOGIC	:=	'0';
+SIGNAL data 					: STD_LOGIC_VECTOR(31 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL q 							: STD_LOGIC_VECTOR(31 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL req 						: STD_LOGIC	:=	'0';
+SIGNAL reset 					: STD_LOGIC	:=	'0';
+SIGNAL sdram_a 				: STD_LOGIC_VECTOR(12 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL sdram_ba 			: STD_LOGIC_VECTOR(1 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL sdram_cas_n 		: STD_LOGIC	:=	'0';
+SIGNAL sdram_cke 			: STD_LOGIC	:=	'0';
+SIGNAL sdram_cs_n 		: STD_LOGIC	:=	'0';
+SIGNAL sdram_dq 			: STD_LOGIC_VECTOR(15 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL sdram_dqmh 		: STD_LOGIC	:=	'0';
+SIGNAL sdram_dqml 		: STD_LOGIC	:=	'0';
+SIGNAL sdram_ras_n 		: STD_LOGIC	:=	'0';
+SIGNAL sdram_we_n 		: STD_LOGIC	:=	'0';
+SIGNAL valid 					: STD_LOGIC	:=	'0';
+SIGNAL we 						: STD_LOGIC	:=	'0';
 COMPONENT SDRAM_Controller_TOP
 	generic	(USE_PLL : boolean := false);
 	PORT (
@@ -117,6 +118,16 @@ BEGIN
 	assert (false)	report "Load  Mode" severity note;
 	wait for 20	ns;
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
+	wait for 40 ns;
+	
+	assert (false)	report "Starting write process" severity note;
+	data 		<=	x"AFFE1234";
+	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
+	req			<=	'1';
+	we			<=	'1';
+	
+	wait for 40 ns;
+	assert (false)	report "Starting activate process" severity note;
 	
 	
 WAIT;                                                       
