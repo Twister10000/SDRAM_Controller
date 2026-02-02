@@ -11,7 +11,7 @@ add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sd
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_we_n
-add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} -expand -subitemconfig {/sdram_controller_top_vhd_tst/sdram_a(12) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(11) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(10) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(9) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(8) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(7) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(6) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(5) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(4) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(3) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(2) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(1) {-color {Dark Slate Blue}} /sdram_controller_top_vhd_tst/sdram_a(0) {-color {Dark Slate Blue}}} /sdram_controller_top_vhd_tst/sdram_a
+add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} /sdram_controller_top_vhd_tst/sdram_a
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_BANK -color Pink /sdram_controller_top_vhd_tst/sdram_ba
 add wave -noupdate -expand -group SDRAM_PINS -group SDRAM_DATA -color Orange /sdram_controller_top_vhd_tst/sdram_dq
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
@@ -21,7 +21,7 @@ add wave -noupdate -group USER-PIN /sdram_controller_top_vhd_tst/data
 add wave -noupdate -group USER-PIN /sdram_controller_top_vhd_tst/req
 add wave -noupdate -group USER-PIN /sdram_controller_top_vhd_tst/we
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200665000 ps} 1} {{Cursor 2} {200665038 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200645000 ps} 0} {{Cursor 2} {200675000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -37,4 +37,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200654442 ps} {201018188 ps}
+WaveRestoreZoom {200631036 ps} {200732159 ps}

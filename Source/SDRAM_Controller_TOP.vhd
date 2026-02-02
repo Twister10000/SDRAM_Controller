@@ -109,8 +109,8 @@ entity SDRAM_Controller_TOP is
     sdram_ras_n : out std_logic;
     sdram_cas_n : out std_logic;
     sdram_we_n  : out std_logic;
-    sdram_dqml  : out std_logic; 	-- SDRAM_LDQM
-    sdram_dqmh  : out std_logic		-- SDRAM_HDQM
+    sdram_dqml  : out std_logic	:=	'1'; 	-- SDRAM_LDQM
+    sdram_dqmh  : out std_logic	:=	'1'		-- SDRAM_HDQM
 	);
 end SDRAM_Controller_TOP;
 
