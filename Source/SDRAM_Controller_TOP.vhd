@@ -194,10 +194,16 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
 	
+	-- Registers declarations
+	signal	addr_reg			:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	data_reg			:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	q_reg					:	std_logic_vector(DATA_WIDTH-1	downto	0)	:=	(others	=>	'0');
+	signal	we_reg				:	std_logic	:= '0';
+	
 	-- alias declarations
-	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr(SDRAM_BANK_WIDTH+SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH);
-	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr(SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_COL_WIDTH);
-	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr(SDRAM_COL_WIDTH-1	downto	0);
+	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr_reg(SDRAM_BANK_WIDTH+SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH);
+	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr_reg(SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_COL_WIDTH);
+	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr_reg(SDRAM_COL_WIDTH-1	downto	0);
 
 begin
 		-- Generate Statement
