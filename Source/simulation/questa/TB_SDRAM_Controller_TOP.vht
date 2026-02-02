@@ -126,8 +126,12 @@ BEGIN
 	req			<=	'1';
 	we			<=	'1';
 	
-	wait for 40 ns;
-	assert (false)	report "Starting activate process" severity note;
+	wait until ack	=	'1';
+	assert (false)	report "data was written to registers" severity note;
+		data 	<=	(others	=>	'0');
+	addr		<=	(others	=>	'0');
+	req			<=	'0';
+	we			<=	'0';
 	
 	
 WAIT;                                                       
