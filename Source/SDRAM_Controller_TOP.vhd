@@ -136,7 +136,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 --	constant	CMD_LOAD_MODE							:	std_logic_vector(3	downto	0)	:=	"0000";
 --	constant	CMD_AUTO_REFRESH					:	std_logic_vector(3	downto	0)	:=	"0001";
 --	constant	CMD_PRECAHRGE							:	std_logic_vector(3	downto	0)	:=	"0010";
-					
+	
 	-- MODE Register				
 					
 	-- the ordering of the burst				
@@ -195,9 +195,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
 	
 	-- alias declarations
-	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr(24	downto	23);
-	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr(22	downto	10);
-	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr(9	downto	0);
+	alias		bank				:	std_logic_vector(SDRAM_BANK_WIDTH-1	downto	0)	is	addr(SDRAM_BANK_WIDTH+SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH);
+	alias		row					:	std_logic_vector(SDRAM_ROW_WIDTH-1	downto	0)	is	addr(SDRAM_ROW_WIDTH+SDRAM_COL_WIDTH-1	downto	SDRAM_COL_WIDTH);
+	alias		column			:	std_logic_vector(SDRAM_COL_WIDTH-1	downto	0)	is	addr(SDRAM_COL_WIDTH-1	downto	0);
 
 begin
 		-- Generate Statement
