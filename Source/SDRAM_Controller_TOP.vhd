@@ -332,7 +332,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 							if wait_cnt	= ACTIVE_WAIT-1 then
 								
-								if we	=	'1' then
+								if we_reg	=	'1' then
 								
 									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									next_sdram_state	<=	writing;
@@ -344,12 +344,17 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								else
 									-- Reading_Beh
 								end if;
-							elsif	wait_cnt	<= ACTIVE_WAIT-1	then
+							elsif	wait_cnt	= 0	then
 								
+								ack	<=	'1';
 								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_ba	<= 	bank;
 								sdram_a		<=	row;
-							
+							else
+								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								sdram_ba	<= 	bank;
+								sdram_a		<=	row;
+								
 							end if;
 							
 						when others	=> next_sdram_state <= idle;
