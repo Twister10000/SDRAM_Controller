@@ -304,9 +304,6 @@ begin
 						
 						when activate		=>
 							-- ToDo activate Beh
-							cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-							sdram_ba	<= 	bank;
-							sdram_a		<=	row;
 							
 							if wait_cnt	= ACTIVE_WAIT-1 then
 							
@@ -320,6 +317,11 @@ begin
 								else
 									-- Reading_Beh
 								end if;
+							elsif	wait_cnt	<= ACTIVE_WAIT-1	then
+							
+								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								sdram_ba	<= 	bank;
+								sdram_a		<=	row;
 							
 							end if;
 							
