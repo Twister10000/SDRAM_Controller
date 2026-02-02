@@ -268,7 +268,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 							elsif	wait_cnt	>=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1 and next_sdram_state = mode	then
 								
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								--cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_a		<= 	MODE_REGISTER_ADRESS;
 								sdram_ba	<=	MODE_REGISTER_BANK;		
 								
@@ -292,7 +292,12 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							if refresh_needed	=	'1'	then
 							
 								next_sdram_state	<=	refresh;
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								case next_sdram_state	is
+									when refresh	=>
+										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+									when others		=>
+										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								end case;	
 							
 							elsif	req	=	'1'	then
 							
@@ -305,8 +310,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						when writing	=>
 							-- ToDo writing Beh
+							sdram_dq <= data_reg((BURST_LENGTH-wait_cnt)*SDRAM_DATA_WIDTH-1 downto (BURST_LENGTH-wait_cnt-1)*SDRAM_DATA_WIDTH);
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready	<=	'1';
+								sdram_dq	<=	(others	=>	'Z');
 								if req = '1' then
 								
 									next_sdram_state	<=	activate;
@@ -350,13 +357,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							elsif	wait_cnt	= 0	then
 								
 								ack	<=	'1';
-								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_ba	<= 	bank;
 								sdram_a		<=	row;
 							else
-								cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								sdram_ba	<= 	bank;
-								sdram_a		<=	row;
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+--								sdram_ba	<= 	bank;
+--								sdram_a		<=	row;
 								
 							end if;
 							
