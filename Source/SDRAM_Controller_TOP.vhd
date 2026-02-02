@@ -305,14 +305,16 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						when writing	=>
 							-- ToDo writing Beh
-							if wait_cnt	= WRITE_WAIT-1	then
-							
-								next_sdram_state <= idle;
-							
-							else
-							
+							if wait_cnt	>= WRITE_WAIT-1	then
+								ready	<=	'1';
+								if req = '1' then
 								
-							
+									next_sdram_state	<=	activate;
+									cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								
+								else
+									next_sdram_state	<=	idle;
+								end if;
 							end if;
 							
 						when reading	=>
