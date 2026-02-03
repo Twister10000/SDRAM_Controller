@@ -47,6 +47,8 @@ entity SDRAM_Controller_TOP is
 		-- The number of 16-bit words to be bursted during a read/write.
     BURST_LENGTH 			: natural := 2;
 		
+		-- Amount of Refresh needed during Startup-Phase
+		REF_AMOUNT_INIT		:	natural		:=	8;					
 		
     -- timing values (in nanoseconds)
     --
@@ -58,7 +60,8 @@ entity SDRAM_Controller_TOP is
     T_RCD  						: real		 	:= 18.0; 			-- RAS to CAS delay
     T_RP   						: real		 	:= 18.0; 			-- precharge to activate delay
     T_WR   						: real		 	:= 12.0; 			-- write recovery time
-    T_REFI 						: real			:= 7812.5  		-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns		
+    T_REFI 						: real			:= 7812.5	  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns
+
 		
 	);
 
@@ -117,7 +120,7 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (init, mode, reading, writing, activate, idle, refresh);
+	type sdram_fsm_type is (init, refresh_init, mode, reading, writing, activate, idle, refresh);
 	
 	signal current_sdram_state				: sdram_fsm_type	:= 	init;
 	signal next_sdram_state						:	sdram_fsm_type	:=	init;
@@ -187,6 +190,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- signal declarations 
 	signal 	sdram_clk					: std_logic := 	'0';
 	signal	refresh_needed		:	std_logic	:=	'0';
+	signal	init_done					:	std_logic	:=	'0';
 	
 	-- Control signals declarations
 	
@@ -195,6 +199,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- Counter declarations
 	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
 	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
+	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
 	
 	-- Registers declarations
 	signal	addr_reg					:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
@@ -255,24 +260,28 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
 								
-							elsif	wait_cnt	=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1	then
+								
+							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= refresh	then
 							
-								next_sdram_state	<= mode;
+								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+								next_sdram_state	<=	refresh;
+								
+							end if;
+						when refresh_init	=>
+							
+							if refresh_init_cnt >= REF_AMOUNT_INIT then
+							
 								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_a		<= 	MODE_REGISTER_ADRESS;
 								sdram_ba	<=	MODE_REGISTER_BANK;
+								next_sdram_state	<=	mode;
 								
-							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= mode	then
-							
+							elsif refresh_init_cnt	<= REF_AMOUNT_INIT and next_sdram_state	/= refresh	then
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-							
-							elsif	wait_cnt	>=	(INIT_WAIT+PRECHARGE_WAIT+8*REFRESH_WAIT)-1 and next_sdram_state = mode	then
-								
-								--cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								sdram_a		<= 	MODE_REGISTER_ADRESS;
-								sdram_ba	<=	MODE_REGISTER_BANK;		
-								
+								next_sdram_state	<=	refresh;
 							end if;
+							
+						
 						
 						when mode			=>
 							
@@ -282,6 +291,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							if wait_cnt	>= LOAD_MODE_WAIT-1	then
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	idle;
+								init_done					<=	'1';
 							end if;
 						
 						when idle 		=>
@@ -329,11 +339,14 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 						when refresh	=>
 							-- ToDo refresh Beh
-							if wait_cnt	>= REFRESH_WAIT-1 then
+							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
 								
 								next_sdram_state	<=	idle;
 								ready	<=	'1';
-								
+							elsif	wait_cnt	>= REFRESH_WAIT-3 and next_sdram_state /= refresh_init	then
+								refresh_init_cnt	<=	refresh_init_cnt	+	1;
+								next_sdram_state	<=	refresh_init;
+						
 							end if;
 							
 						

@@ -3,8 +3,9 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate -expand -group Clock /sdram_controller_top_vhd_tst/CLK
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/current_sdram_state
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/next_sdram_state
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
+add wave -noupdate -expand -group Counter /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cs_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
@@ -24,8 +25,9 @@ add wave -noupdate -group Register -color Violet /sdram_controller_top_vhd_tst/i
 add wave -noupdate -group Register -color Violet /sdram_controller_top_vhd_tst/i1/we_reg
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
+add wave -noupdate /sdram_controller_top_vhd_tst/i1/init_done
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200665000 ps} 1} {{Cursor 2} {200554604 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200025000 ps} 1} {{Cursor 2} {200085000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -41,4 +43,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200539246 ps} {200621093 ps}
+WaveRestoreZoom {200485440 ps} {200706030 ps}
