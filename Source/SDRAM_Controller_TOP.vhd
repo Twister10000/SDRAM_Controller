@@ -305,17 +305,20 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									when others		=>
 										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								end case;	
-							elsif	req	=	'1'	then
+							elsif	req	=	'1' or next_sdram_state	/= idle	then
 								
 								case	next_sdram_state	is
 								
 									when	activate	=>
 										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										ready			<=	'0';
 									when others		=>	
 										next_sdram_state	<=	activate;
 										cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 										sdram_ba	<= 	bank;
 										sdram_a		<=	row;
+										ack				<=	'1';
+										ready			<=	'0';
 								end case;
 							end if;
 						
@@ -384,10 +387,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								else
 									-- Reading_Beh
 								end if;
-							elsif	wait_cnt	= 0	then
-								
-								ack	<=	'1';
-								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							else
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							end if;
