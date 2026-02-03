@@ -3,14 +3,14 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate -expand -group Clock /sdram_controller_top_vhd_tst/CLK
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/current_sdram_state
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/next_sdram_state
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
-add wave -noupdate -group Counter /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
+add wave -noupdate -expand -group Counter /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cs_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_we_n
-add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} /sdram_controller_top_vhd_tst/sdram_a
+add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} -subitemconfig {/sdram_controller_top_vhd_tst/sdram_a(12) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(11) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(10) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(9) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(8) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(7) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(6) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(5) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(4) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(3) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(2) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(1) {-color {Dark Slate Blue} -height 15} /sdram_controller_top_vhd_tst/sdram_a(0) {-color {Dark Slate Blue} -height 15}} /sdram_controller_top_vhd_tst/sdram_a
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_BANK -color Pink /sdram_controller_top_vhd_tst/sdram_ba
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_DATA -color Orange /sdram_controller_top_vhd_tst/sdram_dq
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
@@ -27,7 +27,7 @@ add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/write_data
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200619129 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200585000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -43,4 +43,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200609465 ps} {200703652 ps}
+WaveRestoreZoom {200563592 ps} {200644327 ps}

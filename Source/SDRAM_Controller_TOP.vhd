@@ -266,13 +266,14 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						when refresh_init	=>
 						
 							if refresh_init_cnt >= REF_AMOUNT_INIT then
+							if refresh_init_cnt >= REF_AMOUNT_INIT and next_sdram_state	/= mode then
 							
 								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								sdram_a		<= 	MODE_REGISTER_ADRESS;
 								sdram_ba	<=	MODE_REGISTER_BANK;
 								next_sdram_state	<=	mode;
 								
-							elsif refresh_init_cnt	<= REF_AMOUNT_INIT and next_sdram_state	/= refresh	then
+							elsif refresh_init_cnt	<= REF_AMOUNT_INIT and next_sdram_state	/= refresh and next_sdram_state	/= mode	then
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	refresh;
 							end if;
@@ -311,8 +312,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								
 									when	activate	=>
 										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-										--sdram_ba	<= 	bank;
-										--sdram_a		<=	row;
 									when others		=>	
 										next_sdram_state	<=	activate;
 										cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -323,8 +322,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						/*STATE: WRITING*/
 						when writing	=>
-							
-							sdram_dq	<=	write_data(word_index);
 							
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready				<=	'1';
@@ -381,8 +378,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								
 								ack	<=	'1';
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								--sdram_ba	<= 	bank;
-								--sdram_a		<=	row;
 							else
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							end if;
@@ -448,7 +443,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						for i in 0 to BURST_LENGTH-1 loop
 							write_data(i) <= data((i+1)*SDRAM_DATA_WIDTH-1 downto i*SDRAM_DATA_WIDTH);
 						end loop;
-						--data_reg	<=	data;
 						addr_reg	<=	addr;
 						we_reg		<=	we;
 					end if;
