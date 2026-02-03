@@ -3,9 +3,9 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate -expand -group Clock /sdram_controller_top_vhd_tst/CLK
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/current_sdram_state
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/next_sdram_state
-add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
-add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
-add wave -noupdate -expand -group Counter /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
+add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
+add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
+add wave -noupdate -group Counter -color {Medium Orchid} /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cs_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
@@ -19,7 +19,7 @@ add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/q
 add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/data
 add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/req
 add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/we
-add wave -noupdate -expand -group Register -color Violet -radix hexadecimal /sdram_controller_top_vhd_tst/i1/addr_reg
+add wave -noupdate -expand -group Register -color Violet -radix hexadecimal -childformat {{/sdram_controller_top_vhd_tst/i1/addr_reg(24) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(23) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(22) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(21) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(20) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(19) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(18) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(17) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(16) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(15) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(14) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(13) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(12) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(11) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(10) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(9) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(8) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(7) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(6) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(5) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(4) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(3) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(2) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(1) -radix hexadecimal} {/sdram_controller_top_vhd_tst/i1/addr_reg(0) -radix hexadecimal}} -subitemconfig {/sdram_controller_top_vhd_tst/i1/addr_reg(24) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(23) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(22) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(21) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(20) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(19) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(18) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(17) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(16) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(15) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(14) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(13) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(12) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(11) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(10) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(9) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(8) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(7) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(6) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(5) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(4) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(3) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(2) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(1) {-color Violet -height 15 -radix hexadecimal} /sdram_controller_top_vhd_tst/i1/addr_reg(0) {-color Violet -height 15 -radix hexadecimal}} /sdram_controller_top_vhd_tst/i1/addr_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/q_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/we_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/write_data
@@ -27,7 +27,7 @@ add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/write_data
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200635370 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200705000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -43,4 +43,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200935648 ps} {201003387 ps}
+WaveRestoreZoom {200767355 ps} {201012245 ps}
