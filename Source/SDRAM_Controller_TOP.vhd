@@ -330,16 +330,24 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								word_index	<=	0;
 								sdram_dq	<=	(others	=>	'Z');
 								if req = '1' then
-								
-									next_sdram_state	<=	activate;
-									cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								
+									case next_sdram_state	is	
+										when activate	=>
+											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											ready	<=	'0';
+										when others	=>
+											next_sdram_state	<=	activate;
+											cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											ack		<=	'1';
+											ready	<=	'0';
+									end case;
 								else
 									next_sdram_state	<=	idle;
 								end if;
 							elsif word_index	<=	BURST_LENGTH-1	then
 								word_index	<=	word_index	+	1;
-								sdram_dq	<=	write_data(word_index);								
+								sdram_dq	<=	write_data(word_index);
+							else
+								ready	<=	'1';
 							end if;
 						
 						/*STATE: READING*/	
