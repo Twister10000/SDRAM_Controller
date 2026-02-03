@@ -175,7 +175,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH;
 	
 	-- the number of clock cycles to wait for WRITE CMD is executed
-	constant	WRITE_WAIT				:	natural	:=	BURST_LENGTH+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
+	constant	WRITE_WAIT				:	natural	:=	BURST_LENGTH-2+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
 	
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
@@ -265,7 +265,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: REFRESH_INIT*/
 						when refresh_init	=>
 						
-							if refresh_init_cnt >= REF_AMOUNT_INIT then
 							if refresh_init_cnt >= REF_AMOUNT_INIT and next_sdram_state	/= mode then
 							
 								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -336,7 +335,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									next_sdram_state	<=	idle;
 								end if;
 							elsif word_index	<=	BURST_LENGTH-1	then
-								word_index	<=	word_index	+	1;								
+								word_index	<=	word_index	+	1;
+								sdram_dq	<=	write_data(word_index);								
 							end if;
 						
 						/*STATE: READING*/	
@@ -360,17 +360,27 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: ACTIVATE*/	
 						when activate		=>
 							
-							if wait_cnt	= ACTIVE_WAIT-1 then
+							if wait_cnt	>= ACTIVE_WAIT-1 then
 								
 								if we_reg	=	'1' then
-								
-									cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-									next_sdram_state	<=	writing;
-									sdram_ba					<= 	bank;
-									sdram_a						<=	"001" & column; -- Auto-Precharge A10 needs to be HIGH
-									sdram_dqml				<=	'0';	-- Enables lower input byte buffer
-									sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
-								
+									
+									case	next_sdram_state	is
+										when writing	=>
+											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											word_index	<=	word_index	+	1;
+											sdram_dq		<=	write_data(word_index);
+										when others		=>
+											
+										cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										next_sdram_state	<=	writing;
+										sdram_ba					<= 	bank;
+										sdram_a						<=	"001" & column; -- Auto-Precharge A10 needs to be HIGH
+										sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+										sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
+										
+										word_index	<=	word_index	+	1;
+										sdram_dq	<=	write_data(word_index);
+									end case;	
 								else
 									-- Reading_Beh
 								end if;
