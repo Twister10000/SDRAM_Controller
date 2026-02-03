@@ -45,7 +45,7 @@ entity SDRAM_Controller_TOP is
     CAS_LATENCY 			: natural := 2; -- 2=below 133MHz, 3=above 133MHz
 		
 		-- The number of 16-bit words to be bursted during a read/write.
-    BURST_LENGTH 			: natural := 2;
+    BURST_LENGTH 			: natural := 2; -- 1 | 2 | 4 | 8 
 		
 		-- Amount of Refresh needed during Startup-Phase
 		REF_AMOUNT_INIT		:	natural		:=	8;					
@@ -128,6 +128,12 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
 	
+	-- ARRAY Declarations
+	
+	type	data_reg_array	is array	(0 to BURST_LENGTH-1)	of	std_logic_vector(SDRAM_DATA_WIDTH-1	downto	0);
+	signal	write_data	:	data_reg_array	:=	(others => (others	=>	'0'));
+	
+	
 	-- MODE Register				
 					
 	-- the ordering of the burst				
@@ -185,9 +191,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	ready							:	std_logic	:=	'0';
 	
 	-- Counter declarations
-	signal	wait_cnt					:	integer	range 0 to 50e3	:= 	0;
-	signal	refresh_cnt				:	integer	range 0 to 50e3	:=	0;
+	signal	wait_cnt					:	integer	range 0 to 	50e3								:= 	0;
+	signal	refresh_cnt				:	integer	range 0 to 	50e3								:=	0;
 	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
+	signal	word_index				:	integer	range	0	to	BURST_LENGTH				:=	0;
 	
 	-- Registers declarations
 	signal	addr_reg					:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
@@ -304,8 +311,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								
 									when	activate	=>
 										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-										sdram_ba	<= 	bank;
-										sdram_a		<=	row;
+										--sdram_ba	<= 	bank;
+										--sdram_a		<=	row;
 									when others		=>	
 										next_sdram_state	<=	activate;
 										cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -317,9 +324,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: WRITING*/
 						when writing	=>
 							
-							sdram_dq <= data_reg((BURST_LENGTH-wait_cnt)*SDRAM_DATA_WIDTH-1 downto (BURST_LENGTH-wait_cnt-1)*SDRAM_DATA_WIDTH);
+							sdram_dq	<=	write_data(word_index);
+							
 							if wait_cnt	>= WRITE_WAIT-1	then
-								ready	<=	'1';
+								ready				<=	'1';
+								word_index	<=	0;
 								sdram_dq	<=	(others	=>	'Z');
 								if req = '1' then
 								
@@ -329,6 +338,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								else
 									next_sdram_state	<=	idle;
 								end if;
+							elsif word_index	<=	BURST_LENGTH-1	then
+								word_index	<=	word_index	+	1;								
 							end if;
 						
 						/*STATE: READING*/	
@@ -370,8 +381,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								
 								ack	<=	'1';
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								sdram_ba	<= 	bank;
-								sdram_a		<=	row;
+								--sdram_ba	<= 	bank;
+								--sdram_a		<=	row;
 							else
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 							end if;
@@ -434,7 +445,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 				if rising_edge(sdram_clk)	then
 				
 					if ready	=	'1'	then
-						data_reg	<=	data;
+						for i in 0 to BURST_LENGTH-1 loop
+							write_data(i) <= data((i+1)*SDRAM_DATA_WIDTH-1 downto i*SDRAM_DATA_WIDTH);
+						end loop;
+						--data_reg	<=	data;
 						addr_reg	<=	addr;
 						we_reg		<=	we;
 					end if;
