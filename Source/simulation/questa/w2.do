@@ -20,14 +20,14 @@ add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/data
 add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/req
 add wave -noupdate -expand -group USER-PIN /sdram_controller_top_vhd_tst/we
 add wave -noupdate -expand -group Register -color Violet -radix hexadecimal /sdram_controller_top_vhd_tst/i1/addr_reg
-add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/data_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/q_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/we_reg
+add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/write_data
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/write_data
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200585000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200635000 ps} 1} {{Cursor 2} {200635370 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -43,4 +43,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200923302 ps} {201004037 ps}
+WaveRestoreZoom {200935648 ps} {201003387 ps}

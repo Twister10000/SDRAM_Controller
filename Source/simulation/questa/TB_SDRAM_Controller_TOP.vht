@@ -128,7 +128,7 @@ BEGIN
 	
 	wait until ack	=	'1';
 	assert (false)	report "data was written to registers" severity note;
-		data 	<=	(others	=>	'0');
+	data 		<=	(others	=>	'0');
 	addr		<=	(others	=>	'0');
 	req			<=	'0';
 	we			<=	'0';
