@@ -26,7 +26,7 @@ add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_v
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200695000 ps} 1} {{Cursor 2} {200738236 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200695000 ps} 1} {{Cursor 2} {200372830 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -42,4 +42,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200603740 ps} {200801944 ps}
+WaveRestoreZoom {200046591 ps} {200928756 ps}
