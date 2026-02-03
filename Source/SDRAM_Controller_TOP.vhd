@@ -128,18 +128,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	attribute	syn_encoding	of	sdram_fsm_type : type is	"safe";
 	
-	-- constant declarations
-	-- CMD from COMMAND TRUTH Table
---	constant	CMD_DESELECT							:	std_logic_vector(3	downto	0)	:=	"1000";
---	constant	CMD_NOP										:	std_logic_vector(3	downto	0)	:=	"0111";
---	constant	CMD_BRST_STOP							:	std_logic_vector(3	downto	0)	:=	"0110";
---	constant	CMD_READ									:	std_logic_vector(3	downto	0)	:=	"0101";
---	constant	CMD_WRITE									:	std_logic_vector(3	downto	0)	:=	"0100";
---	constant	CMD_BANK_ACTIVATE					:	std_logic_vector(3	downto	0)	:=	"0011";
---	constant	CMD_LOAD_MODE							:	std_logic_vector(3	downto	0)	:=	"0000";
---	constant	CMD_AUTO_REFRESH					:	std_logic_vector(3	downto	0)	:=	"0001";
---	constant	CMD_PRECAHRGE							:	std_logic_vector(3	downto	0)	:=	"0010";
-	
 	-- MODE Register				
 					
 	-- the ordering of the burst				
@@ -251,24 +239,25 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					sdram_ba						<=	(others	=>	'0');
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 					
+					/*FSM for SDRAM_CONTROLLER*/
 					case current_sdram_state is
 						
+						/*STATE: INIT*/
 						when init			=>
-							-- ToDo init Beh
 						
 							if	wait_cnt	= INIT_WAIT-1	then
 							
 								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
 								
-								
 							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= refresh	then
 							
 								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								next_sdram_state	<=	refresh;
-								
 							end if;
-						when refresh_init	=>
 							
+						/*STATE: REFRESH_INIT*/
+						when refresh_init	=>
+						
 							if refresh_init_cnt >= REF_AMOUNT_INIT then
 							
 								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -281,8 +270,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								next_sdram_state	<=	refresh;
 							end if;
 							
-						
-						
+						/*STATE: LOAD MODE REGISTER*/
 						when mode			=>
 							
 							sdram_a		<= 	MODE_REGISTER_ADRESS;
@@ -293,22 +281,22 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								next_sdram_state	<=	idle;
 								init_done					<=	'1';
 							end if;
-						
+							
+						/*STATE: IDLE*/
 						when idle 		=>
-							-- ToDo Idle Beh
 							
 							ready	<=	'1';
 							
 							if refresh_needed	=	'1'	then
 							
 								next_sdram_state	<=	refresh;
+								
 								case next_sdram_state	is
 									when refresh	=>
 										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									when others		=>
 										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 								end case;	
-							
 							elsif	req	=	'1'	then
 							
 								next_sdram_state	<=	activate;
@@ -318,8 +306,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 							end if;
 						
+						/*STATE: WRITING*/
 						when writing	=>
-							-- ToDo writing Beh
+							
 							sdram_dq <= data_reg((BURST_LENGTH-wait_cnt)*SDRAM_DATA_WIDTH-1 downto (BURST_LENGTH-wait_cnt-1)*SDRAM_DATA_WIDTH);
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready	<=	'1';
@@ -333,25 +322,27 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									next_sdram_state	<=	idle;
 								end if;
 							end if;
-							
+						
+						/*STATE: READING*/	
 						when reading	=>
 							-- ToDo reading Beh
-							
+						
+						
+						/*STATE: REFRESH*/	
 						when refresh	=>
-							-- ToDo refresh Beh
+							
 							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
 								
 								next_sdram_state	<=	idle;
 								ready	<=	'1';
 							elsif	wait_cnt	>= REFRESH_WAIT-3 and next_sdram_state /= refresh_init	then
+								
 								refresh_init_cnt	<=	refresh_init_cnt	+	1;
 								next_sdram_state	<=	refresh_init;
-						
 							end if;
-							
 						
+						/*STATE: ACTIVATE*/	
 						when activate		=>
-							-- ToDo activate Beh
 							
 							if wait_cnt	= ACTIVE_WAIT-1 then
 								
@@ -375,14 +366,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								sdram_a		<=	row;
 							else
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
---								sdram_ba	<= 	bank;
---								sdram_a		<=	row;
-								
 							end if;
-							
+					
+						/*STATE: OTHERS*/	
 						when others	=> next_sdram_state <= idle;
 					end case;
-
 				end if;
 		end process main; 
 		
@@ -445,7 +433,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 				
 				end if;
 				
-		
 		end process register_input;
 		
 end BEH_SDRAM_Controller_TOP;
