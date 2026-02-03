@@ -130,7 +130,7 @@ BEGIN
 	assert (false)	report "data was written to registers" severity note;
 	data 		<=	(others	=>	'0');
 	addr		<=	(others	=>	'0');
-	req			<=	'0';
+	req			<=	'1';
 	we			<=	'0';
 	
 	
