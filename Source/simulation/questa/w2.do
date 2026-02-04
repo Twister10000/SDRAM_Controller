@@ -3,9 +3,9 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate -expand -group Clock /sdram_controller_top_vhd_tst/CLK
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/current_sdram_state
 add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/i1/next_sdram_state
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
-add wave -noupdate -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
-add wave -noupdate -group Counter -color {Medium Orchid} /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
+add wave -noupdate -expand -group Counter -color {Medium Orchid} /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cs_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
@@ -23,10 +23,12 @@ add wave -noupdate -expand -group Register -color Violet -radix hexadecimal -chi
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/q_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/we_reg
 add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/write_data
+add wave -noupdate -expand -group Register -color Violet /sdram_controller_top_vhd_tst/i1/read_data
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ready
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
+add wave -noupdate /sdram_controller_top_vhd_tst/i1/word_index
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200695000 ps} 1} {{Cursor 2} {200372830 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200735000 ps} 1} {{Cursor 2} {200759815 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -42,4 +44,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200161944 ps} {201044109 ps}
+WaveRestoreZoom {200874444 ps} {201006609 ps}
