@@ -140,23 +140,27 @@ BEGIN
 	we			<=	'0';
 	
 	
+	
+	
 	wait until  sdram_cs_n	=	'0' and  sdram_ras_n = '1' and sdram_cas_n = '0' and sdram_we_n = '0'	and sdram_a(10) = '1' for 0.1 ms;
 	wait for	10 ns;
 	assert (false)	report "Starting write process" severity note;
 	
-	if sdram_dq = x"1234" then
-	else
-		assert (false)	report "WRONG DATA" severity warning;
-	end if;
-	
-	wait until	sdram_dq(1)	=	'Z' for 0.1 ms;
-	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
-
+	wait until ack = '1' for 0.1 ms;
+	wait for 20 ns;
+	req			<=	'0';
 	data 		<=	(others	=>	'0');
 	addr		<=	(others	=>	'0');
-	wait until	ack	=	'0';
-	req			<=	'0';
-	we			<=	'0';
+	
+	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
+	
+	wait for (4*clk_period);
+	assert (false)	report "FIRST 16-BIT" severity note;
+	sdram_dq(15 downto	0)	<=	x"1234";
+	wait for clk_period;
+	assert (false)	report "SECOND 16-BIT" severity note;
+	sdram_dq(15 downto	0)	<=	x"AFFE";
+	
 	wait until valid	=	'1'	for 0.1 ms;
 	assert (false)	report "READING is DONE. DATA @ Q are valid" severity note;
 

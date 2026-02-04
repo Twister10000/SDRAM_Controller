@@ -425,7 +425,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 						/*STATE: REFRESH*/	
 						when refresh	=>
-							ready	<=	'1';
+							
 							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
 								
 								next_sdram_state	<=	idle;
