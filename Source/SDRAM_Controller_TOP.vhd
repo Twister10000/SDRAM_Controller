@@ -131,7 +131,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- ARRAY Declarations
 	
 	type	data_reg_array	is array	(0 to BURST_LENGTH-1)	of	std_logic_vector(SDRAM_DATA_WIDTH-1	downto	0);
-	signal	write_data	:	data_reg_array	:=	(others => (others	=>	'0'));
+	signal	write_data	:	data_reg_array	:=	(others =>	(others	=>	'0'));
+	signal	read_data		:	data_reg_array	:=	(others	=>	(others	=>	'0'));
 	
 	
 	-- MODE Register				
