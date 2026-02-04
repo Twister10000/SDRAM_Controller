@@ -309,19 +309,24 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								end case;	
 							elsif	req	=	'1' or next_sdram_state	/= idle	then
 								
-								case	next_sdram_state	is
+								if	refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-WRITE_WAIT-4 or refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-READ_WAIT-4	then
+									next_sdram_state	<=	refresh;
+								else
 								
-									when	activate	=>
-										cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-										ready			<=	'0';
-									when others		=>	
-										next_sdram_state	<=	activate;
-										cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-										sdram_ba	<= 	bank;
-										sdram_a		<=	row;
-										ack				<=	'1';
-										ready			<=	'0';
-								end case;
+									case	next_sdram_state	is
+									
+										when	activate	=>
+											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											ready			<=	'0';
+										when others		=>	
+											next_sdram_state	<=	activate;
+											cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											sdram_ba	<= 	bank;
+											sdram_a		<=	row;
+											ack				<=	'1';
+											ready			<=	'0';
+									end case;
+								end if;
 							end if;
 						
 						/*STATE: WRITING*/
@@ -331,7 +336,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								ready				<=	'1';
 								word_index	<=	0;
 								sdram_dq	<=	(others	=>	'Z');
-								if refresh_needed	=	'1'	then
+								if refresh_needed	=	'1' then
 									next_sdram_state	<=	refresh;
 									
 									case next_sdram_state	is -- case for Handle the FSM-Change-delay 
@@ -341,19 +346,23 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									end case;
 									
-								elsif req = '1' or next_sdram_state	= activate then
-								
-									case next_sdram_state	is	
-										when activate	=>
-											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-											ready	<=	'0';
-										when others	=>
-											next_sdram_state	<=	activate;
-											cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-											ack		<=	'1';
-											ready	<=	'0';
-									end case;
+								elsif req = '1' /*or next_sdram_state	= activate */then
 									
+									if	refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-WRITE_WAIT-6 or refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-READ_WAIT-6	then
+										next_sdram_state	<=	refresh;
+									else
+									
+										case next_sdram_state	is	
+											when activate	=>
+												cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												ready	<=	'0';
+											when others	=>
+												next_sdram_state	<=	activate;
+												cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												ack		<=	'1';
+												ready	<=	'0';
+										end case;
+									end if;
 								else
 									next_sdram_state	<=	idle;
 								end if;
@@ -416,7 +425,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 						/*STATE: REFRESH*/	
 						when refresh	=>
-							
+							ready	<=	'1';
 							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
 								
 								next_sdram_state	<=	idle;
@@ -425,6 +434,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								
 								refresh_init_cnt	<=	refresh_init_cnt	+	1;
 								next_sdram_state	<=	refresh_init;
+							
 							end if;
 						
 						/*STATE: ACTIVATE*/	
