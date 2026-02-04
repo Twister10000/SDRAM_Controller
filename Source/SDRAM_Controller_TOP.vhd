@@ -331,7 +331,18 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								ready				<=	'1';
 								word_index	<=	0;
 								sdram_dq	<=	(others	=>	'Z');
-								if req = '1' then
+								if refresh_needed	=	'1'	then
+									next_sdram_state	<=	refresh;
+									
+									case next_sdram_state	is -- case for Handle the FSM-Change-delay 
+										when refresh	=>
+											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										when others		=>
+											cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+									end case;
+									
+								elsif req = '1' then
+								
 									case next_sdram_state	is	
 										when activate	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -342,9 +353,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											ack		<=	'1';
 											ready	<=	'0';
 									end case;
+									
 								else
 									next_sdram_state	<=	idle;
 								end if;
+								
 							elsif word_index	<=	BURST_LENGTH-1	then
 								word_index	<=	word_index	+	1;
 								sdram_dq	<=	write_data(word_index);
@@ -355,8 +368,19 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: READING*/	
 						when reading	=>
 							-- ToDo reading Beh
-						
-						
+							if wait_cnt	>=	CAS_LATENCY-1	then -- wait CAS_LATENCY
+								
+								if word_index	> BURST_LENGTH-1	then
+									-- Fertig Gelesen
+									
+
+								else
+									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
+									read_data(word_index)	<=	sdram_dq;					-- write Data to OUTPUT ARRAY-REGISTER
+								end if;
+								
+							end if;
+							
 						/*STATE: REFRESH*/	
 						when refresh	=>
 							
