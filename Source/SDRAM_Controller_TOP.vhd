@@ -341,7 +341,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									end case;
 									
-								elsif req = '1' then
+								elsif req = '1' or next_sdram_state	= activate then
 								
 									case next_sdram_state	is	
 										when activate	=>
@@ -370,9 +370,42 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							-- ToDo reading Beh
 							if wait_cnt	>=	CAS_LATENCY-1	then -- wait CAS_LATENCY
 								
-								if word_index	> BURST_LENGTH-1	then
+								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
+									ready				<=	'1';
+									word_index	<=	0;
+									/*LOOP To OUTPUT READ DATA to Q OUTPUT*/
+									for i in 0 to BURST_LENGTH-1 loop
+										q((i+1)*SDRAM_DATA_WIDTH-1 downto	i*SDRAM_DATA_WIDTH)	<=	read_data(i);
+									end loop;
 									
+									valid	<=	'1';
+									
+									if	refresh_needed	=	'1'	then
+										next_sdram_state	<=	refresh;
+										
+										case next_sdram_state	is -- case for Handle the FSM-Change-delay 
+											when refresh	=>
+												cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											when others		=>
+												cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										end case;
+										
+									elsif	req	=	'1' or next_sdram_state	= activate	then -- NEW Operation	should be performed
+										
+										case next_sdram_state	is	
+											when activate	=>
+												cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												ready	<=	'0';
+											when others	=>
+												next_sdram_state	<=	activate;
+												cmd_activate(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												ack		<=	'1';
+												ready	<=	'0';
+										end case;		
+									else		-- Going back to IDLE
+										next_sdram_state	<= idle;
+									end if;
 
 								else
 									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
