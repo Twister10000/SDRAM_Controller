@@ -120,19 +120,40 @@ BEGIN
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
 	wait for 40 ns;
 	
-	assert (false)	report "Starting write process" severity note;
 	data 		<=	x"AFFE1234";
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	req			<=	'1';
 	we			<=	'1';
 	
-	wait until ack	=	'1';
+	wait until ack	=	'1'	for 0.1 ms;
 	assert (false)	report "data was written to registers" severity note;
 	data 		<=	(others	=>	'0');
 	addr		<=	(others	=>	'0');
 	req			<=	'1';
 	we			<=	'0';
 	
+	
+	wait until  sdram_cs_n	=	'0' and  sdram_ras_n = '1' and sdram_cas_n = '0' and sdram_we_n = '0'	and sdram_a(10) = '1' for 0.1 ms;
+	wait for	10 ns;
+	assert (false)	report "Starting write process" severity note;
+	
+	if sdram_dq = x"1234" then
+	
+	else
+		assert (false)	report "WRONG DATA" severity warning;
+	end if;
+
+	
+	wait until	sdram_dq(1)	=	'Z' for 0.1 ms;
+	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
+
+	data 		<=	(others	=>	'0');
+	addr		<=	(others	=>	'0');
+	req			<=	'0';
+	we			<=	'0';
+	wait until valid	=	'1'	for 0.1 ms;
+	assert (false)	report "READING is DONE. DATA @ Q are valid" severity note;
+
 	
 WAIT;                                                       
 END PROCESS init; 
