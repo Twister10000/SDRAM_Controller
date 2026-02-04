@@ -48,7 +48,7 @@ entity SDRAM_Controller_TOP is
     BURST_LENGTH 			: natural := 2; -- 1 | 2 | 4 | 8 
 		
 		-- Amount of Refresh needed during Startup-Phase
-		REF_AMOUNT_INIT		:	natural		:=	8;					
+		REF_AMOUNT_INIT		:	natural	:=	8;					
 		
     -- timing values (in nanoseconds)
     --
@@ -394,6 +394,20 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									end case;	
 								else
 									-- Reading_Beh
+									case next_sdram_state	is
+										when	reading	=>
+											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											
+										when others		=>												
+											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											next_sdram_state	<=	reading;
+											sdram_ba					<= 	bank;
+											sdram_a						<=	"001" & column; -- Auto-Precharge A10 needs to be HIGH
+											sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+											sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
+									end case;
+									
+									
 								end if;
 							else
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
