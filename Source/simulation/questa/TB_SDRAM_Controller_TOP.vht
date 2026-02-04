@@ -120,6 +120,13 @@ BEGIN
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
 	wait for 40 ns;
 	
+	/* -- This code is used to Test if no refresh violations occur
+	wait for 7 us;
+	wait for 70 * clk_period;
+	
+			wait for 7 us;
+	wait for 70 * clk_period;
+	*/
 	data 		<=	x"AFFE1234";
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	req			<=	'1';
@@ -138,17 +145,16 @@ BEGIN
 	assert (false)	report "Starting write process" severity note;
 	
 	if sdram_dq = x"1234" then
-	
 	else
 		assert (false)	report "WRONG DATA" severity warning;
 	end if;
-
 	
 	wait until	sdram_dq(1)	=	'Z' for 0.1 ms;
 	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
 
 	data 		<=	(others	=>	'0');
 	addr		<=	(others	=>	'0');
+	wait until	ack	=	'0';
 	req			<=	'0';
 	we			<=	'0';
 	wait until valid	=	'1'	for 0.1 ms;
