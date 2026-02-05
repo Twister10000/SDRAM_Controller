@@ -10,6 +10,7 @@ add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sd
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_we_n
+add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cke
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_ADRESS -color {Dark Slate Blue} /sdram_controller_top_vhd_tst/sdram_a
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_BANK -color Pink /sdram_controller_top_vhd_tst/sdram_ba
 add wave -noupdate -expand -group SDRAM_PINS -expand -group SDRAM_DATA -color Orange /sdram_controller_top_vhd_tst/sdram_dq
@@ -31,7 +32,7 @@ add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/word_index
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200735000 ps} 1} {{Cursor 2} {200787059 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200735000 ps} 1} {{Cursor 2} {200799708 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -47,4 +48,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200458052 ps} {201299190 ps}
+WaveRestoreZoom {200594177 ps} {201021360 ps}

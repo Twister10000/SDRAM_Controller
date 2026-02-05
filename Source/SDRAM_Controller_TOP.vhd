@@ -241,6 +241,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*Default values for signal*/
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
+					sdram_cke						<=	'1';
 					--valid								<=	'0';																-- Default Value should be 0
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
