@@ -241,7 +241,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*Default values for signal*/
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
-					valid								<=	'0';																-- Default Value should be 0
+					--valid								<=	'0';																-- Default Value should be 0
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');										-- Default Value should be 0
@@ -331,7 +331,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						/*STATE: WRITING*/
 						when writing	=>
-							
+							sdram_dqml	<=	'0';
+							sdram_dqmh	<=	'0';
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready				<=	'1';
 								word_index	<=	0;
@@ -377,6 +378,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: READING*/	
 						when reading	=>
 							-- ToDo reading Beh
+							sdram_dqml	<=	'0';
+							sdram_dqmh	<=	'0';
 							if wait_cnt	>=	CAS_LATENCY-1	then -- wait CAS_LATENCY
 								
 								if wait_cnt	>=	READ_WAIT-1	then
@@ -389,7 +392,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									end loop;
 									
 									valid	<=	'1';
-									
+									sdram_dq	<=	(others	=>	'Z');
 									if	refresh_needed	=	'1'	then
 										next_sdram_state	<=	refresh;
 										
@@ -449,6 +452,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											word_index	<=	word_index	+	1;
 											sdram_dq		<=	write_data(word_index);
+											sdram_dqml	<=	'0';
+											sdram_dqmh	<=	'0';
 										when others		=>
 											
 										cmd_write(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -466,6 +471,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									case next_sdram_state	is
 										when	reading	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+											valid	<=	'0';
 											
 										when others		=>												
 											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);

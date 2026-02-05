@@ -49,7 +49,7 @@ SIGNAL sdram_ba 			: STD_LOGIC_VECTOR(1 DOWNTO 0)	:=	(others	=>	'0');
 SIGNAL sdram_cas_n 		: STD_LOGIC	:=	'0';
 SIGNAL sdram_cke 			: STD_LOGIC	:=	'0';
 SIGNAL sdram_cs_n 		: STD_LOGIC	:=	'0';
-SIGNAL sdram_dq 			: STD_LOGIC_VECTOR(15 DOWNTO 0)	:=	(others	=>	'0');
+SIGNAL sdram_dq 			: STD_LOGIC_VECTOR(15 DOWNTO 0)	:=	(others	=>	'Z');
 SIGNAL sdram_dqmh 		: STD_LOGIC	:=	'0';
 SIGNAL sdram_dqml 		: STD_LOGIC	:=	'0';
 SIGNAL sdram_ras_n 		: STD_LOGIC	:=	'0';
@@ -135,7 +135,7 @@ BEGIN
 	wait until ack	=	'1'	for 0.1 ms;
 	assert (false)	report "data was written to registers" severity note;
 	data 		<=	(others	=>	'0');
-	addr		<=	(others	=>	'0');
+	--addr		<=	(others	=>	'0');
 	req			<=	'1';
 	we			<=	'0';
 	
@@ -150,7 +150,7 @@ BEGIN
 	wait for 20 ns;
 	req			<=	'0';
 	data 		<=	(others	=>	'0');
-	addr		<=	(others	=>	'0');
+	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	
 	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
 	
@@ -163,7 +163,7 @@ BEGIN
 	
 	wait until valid	=	'1'	for 0.1 ms;
 	assert (false)	report "READING is DONE. DATA @ Q are valid" severity note;
-
+	sdram_dq(15	downto	0)	<=	(others	=>	'Z');
 	
 WAIT;                                                       
 END PROCESS init; 
