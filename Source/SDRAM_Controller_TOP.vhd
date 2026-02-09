@@ -473,6 +473,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when	reading	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											valid	<=	'0';
+											sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+											sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 											
 										when others		=>												
 											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
