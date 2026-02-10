@@ -364,8 +364,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						/*STATE: WRITING*/
 						when writing	=>
-							sdram_dqml	<=	'0';
-							sdram_dqmh	<=	'0';
+						
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready				<=	'1';
 								word_index	<=	0;
@@ -402,6 +401,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								end if;
 								
 							elsif word_index	<=	BURST_LENGTH-1	then
+								sdram_dqml	<=	'0';
+								sdram_dqmh	<=	'0';
 								word_index	<=	word_index	+	1;
 								sdram_dq	<=	write_data(word_index);
 							else
