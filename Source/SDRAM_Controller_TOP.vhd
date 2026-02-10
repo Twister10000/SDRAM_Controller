@@ -120,7 +120,7 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (init, refresh_init, mode, reading, writing, activate, idle, refresh);
+	type sdram_fsm_type is (init, mode, reading, writing, activate, idle, refresh);
 	
 	signal current_sdram_state				: sdram_fsm_type	:= 	init;
 	signal next_sdram_state						:	sdram_fsm_type	:=	init;
@@ -181,11 +181,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
 	
-	
+	-- the number of Refersh CMD needed during INIT-PHASE
 	constant NUM_REFRESH : natural := 8;
 
-signal refresh_counter   : natural range 0 to 2*NUM_REFRESH;
-signal refresh_timer : natural range 0 to REFRESH_WAIT-1;
+
 	
 	-- signal declarations 
 	signal 	sdram_clk					: std_logic := 	'0';
@@ -201,6 +200,8 @@ signal refresh_timer : natural range 0 to REFRESH_WAIT-1;
 	signal	refresh_cnt				:	integer	range 0 to 	50e3								:=	0;
 	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
 	signal	word_index				:	integer	range	0	to	BURST_LENGTH				:=	0;
+	signal refresh_counter   	: integer range 0 to 2*NUM_REFRESH				:=	0;
+	signal refresh_timer 			: integer range 0 to REFRESH_WAIT-1				:=	0;
 	
 	-- Registers declarations
 	signal	addr_reg					:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
@@ -460,14 +461,10 @@ signal refresh_timer : natural range 0 to REFRESH_WAIT-1;
 						/*STATE: REFRESH*/	
 						when refresh	=>
 							
-							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
+							if wait_cnt	>= REFRESH_WAIT-3 then
 								
 								next_sdram_state	<=	idle;
 								ready	<=	'1';
-							elsif	wait_cnt	>= REFRESH_WAIT-3 and next_sdram_state /= refresh_init	then
-								
-								refresh_init_cnt	<=	refresh_init_cnt	+	1;
-								next_sdram_state	<=	refresh_init;
 							
 							end if;
 						
