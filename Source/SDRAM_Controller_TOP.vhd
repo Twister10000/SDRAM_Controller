@@ -248,12 +248,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
 					sdram_cke						<=	'1';
-					--valid								<=	'0';																-- Default Value should be 0
+					valid								<=	'0';																-- Default Value should be 0
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');										-- Default Value should be 0
 					sdram_ba						<=	(others	=>	'0');										-- Default Value should be 0
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);	-- Default CMD should be NOP
+					sdram_dq						<=	(others	=>	'Z');
 					
 					/*FSM for SDRAM_CONTROLLER*/
 					case current_sdram_state is
