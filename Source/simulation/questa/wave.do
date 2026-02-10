@@ -6,6 +6,8 @@ add wave -noupdate -expand -group FSM -color Cyan /sdram_controller_top_vhd_tst/
 add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/wait_cnt
 add wave -noupdate -expand -group Counter -color {Medium Orchid} -radix decimal /sdram_controller_top_vhd_tst/i1/refresh_cnt
 add wave -noupdate -expand -group Counter -color {Medium Orchid} /sdram_controller_top_vhd_tst/i1/refresh_init_cnt
+add wave -noupdate -expand -group Counter /sdram_controller_top_vhd_tst/i1/refresh_timer
+add wave -noupdate -expand -group Counter /sdram_controller_top_vhd_tst/i1/refresh_counter
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cs_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_ras_n
 add wave -noupdate -expand -group SDRAM_PINS /sdram_controller_top_vhd_tst/i1/sdram_cas_n
@@ -32,7 +34,7 @@ add wave -noupdate /sdram_controller_top_vhd_tst/i1/ack
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/word_index
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {200735000 ps} 1} {{Cursor 2} {200734931 ps} 0}
+WaveRestoreCursors {{Cursor 1} {200025000 ps} 1} {{Cursor 2} {200505000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -48,4 +50,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {200672357 ps} {200847563 ps}
+WaveRestoreZoom {200447689 ps} {200669856 ps}

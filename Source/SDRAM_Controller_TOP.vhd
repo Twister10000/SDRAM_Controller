@@ -182,6 +182,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
 	
 	
+	constant NUM_REFRESH : natural := 8;
+
+signal refresh_counter   : natural range 0 to 2*NUM_REFRESH;
+signal refresh_timer : natural range 0 to REFRESH_WAIT-1;
+	
 	-- signal declarations 
 	signal 	sdram_clk					: std_logic := 	'0';
 	signal	refresh_needed		:	std_logic	:=	'0';
@@ -252,32 +257,47 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*FSM for SDRAM_CONTROLLER*/
 					case current_sdram_state is
 						
-						/*STATE: INIT*/
+					/*STATE: INIT*/
 						when init			=>
 						
-							if	wait_cnt	= INIT_WAIT-1	then
-							
-								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
-								
-							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= refresh	then
-							
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<=	refresh;
-							end if;
-							
-						/*STATE: REFRESH_INIT*/
-						when refresh_init	=>
+							cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 						
-							if refresh_init_cnt >= REF_AMOUNT_INIT and next_sdram_state	/= mode then
-							
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								sdram_a		<= 	MODE_REGISTER_ADRESS;
-								sdram_ba	<=	MODE_REGISTER_BANK;
-								next_sdram_state	<=	mode;
-								
-							elsif refresh_init_cnt	<= REF_AMOUNT_INIT and next_sdram_state	/= refresh and next_sdram_state	/= mode	then
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<=	refresh;
+							-- Phase 0: Start
+							if wait_cnt = 0 then
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+						
+							-- Phase 1: Precharge
+							elsif wait_cnt = INIT_WAIT-1 then
+								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n,	sdram_a);
+								refresh_counter    <= 0;
+								refresh_timer			 <= 0;
+						
+							-- Phase 2: Refresh-Sequenz
+							elsif wait_cnt >= INIT_WAIT + PRECHARGE_WAIT -	1 then
+						
+								if	refresh_counter	=	0	then
+									
+									cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+									refresh_counter    	<= refresh_counter + 1;
+									refresh_timer 			<= 0;
+									
+								elsif refresh_timer = REFRESH_WAIT-1 then
+									
+									if refresh_counter	=	NUM_REFRESH	then
+										cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										sdram_a		<= 	MODE_REGISTER_ADRESS;
+										sdram_ba	<=	MODE_REGISTER_BANK;
+										next_sdram_state	<=	mode;
+									
+									else
+										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										refresh_counter    	<= refresh_counter + 1;
+										refresh_timer 			<= 0;
+									end if;
+								else
+									refresh_timer <= refresh_timer + 1;
+								end if;
+						
 							end if;
 							
 						/*STATE: LOAD MODE REGISTER*/
