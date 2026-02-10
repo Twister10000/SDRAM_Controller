@@ -103,7 +103,7 @@ entity SDRAM_Controller_TOP is
 		-- I/O for interfacing with SDRAM-Chip
 
 		--Inout ports
-    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'Z');
 		-- Output ports
 		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0)		:=	(others	=>	'0');
