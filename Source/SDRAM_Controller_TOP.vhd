@@ -283,11 +283,21 @@ signal refresh_timer : natural range 0 to REFRESH_WAIT-1;
 									
 								elsif refresh_timer = REFRESH_WAIT-1 then
 									
-									if refresh_counter	=	NUM_REFRESH	then
-										cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-										sdram_a		<= 	MODE_REGISTER_ADRESS;
-										sdram_ba	<=	MODE_REGISTER_BANK;
-										next_sdram_state	<=	mode;
+									if refresh_counter	=	NUM_REFRESH then
+										
+										case next_sdram_state	is	
+										
+											when mode	=>	cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												
+											when init	=>	
+												
+												cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												sdram_a		<= 	MODE_REGISTER_ADRESS;
+												sdram_ba	<=	MODE_REGISTER_BANK;
+												next_sdram_state	<=	mode;
+												
+											when others	=>	cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										end case;
 									
 									else
 										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
