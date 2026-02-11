@@ -415,7 +415,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							sdram_dqml	<=	'0';
 							sdram_dqmh	<=	'0';
 							if wait_cnt	>=	CAS_LATENCY	-	1	then -- wait CAS_LATENCY
-								
+								sdram_dqml	<=	'1';
+								sdram_dqmh	<=	'1';
 								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
 									ready				<=	'1';
