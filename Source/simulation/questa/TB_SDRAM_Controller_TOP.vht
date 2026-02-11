@@ -34,7 +34,7 @@ ENTITY SDRAM_Controller_TOP_vhd_tst IS
 END SDRAM_Controller_TOP_vhd_tst;
 ARCHITECTURE SDRAM_Controller_TOP_arch OF SDRAM_Controller_TOP_vhd_tst IS
 -- constants
-constant	clk_period	:	time :=  10 ns;
+constant	clk_period	:	time :=  7.5 ns;
 signal		USE_PLL			: boolean := false;                                                
 -- signals                                                   
 SIGNAL ack 						: STD_LOGIC	:=	'0';
@@ -112,13 +112,13 @@ BEGIN
 	assert (false)	report "Start" severity note;			
 	wait for 200.005 us;
 	assert (false)	report "Precharge" severity note;
-	wait for 20 ns;
+	wait for 15 ns;
 	assert (false)	report "Refresh" severity note;
-	wait for 480 ns;
+	wait for 360 ns;
 	assert (false)	report "Load  Mode" severity note;
-	wait for 20	ns;
+	wait for 15	ns;
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
-	wait for 40 ns;
+	wait for 30 ns;
 	
 	/* -- This code is used to Test if no refresh violations occur
 	wait for 7 us;
@@ -143,11 +143,11 @@ BEGIN
 	
 	
 	wait until  sdram_cs_n	=	'0' and  sdram_ras_n = '1' and sdram_cas_n = '0' and sdram_we_n = '0'	and sdram_a(10) = '1' for 0.1 ms;
-	wait for	10 ns;
+	wait for	7.5 ns;
 	assert (false)	report "Starting write process" severity note;
 	
 	wait until ack = '1' for 0.1 ms;
-	wait for 20 ns;
+	wait for 15 ns;
 	req			<=	'0';
 	data 		<=	(others	=>	'0');
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
@@ -160,6 +160,11 @@ BEGIN
 	wait for clk_period;
 	assert (false)	report "SECOND 16-BIT" severity note;
 	sdram_dq(15 downto	0)	<=	x"AFFE";
+	
+		wait for clk_period;
+	assert (false)	report "SECOND 16-BIT" severity note;
+	sdram_dq(15 downto	0)	<=	(others	=>	'Z');
+	
 	
 	wait until valid	=	'1'	for 0.1 ms;
 	assert (false)	report "READING is DONE. DATA @ Q are valid" severity note;

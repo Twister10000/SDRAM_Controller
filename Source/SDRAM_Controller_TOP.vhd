@@ -24,7 +24,7 @@ entity SDRAM_Controller_TOP is
 		
 		-- these value is needed to calculate time periods [MHz]
 		
-		CLK_FREQ					:	real 		:= 100.0;
+		CLK_FREQ					:	real 		:= 133.0;
 		
 		
 		-- 32-bit controller interface
@@ -55,10 +55,10 @@ entity SDRAM_Controller_TOP is
     -- These values can be adjusted to match the exact timing of your SDRAM
     -- chip (refer to the datasheet).
     T_DESL 						: real		 	:= 200000.0; 	-- startup delay
-    T_MRD  						: real		 	:= 12.0; 			-- mode register cycle time
+    T_MRD  						: real		 	:= 14.0; 			-- mode register cycle time
     T_RC   						: real		 	:= 60.0; 			-- row cycle time
-    T_RCD  						: real		 	:= 18.0; 			-- RAS to CAS delay
-    T_RP   						: real		 	:= 18.0; 			-- precharge to activate delay
+    T_RCD  						: real		 	:= 15.0; 			-- RAS to CAS delay
+    T_RP   						: real		 	:= 15.0; 			-- precharge to activate delay
     T_WR   						: real		 	:= 12.0; 			-- write recovery time
     T_REFI 						: real			:= 7812.5	  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns
 
@@ -247,14 +247,14 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*Default values for signal*/
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
-					sdram_cke						<=	'1';
 					valid								<=	'0';																-- Default Value should be 0
+					sdram_cke						<=	'1';																-- Default Value should be 1
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');										-- Default Value should be 0
 					sdram_ba						<=	(others	=>	'0');										-- Default Value should be 0
+					sdram_dq						<=	(others	=>	'Z');										-- Default Value should be Z
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);	-- Default CMD should be NOP
-					sdram_dq						<=	(others	=>	'Z');
 					
 					/*FSM for SDRAM_CONTROLLER*/
 					case current_sdram_state is
@@ -414,7 +414,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							-- ToDo reading Beh
 							sdram_dqml	<=	'0';
 							sdram_dqmh	<=	'0';
-							if wait_cnt	>=	CAS_LATENCY-1	then -- wait CAS_LATENCY
+							if wait_cnt	>=	CAS_LATENCY	-	1	then -- wait CAS_LATENCY
 								
 								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
