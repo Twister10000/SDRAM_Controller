@@ -54,7 +54,7 @@ entity SDRAM_Controller_TOP is
     --
     -- These values can be adjusted to match the exact timing of your SDRAM
     -- chip (refer to the datasheet).
-    T_DESL 						: real		 	:= 200000.0; 	-- startup delay
+    T_DESL 						: real		 	:= 100000.0; 	-- startup delay
     T_MRD  						: real		 	:= 14.0; 			-- mode register cycle time
     T_RC   						: real		 	:= 60.0; 			-- row cycle time
     T_RCD  						: real		 	:= 15.0; 			-- RAS to CAS delay
@@ -182,7 +182,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
 	
 	-- the number of Refersh CMD needed during INIT-PHASE
-	constant NUM_REFRESH : natural := 8;
+	constant NUM_REFRESH : natural := 2;
 
 
 	
@@ -412,11 +412,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: READING*/	
 						when reading	=>
 							-- ToDo reading Beh
-							sdram_dqml	<=	'0';
-							sdram_dqmh	<=	'0';
+							sdram_dqml	<=	'1';
+							sdram_dqmh	<=	'1';
 							if wait_cnt	>=	CAS_LATENCY	-	1	then -- wait CAS_LATENCY
-								sdram_dqml	<=	'1';
-								sdram_dqmh	<=	'1';
+								sdram_dqml	<=	'0';
+								sdram_dqmh	<=	'0';
 								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
 									ready				<=	'1';
@@ -503,8 +503,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when	reading	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											valid	<=	'0';
-											sdram_dqml				<=	'0';	-- Enables lower input byte buffer
-											sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
+											sdram_dqml				<=	'1';	-- Enables lower input byte buffer
+											sdram_dqmh				<=	'1';	-- Enables higher input byte buffer
 											
 										when others		=>												
 											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);

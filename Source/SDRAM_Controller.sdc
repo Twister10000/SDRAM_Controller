@@ -31,10 +31,10 @@ derive_clock_uncertainty
 #**************************************************************
 # Set Input Delay
 #**************************************************************
-#Output Data Hold Time 2.7ns
-set_input_delay -min -clock $SDRAM_PLL 3.0 [get_ports sdram_dq*]
+#Output Data Hold Time 2.5ns
+set_input_delay -min -clock $SDRAM_PLL 2.8 [get_ports sdram_dq*]
 #Output HIGH Impedance Time	5.4ns 
-set_input_delay -max -clock $SDRAM_PLL 5.9 [get_ports sdram_dq*]
+set_input_delay -max -clock $SDRAM_PLL 5.7 [get_ports sdram_dq*]
 
 #Controller Interface no timing requirments
 set_input_delay -min -clock $SDRAM_PLL 0 [get_ports {reset addr* data* we req}]

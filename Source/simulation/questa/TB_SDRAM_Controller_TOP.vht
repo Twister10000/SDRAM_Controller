@@ -110,7 +110,7 @@ init : PROCESS
 BEGIN                                                        
         -- code that executes only once
 	assert (false)	report "Start" severity note;			
-	wait for 200103.75 ns;
+	wait for 100103.75 ns;
 	assert (false)	report "Precharge" severity note;
 	wait for (2*clk_period);
 	assert (false)	report "Refresh" severity note;
