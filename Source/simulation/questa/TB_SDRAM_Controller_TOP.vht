@@ -142,7 +142,7 @@ BEGIN
 	
 	wait until ack = '1' for 0.1 ms;
 	wait for (1*clk_period);
-	req			<=	'1';
+	req			<=	'0';
 	data 		<=	(others	=>	'0');
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	

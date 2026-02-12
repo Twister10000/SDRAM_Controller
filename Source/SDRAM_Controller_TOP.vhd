@@ -560,7 +560,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						refresh_cnt				<=	0;
 						refresh_needed		<=	'0';
 						
-					elsif	refresh_cnt	>= REFRESH_CYCLE - 4 then
+					elsif	refresh_cnt	>= REFRESH_CYCLE - 7 then
 					
 						refresh_needed		<=	'1';
 						
