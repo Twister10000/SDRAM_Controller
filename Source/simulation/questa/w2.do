@@ -35,7 +35,7 @@ add wave -noupdate /sdram_controller_top_vhd_tst/i1/word_index
 add wave -noupdate /sdram_controller_top_vhd_tst/i1/refresh_needed
 add wave -noupdate -radix decimal /sdram_controller_top_vhd_tst/i1/INIT_WAIT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {100293750 ps} 1} {{Cursor 2} {100301250 ps} 0}
+WaveRestoreCursors {{Cursor 1} {100481250 ps} 1} {{Cursor 4} {100623572 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -51,4 +51,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {100850306 ps} {101007879 ps}
+WaveRestoreZoom {100720890 ps} {101014691 ps}

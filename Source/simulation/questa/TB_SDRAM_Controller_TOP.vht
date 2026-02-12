@@ -141,14 +141,14 @@ BEGIN
 	assert (false)	report "Starting write process" severity note;
 	
 	wait until ack = '1' for 0.1 ms;
-	wait for (2*clk_period);
-	req			<=	'0';
+	wait for (1*clk_period);
+	req			<=	'1';
 	data 		<=	(others	=>	'0');
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	
 	assert (false)	report "DATA OUT DONE. STARTING READING PROCESS" severity note;
 	
-	wait for (4*clk_period);
+	wait for (5*clk_period);
 	assert (false)	report "FIRST 16-BIT" severity note;
 	sdram_dq(15 downto	0)	<=	x"1234";
 	wait for clk_period;

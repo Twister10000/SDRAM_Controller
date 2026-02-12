@@ -173,7 +173,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	PRECHARGE_WAIT		:	natural	:=	natural(ceil(T_RP/CLK_PERIOD));
 	
 	-- the number of clock cycles to wait for READ CMD is executed
-	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH;
+	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH+natural(T_RP/CLK_PERIOD);
 	
 	-- the number of clock cycles to wait for WRITE CMD is executed
 	constant	WRITE_WAIT				:	natural	:=	BURST_LENGTH-2+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
@@ -376,7 +376,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									end case;
 									
-								elsif req = '1' /*or next_sdram_state	= activate */then
+								elsif req = '1' or next_sdram_state	= activate then
 									
 									if	refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-WRITE_WAIT-6 or refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-READ_WAIT-6	then
 										next_sdram_state	<=	refresh;
@@ -409,13 +409,15 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: READING*/	
 						when reading	=>
 							-- ToDo reading Beh
-							sdram_dqml	<=	'1';
-							sdram_dqmh	<=	'1';
+							sdram_dqml	<=	'0';
+							sdram_dqmh	<=	'0';
 							if wait_cnt	>=	CAS_LATENCY	-	1	then -- wait CAS_LATENCY
 								sdram_dqml	<=	'0';
 								sdram_dqmh	<=	'0';
 								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
+									sdram_dqml	<=	'1';
+									sdram_dqmh	<=	'1';
 									ready				<=	'1';
 									word_index	<=	0;
 									/*LOOP To OUTPUT READ DATA to Q OUTPUT*/
@@ -451,9 +453,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										next_sdram_state	<= idle;
 									end if;
 
-								else
+								elsif	word_index	<=	BURST_LENGTH-1	then
 									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
 									read_data(word_index)	<=	sdram_dq;					-- write Data to OUTPUT ARRAY-REGISTER
+								else
+									ready	<=	'1';
 								end if;
 								
 							end if;
@@ -500,8 +504,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when	reading	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											valid	<=	'0';
-											sdram_dqml				<=	'1';	-- Enables lower input byte buffer
-											sdram_dqmh				<=	'1';	-- Enables higher input byte buffer
+											sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+											sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 											
 										when others		=>												
 											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
