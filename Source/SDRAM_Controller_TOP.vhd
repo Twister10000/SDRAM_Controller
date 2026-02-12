@@ -10,7 +10,6 @@
 library ieee;
 use	ieee.std_logic_1164.all;
 use	ieee.numeric_std.all;
-use	ieee.std_logic_unsigned.all;
 use ieee.math_real.all;
 use work.sdram_cmd_pkg.all;
 
@@ -184,7 +183,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- the number of Refersh CMD needed during INIT-PHASE
 	constant NUM_REFRESH : natural := 2;
 
-
+	-- === DQ I/O Registers ===
+	signal dq_out_reg  : std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+	signal dq_in_reg   : std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+	signal dq_oe_reg   : std_logic	:=	'0';
 	
 	-- signal declarations 
 	signal 	sdram_clk					: std_logic := 	'0';
@@ -248,12 +250,12 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
 					valid								<=	'0';																-- Default Value should be 0
+					dq_oe_reg						<=	'0';																-- Default Value should be 0
 					sdram_cke						<=	'1';																-- Default Value should be 1
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');										-- Default Value should be 0
 					sdram_ba						<=	(others	=>	'0');										-- Default Value should be 0
-					sdram_dq						<=	(others	=>	'Z');										-- Default Value should be Z
 					cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);	-- Default CMD should be NOP
 					
 					/*FSM for SDRAM_CONTROLLER*/
@@ -365,7 +367,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready				<=	'1';
 								word_index	<=	0;
-								sdram_dq	<=	(others	=>	'Z');
 								if refresh_needed	=	'1' then
 									next_sdram_state	<=	refresh;
 									
@@ -401,7 +402,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								sdram_dqml	<=	'0';
 								sdram_dqmh	<=	'0';
 								word_index	<=	word_index	+	1;
-								sdram_dq	<=	write_data(word_index);
+								dq_oe_reg		<=	'1';
+								dq_out_reg 	<=	write_data(word_index);
 							else
 								ready	<=	'1';
 							end if;
@@ -426,7 +428,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									end loop;
 									
 									valid	<=	'1';
-									sdram_dq	<=	(others	=>	'Z');
 									if	refresh_needed	=	'1'	then
 										next_sdram_state	<=	refresh;
 										
@@ -455,7 +456,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 
 								elsif	word_index	<=	BURST_LENGTH-1	then
 									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
-									read_data(word_index)	<=	sdram_dq;					-- write Data to OUTPUT ARRAY-REGISTER
+									read_data(word_index) <= dq_in_reg;					-- write Data to OUTPUT ARRAY-REGISTER
 								else
 									ready				<=	'1';
 									sdram_dqml	<=	'1';
@@ -485,7 +486,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when writing	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											word_index	<=	word_index	+	1;
-											sdram_dq		<=	write_data(word_index);
+											dq_out_reg 	<= write_data(word_index);
+											dq_oe_reg  	<= '1';
 											sdram_dqml	<=	'0';
 											sdram_dqmh	<=	'0';
 										when others		=>
@@ -498,7 +500,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 										
 										word_index	<=	word_index	+	1;
-										sdram_dq	<=	write_data(word_index);
+										dq_out_reg 	<=	write_data(word_index);
+										dq_oe_reg  	<=	'1';
 									end case;	
 								else
 									-- Reading_Beh
@@ -593,4 +596,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 				
 		end process register_input;
 		
+	dq_io_registers : process(all)
+	begin
+			if rising_edge(sdram_clk) then
+					-- Eingang registrieren
+					dq_in_reg <= sdram_dq;
+			end if;
+	end process;
+	
+		sdram_dq <= dq_out_reg when dq_oe_reg = '1' else (others => 'Z');
 end BEH_SDRAM_Controller_TOP;
