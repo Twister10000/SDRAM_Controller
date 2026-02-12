@@ -158,7 +158,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- CLK_PERIOD in [ns]
 	constant	CLK_PERIOD				:	real		:=	1.0/CLK_FREQ*1000.0; 
 	-- number of clock cycles to wait before init
-	constant	INIT_WAIT					:	natural	:=	natural(ceil((T_DESL+600.0) / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
+	constant	INIT_WAIT					:	natural	:=	natural(ceil((T_DESL+400.0) / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
 	
 	-- the number of clock cycles to wait for LOAD_MODE CMD is executed
 	constant	LOAD_MODE_WAIT		:	natural	:=	natural(ceil(T_MRD/CLK_PERIOD));
@@ -314,9 +314,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							
 						/*STATE: LOAD MODE REGISTER*/
 						when mode			=>
-							
-							sdram_a		<= 	MODE_REGISTER_ADRESS;
-							sdram_ba	<=	MODE_REGISTER_BANK;
 							
 							if wait_cnt	>= LOAD_MODE_WAIT-1	then
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);

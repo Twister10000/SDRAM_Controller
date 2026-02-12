@@ -110,23 +110,17 @@ init : PROCESS
 BEGIN                                                        
         -- code that executes only once
 	assert (false)	report "Start" severity note;			
-	wait for 100103.75 ns;
+	wait for 100158.75 ns;
 	assert (false)	report "Precharge" severity note;
 	wait for (2*clk_period);
 	assert (false)	report "Refresh" severity note;
-	wait for (8*8*clk_period);
+	wait for (2*8*clk_period);
 	assert (false)	report "Load  Mode" severity note;
 	wait for (2*clk_period);
 	assert (false)	report "INIT DONE- READY for DATA" severity note;
 	wait for (4*clk_period);
 	
-	/* -- This code is used to Test if no refresh violations occur
-	wait for 7 us;
-	wait for 70 * clk_period;
 	
-			wait for 7 us;
-	wait for 70 * clk_period;
-	*/
 	data 		<=	x"AFFE1234";
 	addr		<=	std_logic_vector(to_unsigned(8388608, 25));
 	req			<=	'1';
