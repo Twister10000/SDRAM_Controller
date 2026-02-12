@@ -457,7 +457,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
 									read_data(word_index)	<=	sdram_dq;					-- write Data to OUTPUT ARRAY-REGISTER
 								else
-									ready	<=	'1';
+									ready				<=	'1';
+									sdram_dqml	<=	'1';
+									sdram_dqmh	<=	'1';
 								end if;
 								
 							end if;
