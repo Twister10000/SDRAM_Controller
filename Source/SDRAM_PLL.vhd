@@ -156,7 +156,7 @@ BEGIN
 		clk1_divide_by => 50,
 		clk1_duty_cycle => 50,
 		clk1_multiply_by => 133,
-		clk1_phase_shift => "3759",
+		clk1_phase_shift => "3000",
 		compensate_clock => "CLK0",
 		inclk0_input_frequency => 20000,
 		intended_device_family => "MAX 10",
@@ -280,10 +280,10 @@ END SYN;
 -- Retrieval info: PRIVATE: PHASE_RECONFIG_FEATURE_ENABLED STRING "1"
 -- Retrieval info: PRIVATE: PHASE_RECONFIG_INPUTS_CHECK STRING "0"
 -- Retrieval info: PRIVATE: PHASE_SHIFT0 STRING "0.00000000"
--- Retrieval info: PRIVATE: PHASE_SHIFT1 STRING "180.00000000"
+-- Retrieval info: PRIVATE: PHASE_SHIFT1 STRING "3.00000000"
 -- Retrieval info: PRIVATE: PHASE_SHIFT_STEP_ENABLED_CHECK STRING "0"
 -- Retrieval info: PRIVATE: PHASE_SHIFT_UNIT0 STRING "ns"
--- Retrieval info: PRIVATE: PHASE_SHIFT_UNIT1 STRING "deg"
+-- Retrieval info: PRIVATE: PHASE_SHIFT_UNIT1 STRING "ns"
 -- Retrieval info: PRIVATE: PLL_ADVANCED_PARAM_CHECK STRING "0"
 -- Retrieval info: PRIVATE: PLL_ARESET_CHECK STRING "1"
 -- Retrieval info: PRIVATE: PLL_AUTOPLL_CHECK NUMERIC "1"
@@ -328,7 +328,7 @@ END SYN;
 -- Retrieval info: CONSTANT: CLK1_DIVIDE_BY NUMERIC "50"
 -- Retrieval info: CONSTANT: CLK1_DUTY_CYCLE NUMERIC "50"
 -- Retrieval info: CONSTANT: CLK1_MULTIPLY_BY NUMERIC "133"
--- Retrieval info: CONSTANT: CLK1_PHASE_SHIFT STRING "3759"
+-- Retrieval info: CONSTANT: CLK1_PHASE_SHIFT STRING "3000"
 -- Retrieval info: CONSTANT: COMPENSATE_CLOCK STRING "CLK0"
 -- Retrieval info: CONSTANT: INCLK0_INPUT_FREQUENCY NUMERIC "20000"
 -- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "MAX 10"
