@@ -199,8 +199,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	ready							:	std_logic	:=	'0';
 	
 	-- Counter declarations
-	signal	wait_cnt					:	integer	range 0 to 	5e3								:= 	0;
-	signal	refresh_cnt				:	integer	range 0 to 	5e3								:=	0;
+	signal	wait_cnt					:	integer	range 0 to 	20e3								:= 	0;
+	signal	refresh_cnt				:	integer	range 0 to 	20e3								:=	0;
 	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
 	signal	word_index				:	integer	range	0	to	BURST_LENGTH				:=	0;
 	signal refresh_counter   	: integer range 0 to 2*NUM_REFRESH				:=	0;
@@ -415,7 +415,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							-- ToDo reading Beh
 							sdram_dqml	<=	'0';
 							sdram_dqmh	<=	'0';
-							if wait_cnt	>=	CAS_LATENCY	-	1	then -- wait CAS_LATENCY
+							if wait_cnt	>=	CAS_LATENCY	then -- wait CAS_LATENCY
 								sdram_dqml	<=	'0';
 								sdram_dqmh	<=	'0';
 								if wait_cnt	>=	READ_WAIT-1	then
