@@ -13,7 +13,8 @@ create_clock -period "50.0 MHz" [get_ports CLK]
 #**************************************************************
 
 derive_pll_clocks -create_base_clocks
-set SDRAM_PLL	{ \PLL:PLL1|altpll_component|auto_generated|pll1|clk[0]}
+set SYS_CLK	{ \PLL:PLL1|altpll_component|auto_generated|pll1|clk[0]}
+set SDRAM_CLK	{ \PLL:PLL1|altpll_component|auto_generated|pll1|clk[1]}
 
 #**************************************************************
 # Set Clock Latency
@@ -32,14 +33,14 @@ derive_clock_uncertainty
 # Set Input Delay
 #**************************************************************
 #Output Data Hold Time 2.5ns
-set_input_delay -min -clock $SDRAM_PLL 2.8 [get_ports sdram_dq*]
+set_input_delay -min -clock $SDRAM_CLK 2.8 [get_ports sdram_dq*]
 #Output HIGH Impedance Time	5.4ns 
-set_input_delay -max -clock $SDRAM_PLL 5.7 [get_ports sdram_dq*]
+set_input_delay -max -clock $SDRAM_CLK 5.7 [get_ports sdram_dq*]
 
 #Controller Interface no timing requirments
-set_input_delay -min -clock $SDRAM_PLL 0 [get_ports {reset addr* data* we req}]
+set_input_delay -min -clock $SYS_CLK 0 [get_ports {reset addr* data* we req}]
 
-set_input_delay -max -clock $SDRAM_PLL 0 [get_ports {reset addr* data* we req}]
+set_input_delay -max -clock $SYS_CLK 0 [get_ports {reset addr* data* we req}]
 
 						  
 #**************************************************************
@@ -47,19 +48,19 @@ set_input_delay -max -clock $SDRAM_PLL 0 [get_ports {reset addr* data* we req}]
 #**************************************************************
 
 # Input Data Hold Time 0.8ns !negative because hold Time
-set_output_delay -min -clock $SDRAM_PLL -0.9 [get_ports sdram_dq*]
+set_output_delay -min -clock $SDRAM_CLK -1.0 [get_ports sdram_dq*]
 # Input Data Setup Time(2) 1.5ns 
-set_output_delay -max -clock $SDRAM_PLL 1.6 [get_ports sdram_dq*]
+set_output_delay -max -clock $SDRAM_CLK 2.5 [get_ports sdram_dq*]
 
 # Address Hold Time & Command Hold Time (CS, RAS, CAS, WE, DQM) 0.8ns !negative because hold Time
-set_output_delay -min -clock $SDRAM_PLL -0.9 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
+set_output_delay -min -clock $SDRAM_CLK -1.0 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
 # Address Setup Time(2) 1.5ns & Command Setup Time (CS, RAS, CAS, WE, DQM) 1.5ns
-set_output_delay -max -clock $SDRAM_PLL 1.6 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
+set_output_delay -max -clock $SDRAM_CLK 2.5 [get_ports {sdram_a* sdram_ba* sdram_ba sdram_cke sdram_cs_n sdram_ras_n sdram_cas_n sdram_we_n sdram_dqml sdram_dqmh}]
 
 #Controller Interface no timing requirments
-set_output_delay -min -clock $SDRAM_PLL 0 [get_ports {ack valid q*}]
+set_output_delay -min -clock $SYS_CLK 0 [get_ports { ack valid q*}]
 
-set_output_delay -max -clock $SDRAM_PLL 0 [get_ports {ack valid q*}]
+set_output_delay -max -clock $SYS_CLK 0 [get_ports { ack valid q*}]
 
 
 #**************************************************************
@@ -77,7 +78,7 @@ set_output_delay -max -clock $SDRAM_PLL 0 [get_ports {ack valid q*}]
 #**************************************************************
 # Set Multicycle Path
 #**************************************************************
-
+set_multicycle_path -setup -end -from $SDRAM_CLK -to $SYS_CLK 1
 
 
 #**************************************************************

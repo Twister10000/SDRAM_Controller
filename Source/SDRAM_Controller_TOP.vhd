@@ -47,7 +47,7 @@ entity SDRAM_Controller_TOP is
     BURST_LENGTH 			: natural := 2; -- 1 | 2 | 4 | 8 
 		
 		-- Amount of Refresh needed during Startup-Phase
-		REF_AMOUNT_INIT		:	natural	:=	8;					
+		REF_AMOUNT_INIT		:	natural	:=	2;					
 		
     -- timing values (in nanoseconds)
     --
@@ -107,6 +107,7 @@ entity SDRAM_Controller_TOP is
 		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_cke   : out std_logic;
+		sdram_ck		:	out	std_logic;
     sdram_cs_n  : out std_logic;
     sdram_ras_n : out std_logic;
     sdram_cas_n : out std_logic;
@@ -198,8 +199,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	ready							:	std_logic	:=	'0';
 	
 	-- Counter declarations
-	signal	wait_cnt					:	integer	range 0 to 	50e3								:= 	0;
-	signal	refresh_cnt				:	integer	range 0 to 	50e3								:=	0;
+	signal	wait_cnt					:	integer	range 0 to 	5e3								:= 	0;
+	signal	refresh_cnt				:	integer	range 0 to 	5e3								:=	0;
 	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
 	signal	word_index				:	integer	range	0	to	BURST_LENGTH				:=	0;
 	signal refresh_counter   	: integer range 0 to 2*NUM_REFRESH				:=	0;
@@ -227,6 +228,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
         port map(
           
           inclk0 	=> clk,
+					c1 			=>	sdram_ck,
           c0			=> sdram_clk);
 					
     end generate PLL;
