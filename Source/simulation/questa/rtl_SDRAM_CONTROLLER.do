@@ -48,7 +48,7 @@ vcom -reportprogress 300 -work work TB_SDRAM_Controller_TOP.vht
 quit -sim
 vsim -t 1ps -voptargs="+acc" -gui -msgmode both -displaymsgmode both work.SDRAM_Controller_TOP_vhd_tst
 do wave.do
-run 201us
+run 101us
 
 #create backup
 write format wave -window .main_pane.wave.interior.cs.body.pw.wf {./w2.do}

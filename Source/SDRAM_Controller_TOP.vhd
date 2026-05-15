@@ -10,7 +10,6 @@
 library ieee;
 use	ieee.std_logic_1164.all;
 use	ieee.numeric_std.all;
-use	ieee.std_logic_unsigned.all;
 use ieee.math_real.all;
 use work.sdram_cmd_pkg.all;
 
@@ -24,7 +23,7 @@ entity SDRAM_Controller_TOP is
 		
 		-- these value is needed to calculate time periods [MHz]
 		
-		CLK_FREQ					:	real 		:= 100.0;
+		CLK_FREQ					:	real 		:= 133.0;
 		
 		
 		-- 32-bit controller interface
@@ -48,17 +47,17 @@ entity SDRAM_Controller_TOP is
     BURST_LENGTH 			: natural := 2; -- 1 | 2 | 4 | 8 
 		
 		-- Amount of Refresh needed during Startup-Phase
-		REF_AMOUNT_INIT		:	natural	:=	8;					
+		REF_AMOUNT_INIT		:	natural	:=	2;					
 		
     -- timing values (in nanoseconds)
     --
     -- These values can be adjusted to match the exact timing of your SDRAM
     -- chip (refer to the datasheet).
-    T_DESL 						: real		 	:= 200000.0; 	-- startup delay
-    T_MRD  						: real		 	:= 12.0; 			-- mode register cycle time
+    T_DESL 						: real		 	:= 100000.0; 	-- startup delay
+    T_MRD  						: real		 	:= 14.0; 			-- mode register cycle time
     T_RC   						: real		 	:= 60.0; 			-- row cycle time
-    T_RCD  						: real		 	:= 18.0; 			-- RAS to CAS delay
-    T_RP   						: real		 	:= 18.0; 			-- precharge to activate delay
+    T_RCD  						: real		 	:= 15.0; 			-- RAS to CAS delay
+    T_RP   						: real		 	:= 15.0; 			-- precharge to activate delay
     T_WR   						: real		 	:= 12.0; 			-- write recovery time
     T_REFI 						: real			:= 7812.5	  	-- average refresh interval 8192Zyklen allen 64ms 64m/8192 = 7812.5ns
 
@@ -103,11 +102,12 @@ entity SDRAM_Controller_TOP is
 		-- I/O for interfacing with SDRAM-Chip
 
 		--Inout ports
-    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+    sdram_dq    : inout std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'Z');
 		-- Output ports
 		sdram_a     : out std_logic_vector(SDRAM_ADDR_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_ba    : out std_logic_vector(SDRAM_BANK_WIDTH-1 downto 0)		:=	(others	=>	'0');
     sdram_cke   : out std_logic;
+		sdram_ck		:	out	std_logic;
     sdram_cs_n  : out std_logic;
     sdram_ras_n : out std_logic;
     sdram_cas_n : out std_logic;
@@ -120,7 +120,7 @@ end SDRAM_Controller_TOP;
 architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	
 	-- FSM Declarations
-	type sdram_fsm_type is (init, refresh_init, mode, reading, writing, activate, idle, refresh);
+	type sdram_fsm_type is (init, mode, reading, writing, activate, idle, refresh);
 	
 	signal current_sdram_state				: sdram_fsm_type	:= 	init;
 	signal next_sdram_state						:	sdram_fsm_type	:=	init;
@@ -158,7 +158,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- CLK_PERIOD in [ns]
 	constant	CLK_PERIOD				:	real		:=	1.0/CLK_FREQ*1000.0; 
 	-- number of clock cycles to wait before init
-	constant	INIT_WAIT					:	natural	:=	natural(ceil(T_DESL / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
+	constant	INIT_WAIT					:	natural	:=	natural(ceil((T_DESL+400.0) / CLK_PERIOD)); -- ceil rounds the number to the next greater value and returns it as REAL var.
 	
 	-- the number of clock cycles to wait for LOAD_MODE CMD is executed
 	constant	LOAD_MODE_WAIT		:	natural	:=	natural(ceil(T_MRD/CLK_PERIOD));
@@ -173,7 +173,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	constant	PRECHARGE_WAIT		:	natural	:=	natural(ceil(T_RP/CLK_PERIOD));
 	
 	-- the number of clock cycles to wait for READ CMD is executed
-	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH;
+	constant	READ_WAIT					:	natural	:=	CAS_LATENCY+BURST_LENGTH+natural(T_RP/CLK_PERIOD);
 	
 	-- the number of clock cycles to wait for WRITE CMD is executed
 	constant	WRITE_WAIT				:	natural	:=	BURST_LENGTH-2+natural(ceil((T_RP+T_WR)/CLK_PERIOD));
@@ -181,6 +181,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	-- the number of clock cycles befor REFRESH CMD is needed to prevent data loss!
 	constant	REFRESH_CYCLE			:	natural	:=	natural(floor(T_REFI/CLK_PERIOD)); -- Alle 781 Zyklen Refresh CMD
 	
+	-- the number of Refersh CMD needed during INIT-PHASE
+	constant NUM_REFRESH : natural := 2;
+
+	-- === DQ I/O Registers ===
+	signal dq_out_reg  : std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+	signal dq_in_reg   : std_logic_vector(SDRAM_DATA_WIDTH-1 downto 0)	:=	(others	=>	'0');
+	signal dq_oe_reg   : std_logic	:=	'0';
 	
 	-- signal declarations 
 	signal 	sdram_clk					: std_logic := 	'0';
@@ -192,10 +199,12 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 	signal	ready							:	std_logic	:=	'0';
 	
 	-- Counter declarations
-	signal	wait_cnt					:	integer	range 0 to 	50e3								:= 	0;
-	signal	refresh_cnt				:	integer	range 0 to 	50e3								:=	0;
+	signal	wait_cnt					:	integer	range 0 to 	20e3								:= 	0;
+	signal	refresh_cnt				:	integer	range 0 to 	20e3								:=	0;
 	signal	refresh_init_cnt	:	integer	range	0	to	REF_AMOUNT_INIT+1		:=	0;
 	signal	word_index				:	integer	range	0	to	BURST_LENGTH				:=	0;
+	signal refresh_counter   	: integer range 0 to 2*NUM_REFRESH				:=	0;
+	signal refresh_timer 			: integer range 0 to REFRESH_WAIT-1				:=	0;
 	
 	-- Registers declarations
 	signal	addr_reg					:	std_logic_vector(SDRAM_BANK_WIDTH+SDRAM_COL_WIDTH+SDRAM_ROW_WIDTH-1	downto	0)	:=	(others	=>	'0');
@@ -219,6 +228,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
         port map(
           
           inclk0 	=> clk,
+					c1 			=>	sdram_ck,
           c0			=> sdram_clk);
 					
     end generate PLL;
@@ -241,8 +251,9 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*Default values for signal*/
 					ack									<=	'0';																-- Default Value should be 0
 					ready								<=	'0';																-- Default Value should be 0
-					sdram_cke						<=	'1';
-					--valid								<=	'0';																-- Default Value should be 0
+					valid								<=	'0';																-- Default Value should be 0
+					dq_oe_reg						<=	'0';																-- Default Value should be 0
+					sdram_cke						<=	'1';																-- Default Value should be 1
 					sdram_dqml					<=	'1';																-- Disables lower input byte buffer
 					sdram_dqmh					<=	'1';																-- Disables higher input byte buffer
 					sdram_a							<=	(others	=>	'0');										-- Default Value should be 0
@@ -252,39 +263,61 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 					/*FSM for SDRAM_CONTROLLER*/
 					case current_sdram_state is
 						
-						/*STATE: INIT*/
+					/*STATE: INIT*/
 						when init			=>
 						
-							if	wait_cnt	= INIT_WAIT-1	then
-							
-								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n, sdram_a);
-								
-							elsif	wait_cnt	>= (INIT_WAIT+PRECHARGE_WAIT)-1 and next_sdram_state /= refresh	then
-							
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<=	refresh;
-							end if;
-							
-						/*STATE: REFRESH_INIT*/
-						when refresh_init	=>
+							cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 						
-							if refresh_init_cnt >= REF_AMOUNT_INIT and next_sdram_state	/= mode then
-							
-								cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								sdram_a		<= 	MODE_REGISTER_ADRESS;
-								sdram_ba	<=	MODE_REGISTER_BANK;
-								next_sdram_state	<=	mode;
-								
-							elsif refresh_init_cnt	<= REF_AMOUNT_INIT and next_sdram_state	/= refresh and next_sdram_state	/= mode	then
-								cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
-								next_sdram_state	<=	refresh;
+							-- Phase 0: Start
+							if wait_cnt = 0 then
+								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+						
+							-- Phase 1: Precharge
+							elsif wait_cnt = INIT_WAIT-1 then
+								cmd_precharge_all(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n,	sdram_a);
+								refresh_counter    <= 0;
+								refresh_timer			 <= 0;
+						
+							-- Phase 2: Refresh-Sequenz
+							elsif wait_cnt >= INIT_WAIT + PRECHARGE_WAIT -	1 then
+						
+								if	refresh_counter	=	0	then
+									
+									cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+									refresh_counter    	<= refresh_counter + 1;
+									refresh_timer 			<= 0;
+									
+								elsif refresh_timer = REFRESH_WAIT-1 then
+									
+									if refresh_counter	=	NUM_REFRESH then
+										
+										case next_sdram_state	is	
+										
+											when mode	=>	cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												
+											when init	=>	
+												
+												cmd_load_mode_reg(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+												sdram_a		<= 	MODE_REGISTER_ADRESS;
+												sdram_ba	<=	MODE_REGISTER_BANK;
+												next_sdram_state	<=	mode;
+												
+											when others	=>	cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										end case;
+									
+									else
+										cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
+										refresh_counter    	<= refresh_counter + 1;
+										refresh_timer 			<= 0;
+									end if;
+								else
+									refresh_timer <= refresh_timer + 1;
+								end if;
+						
 							end if;
 							
 						/*STATE: LOAD MODE REGISTER*/
 						when mode			=>
-							
-							sdram_a		<= 	MODE_REGISTER_ADRESS;
-							sdram_ba	<=	MODE_REGISTER_BANK;
 							
 							if wait_cnt	>= LOAD_MODE_WAIT-1	then
 								cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -332,12 +365,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						
 						/*STATE: WRITING*/
 						when writing	=>
-							sdram_dqml	<=	'0';
-							sdram_dqmh	<=	'0';
+						
 							if wait_cnt	>= WRITE_WAIT-1	then
 								ready				<=	'1';
 								word_index	<=	0;
-								sdram_dq	<=	(others	=>	'Z');
 								if refresh_needed	=	'1' then
 									next_sdram_state	<=	refresh;
 									
@@ -348,7 +379,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 											cmd_auto_refresh(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 									end case;
 									
-								elsif req = '1' /*or next_sdram_state	= activate */then
+								elsif req = '1' or next_sdram_state	= activate then
 									
 									if	refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-WRITE_WAIT-6 or refresh_cnt	>= REFRESH_CYCLE-ACTIVE_WAIT-READ_WAIT-6	then
 										next_sdram_state	<=	refresh;
@@ -370,8 +401,11 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 								end if;
 								
 							elsif word_index	<=	BURST_LENGTH-1	then
+								sdram_dqml	<=	'0';
+								sdram_dqmh	<=	'0';
 								word_index	<=	word_index	+	1;
-								sdram_dq	<=	write_data(word_index);
+								dq_oe_reg		<=	'1';
+								dq_out_reg 	<=	write_data(word_index);
 							else
 								ready	<=	'1';
 							end if;
@@ -381,10 +415,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 							-- ToDo reading Beh
 							sdram_dqml	<=	'0';
 							sdram_dqmh	<=	'0';
-							if wait_cnt	>=	CAS_LATENCY-1	then -- wait CAS_LATENCY
-								
+							if wait_cnt	>=	CAS_LATENCY	then -- wait CAS_LATENCY
+								sdram_dqml	<=	'0';
+								sdram_dqmh	<=	'0';
 								if wait_cnt	>=	READ_WAIT-1	then
 									-- Fertig Gelesen
+									sdram_dqml	<=	'1';
+									sdram_dqmh	<=	'1';
 									ready				<=	'1';
 									word_index	<=	0;
 									/*LOOP To OUTPUT READ DATA to Q OUTPUT*/
@@ -393,7 +430,6 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 									end loop;
 									
 									valid	<=	'1';
-									sdram_dq	<=	(others	=>	'Z');
 									if	refresh_needed	=	'1'	then
 										next_sdram_state	<=	refresh;
 										
@@ -420,9 +456,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										next_sdram_state	<= idle;
 									end if;
 
-								else
+								elsif	word_index	<=	BURST_LENGTH-1	then
 									word_index						<=	word_index	+	1; 	-- bump+ index for ARRAY
-									read_data(word_index)	<=	sdram_dq;					-- write Data to OUTPUT ARRAY-REGISTER
+									read_data(word_index) <= dq_in_reg;					-- write Data to OUTPUT ARRAY-REGISTER
+								else
+									ready				<=	'1';
+									sdram_dqml	<=	'1';
+									sdram_dqmh	<=	'1';
 								end if;
 								
 							end if;
@@ -430,14 +470,10 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						/*STATE: REFRESH*/	
 						when refresh	=>
 							
-							if wait_cnt	>= REFRESH_WAIT-3 and init_done	=	'1' then
+							if wait_cnt	>= REFRESH_WAIT-3 then
 								
 								next_sdram_state	<=	idle;
 								ready	<=	'1';
-							elsif	wait_cnt	>= REFRESH_WAIT-3 and next_sdram_state /= refresh_init	then
-								
-								refresh_init_cnt	<=	refresh_init_cnt	+	1;
-								next_sdram_state	<=	refresh_init;
 							
 							end if;
 						
@@ -452,7 +488,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when writing	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											word_index	<=	word_index	+	1;
-											sdram_dq		<=	write_data(word_index);
+											dq_out_reg 	<= write_data(word_index);
+											dq_oe_reg  	<= '1';
 											sdram_dqml	<=	'0';
 											sdram_dqmh	<=	'0';
 										when others		=>
@@ -465,7 +502,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 										
 										word_index	<=	word_index	+	1;
-										sdram_dq	<=	write_data(word_index);
+										dq_out_reg 	<=	write_data(word_index);
+										dq_oe_reg  	<=	'1';
 									end case;	
 								else
 									-- Reading_Beh
@@ -473,6 +511,8 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 										when	reading	=>
 											cmd_nop(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
 											valid	<=	'0';
+											sdram_dqml				<=	'0';	-- Enables lower input byte buffer
+											sdram_dqmh				<=	'0';	-- Enables higher input byte buffer
 											
 										when others		=>												
 											cmd_read(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n);
@@ -527,7 +567,7 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 						refresh_cnt				<=	0;
 						refresh_needed		<=	'0';
 						
-					elsif	refresh_cnt	>= REFRESH_CYCLE - 4 then
+					elsif	refresh_cnt	>= REFRESH_CYCLE - 7 then
 					
 						refresh_needed		<=	'1';
 						
@@ -558,4 +598,13 @@ architecture BEH_SDRAM_Controller_TOP of SDRAM_Controller_TOP is
 				
 		end process register_input;
 		
+	dq_io_registers : process(all)
+	begin
+			if rising_edge(sdram_clk) then
+					-- Eingang registrieren
+					dq_in_reg <= sdram_dq;
+			end if;
+	end process;
+	
+		sdram_dq <= dq_out_reg when dq_oe_reg = '1' else (others => 'Z');
 end BEH_SDRAM_Controller_TOP;
